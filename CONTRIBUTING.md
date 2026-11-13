@@ -25,6 +25,7 @@ The maintainer reviews each proposal, playtests it, and adds it to the game.
 1. Edit `scenario.json` (on GitHub you can press the pencil icon on the file; GitHub creates a fork and pull request for you).
 2. If you work locally, run `python3 build.py` to check your change and rebuild `index.html`. You don't have to: GitHub checks every pull request and rebuilds the game after it is merged.
 3. Say in the pull request where your numbers come from.
+4. If you change costs, durations or risks, run `node tools/balance.js 2000` (Node.js) and say in the pull request how the win rates moved. A sensible player should win about half the time.
 
 ## How a stage is written
 

@@ -1,5 +1,5 @@
 {
- "version": 6,
+ "version": 7,
  "title": "Moon Base: Race to the South Pole",
  "start": {
   "y": 2026,
@@ -36,7 +36,7 @@
    "narration": "NASA Moon Base Phase One runs to 2029: 25 launches and 21 robotic landings to scout the south pole. Pick one lander and fill it, within its mass limit, with payloads that give you mobility, mapping, prospecting and geotechnical data. Miss any of the four and the base team cannot choose a site. Some hardware is not ready yet, and the delivery waits for the latest item on board.",
    "videoPrompt": "Photorealistic commercial lunar lander descending to the Moon's south pole, long shadows, low sun on the horizon, dust plume, cinematic 35mm",
    "successText": "The lander is down and the instruments are returning data. You have a resource map, terrain models and soil strength numbers.",
-   "failMonths": 8,
+   "failMonths": 6,
    "needs": [
     {
      "tag": "mobility",
@@ -69,7 +69,7 @@
       "Flies within 8 months"
      ],
      "benefit": "The fastest way to get a first instrument down, at a high landing risk.",
-     "image": "art/novac.png"
+     "image": "art/novac.jpg"
     },
     {
      "id": "blueghost",
@@ -84,7 +84,7 @@
       "Proven soft landing"
      ],
      "benefit": "A reliable ride for a small instrument set.",
-     "image": "art/blueghost.png"
+     "image": "art/blueghost.jpg"
     },
     {
      "id": "griffin",
@@ -99,7 +99,7 @@
       "Ramps for rover egress"
      ],
      "benefit": "Carries a mid-size rover and several instruments on one flight.",
-     "image": "art/griffin.png"
+     "image": "art/griffin.jpg"
     },
     {
      "id": "mk1",
@@ -115,7 +115,7 @@
       "Cryogenic propulsion"
      ],
      "benefit": "Room for a large rover and a full instrument suite on one lander.",
-     "image": "art/mk1.png"
+     "image": "art/mk1.jpg"
     }
    ],
    "items": [
@@ -140,7 +140,8 @@
       "Detects and measures water ice"
      ],
      "benefit": "Gives you a resource map, so the base is sited next to ice you know is there.",
-     "image": "art/viper.png"
+     "image": "art/viper.jpg",
+     "rec": true
     },
     {
      "id": "promise",
@@ -164,7 +165,8 @@
       "Drills 1 m"
      ],
      "benefit": "Ends night dormancy for your scouting and keeps prospecting for 18 months.",
-     "image": "art/promise.png"
+     "image": "art/promise.jpg",
+     "rec": true
     },
     {
      "id": "flip",
@@ -180,7 +182,7 @@
       "Tests mobility in polar soil"
      ],
      "benefit": "A mobile base for instruments that would otherwise sit on the lander deck.",
-     "image": "art/flip.png"
+     "image": "art/flip.jpg"
     },
     {
      "id": "mapp",
@@ -196,7 +198,7 @@
       "Carries one or two small instruments"
      ],
      "benefit": "Cheap mobility for a small lander.",
-     "image": "art/mapp.png"
+     "image": "art/mapp.jpg"
     },
     {
      "id": "cuberover",
@@ -212,7 +214,7 @@
       "Very low mass"
      ],
      "benefit": "The lightest way to tick the mobility box.",
-     "image": "art/cuberover.png"
+     "image": "art/cuberover.jpg"
     },
     {
      "id": "moonfall",
@@ -233,7 +235,7 @@
       "Surveys landing sites from close range"
      ],
      "benefit": "Scouts places wheels cannot reach, in a single lunar day.",
-     "image": "art/moonfall.png"
+     "image": "art/moonfall.jpg"
     },
     {
      "id": "lidar",
@@ -252,7 +254,7 @@
      "fx": {
       "risk": -0.01
      },
-     "image": "art/lidar.png"
+     "image": "art/lidar.jpg"
     },
     {
      "id": "gpr",
@@ -272,7 +274,8 @@
      "fx": {
       "risk": -0.01
      },
-     "image": "art/gpr.png"
+     "image": "art/gpr.jpg",
+     "rec": true
     },
     {
      "id": "prime",
@@ -288,7 +291,7 @@
       "Measures volatiles in cuttings"
      ],
      "benefit": "Prospecting without needing a rover.",
-     "image": "art/prime.png"
+     "image": "art/prime.jpg"
     },
     {
      "id": "nss",
@@ -304,7 +307,7 @@
       "Works while driving"
      ],
      "benefit": "A light way to map where ice is likely.",
-     "image": "art/nss.png"
+     "image": "art/nss.jpg"
     },
     {
      "id": "cone",
@@ -320,7 +323,8 @@
       "Measures soil cohesion"
      ],
      "benefit": "The numbers engineers need to design pads and foundations that do not settle.",
-     "image": "art/cone.png"
+     "image": "art/cone.jpg",
+     "rec": true
     },
     {
      "id": "scalpss",
@@ -339,7 +343,8 @@
      "fx": {
       "risk": -0.01
      },
-     "image": "art/scalpss.png"
+     "image": "art/scalpss.jpg",
+     "rec": true
     },
     {
      "id": "lra",
@@ -358,7 +363,7 @@
      "fx": {
       "risk": -0.02
      },
-     "image": "art/lra.png"
+     "image": "art/lra.jpg"
     },
     {
      "id": "vertex",
@@ -374,7 +379,7 @@
       "Studies solar wind interaction"
      ],
      "benefit": "Good science. It does not help you build.",
-     "image": "art/vertex.png"
+     "image": "art/vertex.jpg"
     },
     {
      "id": "metal",
@@ -389,7 +394,7 @@
       "Measures helium-3 in regolith"
      ],
      "benefit": "Informs a future resource, not this base.",
-     "image": "art/metal.png"
+     "image": "art/metal.jpg"
     },
     {
      "id": "skylight",
@@ -418,7 +423,7 @@
       "High-resolution 3D site model in about a week"
      ],
      "benefit": "A detailed site model means fewer construction surprises, so every later operation is less likely to go wrong.",
-     "image": "art/skylight.png"
+     "image": "art/skylight.jpg"
     },
     {
      "id": "ndl",
@@ -438,7 +443,8 @@
       "Works in darkness"
      ],
      "benefit": "Landing data from this flight makes every later landing less likely to go wrong.",
-     "image": "art/ndl.png"
+     "image": "art/ndl.jpg",
+     "rec": true
     },
     {
      "id": "relay",
@@ -459,7 +465,7 @@
       "Higher data rates"
      ],
      "benefit": "Robots are supervised around the clock, so work goes a little faster and with fewer errors.",
-     "image": "art/relay.png"
+     "image": "art/relay.jpg"
     }
    ],
    "insight": {
@@ -467,7 +473,7 @@
     "url": "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"
    },
    "real": "2026 to 2028: Moon Base I, II and III, VIPER late 2027, PROMISE late 2028",
-   "still": "art/scout.png",
+   "still": "art/scout.jpg",
    "media": "art/scout.mp4"
   },
   {
@@ -478,7 +484,7 @@
    "narration": "The base needs vehicles that can haul cargo and carry tools. NASA awarded Lunar Terrain Vehicle contracts worth $439 million to Astrolab and Lunar Outpost, with Blue Origin delivering them in 2028. Choose a delivery and the vehicles to send. You need at least one crew-class vehicle or larger. What you land here decides which options you get when the habitats arrive.",
    "videoPrompt": "Photorealistic six-limbed wheeled robot and an open lunar rover driving off a cargo lander at the lunar south pole, harsh side lighting, dust trails",
    "successText": "The vehicles drive off the deck and start their checkout traverses.",
-   "failMonths": 8,
+   "failMonths": 6,
    "needs": [
     {
      "tag": "haul",
@@ -490,7 +496,7 @@
      "id": "mk1x2",
      "label": "Two Blue Moon Mark 1 cargo flights",
      "capKg": 6000,
-     "months": 14,
+     "months": 10,
      "desc": "NASA's task orders deliver the Lunar Terrain Vehicles this way in 2028.",
      "costM": 188,
      "risk": 0.15,
@@ -499,21 +505,21 @@
       "Available on NASA's 2028 schedule"
      ],
      "benefit": "Delivers the rovers NASA has already ordered.",
-     "image": "art/mk1x2.png"
+     "image": "art/mk1x2.jpg"
     },
     {
      "id": "mk2c",
      "label": "Wait for Blue Moon Mark 2 cargo",
      "capKg": 30000,
-     "months": 26,
+     "months": 18,
      "desc": "Far more mass, but the lander is not ready for years.",
-     "costM": 2500,
+     "costM": 1800,
      "risk": 0.12,
      "caps": [
       "30,000 kg in one landing"
      ],
      "benefit": "Carries the heaviest vehicles, years later.",
-     "image": "art/mk2c.png"
+     "image": "art/mk2c.jpg"
     }
    ],
    "items": [
@@ -533,7 +539,7 @@
       "Drives itself between crews"
      ],
      "benefit": "Hauls cargo and tools around the site without astronauts present.",
-     "image": "art/flex.png"
+     "image": "art/flex.jpg"
     },
     {
      "id": "pegasus",
@@ -551,7 +557,7 @@
       "Built to run for a year"
      ],
      "benefit": "A second, independent rover design, so one fault cannot stop surface transport.",
-     "image": "art/pegasus.png"
+     "image": "art/pegasus.jpg"
     },
     {
      "id": "racer",
@@ -568,7 +574,7 @@
       "Tows a trailer"
      ],
      "benefit": "Extra hauling capacity.",
-     "image": "art/racer.png"
+     "image": "art/racer.jpg"
     },
     {
      "id": "athlete",
@@ -587,7 +593,7 @@
       "Swaps tools: gripper, drill, scoop, cable reel"
      ],
      "benefit": "Unlocks the fastest ways to move, connect and build, and shortens construction.",
-     "image": "art/athlete.png"
+     "image": "art/athlete.jpg"
     },
     {
      "id": "lunarcruiser",
@@ -609,7 +615,7 @@
      ],
      "benefit": "Extends crew reach far beyond walking distance and adds living space.",
      "quality": 5,
-     "image": "art/lunarcruiser.png"
+     "image": "art/lunarcruiser.jpg"
     },
     {
      "id": "mapp2",
@@ -625,7 +631,7 @@
       "Relay communications"
      ],
      "benefit": "Useful eyes on site. They cannot haul.",
-     "image": "art/mapp2.png"
+     "image": "art/mapp2.jpg"
     }
    ],
    "insight": {
@@ -633,7 +639,7 @@
     "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
    },
    "real": "2028: both Lunar Terrain Vehicles delivered",
-   "still": "art/mobility.png",
+   "still": "art/mobility.jpg",
    "media": "art/mobility.mp4"
   },
   {
@@ -656,7 +662,7 @@
      "resultText": "Site confirmed. Power towers on the ridge see the Sun most of the year and the ice is a short drive downhill.",
      "costM": 60,
      "quality": 3,
-     "image": "art/ridge.png"
+     "image": "art/ridge.jpg"
     },
     {
      "id": "nobile",
@@ -670,7 +676,7 @@
      "resultText": "Site confirmed. Flat ground makes pad building easy, with small cold traps close by.",
      "costM": 60,
      "quality": 2,
-     "image": "art/nobile.png"
+     "image": "art/nobile.jpg"
     },
     {
      "id": "malapert",
@@ -683,37 +689,37 @@
      "desc": "Always in view of Earth for communications, but a long drive to large ice deposits.",
      "resultText": "Site confirmed. Communications are excellent. Ice runs take longer, so planning adds time.",
      "costM": 80,
-     "image": "art/malapert.png"
+     "image": "art/malapert.jpg"
     },
     {
      "id": "floor",
      "label": "Floor of Shackleton crater",
-     "months": 10,
+     "months": 6,
      "outcome": "fail",
      "desc": "Sit directly on the ice.",
      "resultText": "The crater floor never sees the Sun or the Earth. At -334 °F the hardware freezes and you have no direct link home. The survey is redone.",
      "costM": 120,
-     "image": "art/floor.png"
+     "image": "art/floor.jpg"
     },
     {
      "id": "reiner",
      "label": "Reiner Gamma",
-     "months": 10,
+     "months": 6,
      "outcome": "fail",
      "desc": "A bright magnetic swirl on the near side, easy to reach. Moon Base III lands here for science.",
      "resultText": "It is an interesting place with no permanently shadowed regions and no water ice. The base cannot live off the land here. The survey is redone.",
      "costM": 120,
-     "image": "art/reiner.png"
+     "image": "art/reiner.jpg"
     },
     {
      "id": "tranq",
      "label": "Mare Tranquillitatis",
-     "months": 10,
+     "months": 6,
      "outcome": "fail",
      "desc": "Flat, well-mapped equatorial plain.",
      "resultText": "Fourteen-day nights and no polar volatiles. The site fails the resource review and the survey is redone.",
      "costM": 120,
-     "image": "art/tranq.png"
+     "image": "art/tranq.jpg"
     }
    ],
    "insight": {
@@ -721,7 +727,7 @@
     "url": "https://www.nasa.gov/reference/moonbase-about/"
    },
    "real": "Moon Base I targets Shackleton Connecting Ridge",
-   "still": "art/site.png",
+   "still": "art/site.jpg",
    "media": "art/site.mp4"
   },
   {
@@ -732,7 +738,7 @@
    "narration": "Before heavy landers arrive you need machines on the surface to dig, to turn regolith into hard surfaces, and to power the work. Choose a delivery and payloads. You must cover excavation, surface construction and power. Resource processing is optional and risky.",
    "videoPrompt": "Photorealistic small robotic excavators with counter-rotating bucket drums unloading from a lunar cargo lander, solar tower deploying in the background",
    "successText": "The construction fleet is unloaded and the power tower is up.",
-   "failMonths": 9,
+   "failMonths": 6,
    "needs": [
     {
      "tag": "excavate",
@@ -752,7 +758,7 @@
      "id": "mk1x2",
      "label": "Two Blue Moon Mark 1 cargo flights",
      "capKg": 6000,
-     "months": 12,
+     "months": 9,
      "desc": "Available now.",
      "costM": 400,
      "risk": 0.15,
@@ -760,21 +766,21 @@
       "6,000 kg across two landers"
      ],
      "benefit": "Enough for a lean construction fleet.",
-     "image": "art/mk1x2.png"
+     "image": "art/mk1x2.jpg"
     },
     {
      "id": "mk2c",
      "label": "Blue Moon Mark 2 cargo",
      "capKg": 30000,
-     "months": 20,
+     "months": 14,
      "desc": "Carries everything, later.",
-     "costM": 2500,
+     "costM": 1800,
      "risk": 0.12,
      "caps": [
       "30,000 kg in one landing"
      ],
      "benefit": "Carries every construction option at once.",
-     "image": "art/mk2c.png"
+     "image": "art/mk2c.jpg"
     }
    ],
    "items": [
@@ -792,7 +798,8 @@
       "Hauls regolith"
      ],
      "benefit": "Builds berms, trenches and the shielding cover.",
-     "image": "art/rassor.png"
+     "image": "art/rassor.jpg",
+     "rec": true
     },
     {
      "id": "ipex",
@@ -808,7 +815,7 @@
       "Light enough for small landers"
      ],
      "benefit": "A low-mass way to cover excavation.",
-     "image": "art/ipex.png"
+     "image": "art/ipex.jpg"
     },
     {
      "id": "microwave",
@@ -825,7 +832,8 @@
       "Makes a hard dust-free surface"
      ],
      "benefit": "Turns loose soil into pads and roads with no binder brought from Earth.",
-     "image": "art/microwave.png"
+     "image": "art/microwave.jpg",
+     "rec": true
     },
     {
      "id": "solarsinter",
@@ -842,7 +850,7 @@
       "Low power draw"
      ],
      "benefit": "Paving that runs on sunlight alone.",
-     "image": "art/solarsinter.png"
+     "image": "art/solarsinter.jpg"
     },
     {
      "id": "laser",
@@ -859,7 +867,8 @@
       "Prints pads, walls and vault blocks"
      ],
      "benefit": "The fastest surface construction, and it unlocks a printed vault over the habitat.",
-     "image": "art/laser.png"
+     "image": "art/laser.jpg",
+     "rec": true
     },
     {
      "id": "lasermfg",
@@ -876,7 +885,7 @@
      ],
      "benefit": "Shortens construction because broken parts are replaced in days.",
      "quality": 4,
-     "image": "art/lasermfg.png"
+     "image": "art/lasermfg.jpg"
     },
     {
      "id": "minicast",
@@ -893,7 +902,8 @@
       "Wireless power to rovers"
      ],
      "benefit": "Stored power ends night dormancy for the construction fleet.",
-     "image": "art/minicast.png"
+     "image": "art/minicast.jpg",
+     "rec": true
     },
     {
      "id": "lsms",
@@ -909,7 +919,8 @@
       "Light truss boom"
      ],
      "benefit": "Unlocks moving the habitat by rover and trailer.",
-     "image": "art/lsms.png"
+     "image": "art/lsms.jpg",
+     "rec": true
     },
     {
      "id": "carbothermal",
@@ -925,7 +936,7 @@
      ],
      "benefit": "Breathing oxygen made on site raises the quality of the base.",
      "quality": 5,
-     "image": "art/carbothermal.png"
+     "image": "art/carbothermal.jpg"
     },
     {
      "id": "icemine",
@@ -941,7 +952,7 @@
      ],
      "benefit": "Water for crew and shielding, made on site.",
      "quality": 6,
-     "image": "art/icemine.png"
+     "image": "art/icemine.jpg"
     },
     {
      "id": "mre",
@@ -952,7 +963,7 @@
       "metals"
      ],
      "outcome": "fail",
-     "failMonths": 12,
+     "failMonths": 9,
      "scene": "boom",
      "desc": "Melts regolith at 1,600 °C and splits it into oxygen and metals. Highest yield on paper.",
      "failText": "The molten pool eats through the electrode seal. The reactor ruptures and sprays slag across the lander and the payloads beside it. The delivery is lost.",
@@ -961,9 +972,9 @@
       "Extracts oxygen and metals from molten regolith"
      ],
      "benefit": "The highest yield on paper.",
-     "image": "art/mre.png",
+     "image": "art/mre.jpg",
      "art": {
-      "still": "art/out_mre.png",
+      "still": "art/out_mre.jpg",
       "media": "art/out_mre.mp4"
      }
     },
@@ -995,7 +1006,7 @@
       "Track rolls up and can be re-laid"
      ],
      "benefit": "Regolith and cargo move without rover trips, so every later stage is 15% faster.",
-     "image": "art/float.png"
+     "image": "art/float.jpg"
     },
     {
      "id": "lightbender",
@@ -1025,7 +1036,7 @@
       "About 5 times lighter than cables or laser beaming"
      ],
      "benefit": "Counts as power for the fleet, ends night dormancy, and lets robots work inside shadowed areas.",
-     "image": "art/lightbender.png"
+     "image": "art/lightbender.jpg"
     },
     {
      "id": "thermalmine",
@@ -1051,7 +1062,7 @@
       "About 60% less mass and energy than digging"
      ],
      "benefit": "A steady water supply for crew, shielding and propellant raises the quality of the base.",
-     "image": "art/thermalmine.png"
+     "image": "art/thermalmine.jpg"
     },
     {
      "id": "eds",
@@ -1072,7 +1083,8 @@
       "Protects optics, radiators and seals"
      ],
      "benefit": "Dust is the main cause of worn mechanisms, so every later operation is less likely to go wrong.",
-     "image": "art/eds.png"
+     "image": "art/eds.jpg",
+     "rec": true
     },
     {
      "id": "cadre",
@@ -1092,7 +1104,8 @@
       "Keeps working through communication gaps"
      ],
      "benefit": "Less waiting for commands, so every later stage is 6% faster.",
-     "image": "art/cadre.png"
+     "image": "art/cadre.jpg",
+     "rec": true
     },
     {
      "id": "nde",
@@ -1113,7 +1126,7 @@
       "Verifies flatness and thickness"
      ],
      "benefit": "Defects are caught before a lander or habitat sits on them, and the finished base is better built.",
-     "image": "art/nde.png"
+     "image": "art/nde.jpg"
     }
    ],
    "insight": {
@@ -1121,7 +1134,7 @@
     "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
    },
    "real": "2027 onward: integrated power system solicitation",
-   "still": "art/construct.png",
+   "still": "art/construct.jpg",
    "media": "art/construct.mp4"
   },
   {
@@ -1135,7 +1148,7 @@
     {
      "id": "full",
      "label": "Landing pad with blast berm, then road, then habitat foundations",
-     "months": 16,
+     "months": 13,
      "outcome": "ok",
      "grants": [
       "pad",
@@ -1158,14 +1171,14 @@
      ],
      "desc": "The complete job. ATHLETE, a laser printer and on-site spares each shorten it.",
      "resultText": "A sintered pad with a blast berm, a graded road and level foundations are finished.",
-     "costM": 1500,
+     "costM": 1200,
      "risk": 0.1,
      "quality": 2
     },
     {
      "id": "twopads",
      "label": "Two pads, road and foundations",
-     "months": 22,
+     "months": 18,
      "outcome": "ok",
      "grants": [
       "pad",
@@ -1184,14 +1197,14 @@
      ],
      "desc": "A second pad gives a backup, at a cost in time.",
      "resultText": "Two pads, a road and foundations are finished. Landings no longer depend on one surface.",
-     "costM": 2200,
+     "costM": 1700,
      "risk": 0.08,
      "quality": 6
     },
     {
      "id": "padonly",
      "label": "Pad only, skip the road and foundations",
-     "months": 19,
+     "months": 17,
      "outcome": "setback",
      "desc": "Get the heavy landers down sooner.",
      "resultText": "The pad works, but vehicles bog down in loose regolith and there is nowhere level to set a habitat. The team goes back and finishes the road and foundations, ten months later than a single campaign would have taken.",
@@ -1205,14 +1218,14 @@
     {
      "id": "nopad",
      "label": "Skip the pad and land on bare regolith",
-     "months": 10,
+     "months": 7,
      "outcome": "fail",
      "scene": "boom",
      "desc": "Apollo did it.",
      "resultText": "The heavy lander's plume digs a crater under itself and sandblasts the construction fleet. Repairs and a rebuilt site cost you most of a year.",
      "costM": 900,
      "art": {
-      "still": "art/out_nopad.png",
+      "still": "art/out_nopad.jpg",
       "media": "art/out_nopad.mp4"
      }
     }
@@ -1222,7 +1235,7 @@
     "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
    },
    "real": "Not yet dated by NASA",
-   "still": "art/build.png",
+   "still": "art/build.jpg",
    "media": "art/build.mp4"
   },
   {
@@ -1233,7 +1246,7 @@
    "narration": "The pads are ready for the big landers. NASA's Phase Three, from 2032, brings larger permanent habitats and nuclear power, with equipment from Italy and Canada. Choose Blue Origin's Blue Moon Mark 2, SpaceX's Starship, or both, and load them. The base needs a fission reactor, a habitat, the cabling to join them, and supplies.",
    "videoPrompt": "Photorealistic SpaceX Starship lunar lander touching down on a sintered landing pad at the lunar south pole, Blue Moon Mark 2 lander in the distance, dramatic low sun",
    "successText": "Touchdown on the pad. The blast berm does its job and the cargo is intact.",
-   "failMonths": 9,
+   "failMonths": 6,
    "needs": [
     {
      "tag": "reactor",
@@ -1257,47 +1270,47 @@
      "id": "mk2",
      "label": "Blue Moon Mark 2 cargo",
      "capKg": 30000,
-     "months": 12,
+     "months": 10,
      "desc": "About 30 tonnes one way.",
-     "costM": 2500,
+     "costM": 1800,
      "risk": 0.1,
      "caps": [
       "30,000 kg one way",
       "Cargo deck near the ground"
      ],
      "benefit": "Enough for a lean base in one landing.",
-     "image": "art/mk2.png"
+     "image": "art/mk2.jpg"
     },
     {
      "id": "starship",
      "label": "SpaceX Starship cargo",
      "capKg": 100000,
-     "months": 14,
+     "months": 11,
      "desc": "About 100 tonnes, after orbital refuelling. Cargo comes down a 30 m elevator.",
-     "costM": 3000,
+     "costM": 2200,
      "risk": 0.12,
      "caps": [
       "100,000 kg",
       "Cargo elevator"
      ],
      "benefit": "Room for a larger habitat and spares.",
-     "image": "art/starship.png"
+     "image": "art/starship.jpg"
     },
     {
      "id": "both",
      "label": "Both landers",
      "capKg": 130000,
-     "months": 16,
+     "months": 13,
      "desc": "Two landings, the most mass, the longest campaign.",
-     "costM": 5500,
+     "costM": 3800,
      "risk": 0.18,
      "caps": [
       "130,000 kg across two landers"
      ],
      "benefit": "Everything at once, with two providers.",
      "image": [
-      "art/starship.png",
-      "art/mk2.png"
+      "art/starship.jpg",
+      "art/mk2.jpg"
      ]
     }
    ],
@@ -1314,14 +1327,14 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 3000,
+     "costM": 2000,
      "caps": [
       "100 kW class",
       "Runs with no sunlight",
       "Years of operation"
      ],
      "benefit": "Powers the habitat through the long polar shadows.",
-     "image": "art/fsp.png"
+     "image": "art/fsp.jpg"
     },
     {
      "id": "fsp2",
@@ -1336,13 +1349,13 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 3000,
+     "costM": 2800,
      "caps": [
       "Second 100 kW class reactor"
      ],
      "benefit": "Backup power raises the quality of the base.",
      "quality": 6,
-     "image": "art/fsp2.png"
+     "image": "art/fsp2.jpg"
     },
     {
      "id": "inflatable",
@@ -1352,14 +1365,14 @@
       "habitat"
      ],
      "desc": "A Phase Two semi-habitable module. Packs small, expands once set on its foundation.",
-     "costM": 2500,
+     "costM": 1800,
      "caps": [
       "Packs small",
       "Large volume once inflated"
      ],
      "benefit": "A light habitat that fits Blue Moon Mark 2.",
      "quality": 4,
-     "image": "art/inflatable.png"
+     "image": "art/inflatable.jpg"
     },
     {
      "id": "rigid",
@@ -1373,14 +1386,14 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 4500,
+     "costM": 3200,
      "caps": [
       "Outfitted on Earth",
       "Multiple decks"
      ],
      "benefit": "A permanent habitat that raises the quality of the base.",
      "quality": 10,
-     "image": "art/rigid.png"
+     "image": "art/rigid.jpg"
     },
     {
      "id": "cable",
@@ -1396,7 +1409,7 @@
       "Radiators for the reactor"
      ],
      "benefit": "Lets the reactor sit at a safe distance.",
-     "image": "art/cable.png"
+     "image": "art/cable.jpg"
     },
     {
      "id": "logistics",
@@ -1412,7 +1425,7 @@
      ],
      "benefit": "Without it the crew cannot stay.",
      "quality": 2,
-     "image": "art/logistics.png"
+     "image": "art/logistics.jpg"
     },
     {
      "id": "airlock",
@@ -1429,7 +1442,7 @@
      ],
      "benefit": "Cleaner air and less wear inside the habitat.",
      "quality": 6,
-     "image": "art/airlock.png"
+     "image": "art/airlock.jpg"
     },
     {
      "id": "solarfarm",
@@ -1445,7 +1458,7 @@
      ],
      "benefit": "Margin for science and charging.",
      "quality": 3,
-     "image": "art/solarfarm.png"
+     "image": "art/solarfarm.jpg"
     },
     {
      "id": "prover",
@@ -1466,7 +1479,7 @@
      ],
      "benefit": "Adds mobile living space.",
      "quality": 5,
-     "image": "art/lunarcruiser.png"
+     "image": "art/lunarcruiser.jpg"
     },
     {
      "id": "myco",
@@ -1492,7 +1505,7 @@
       "Technology readiness 3, aiming for 6 with a lander demonstration"
      ],
      "benefit": "More living and working volume than you could launch, which raises the quality of the base.",
-     "image": "art/myco.png"
+     "image": "art/myco.jpg"
     },
     {
      "id": "lspop",
@@ -1519,7 +1532,7 @@
       "Designed to last over 10 years"
      ],
      "benefit": "Oxygen arrives without rover tanker runs, which raises the quality of the base.",
-     "image": "art/lspop.png"
+     "image": "art/lspop.jpg"
     },
     {
      "id": "cryo",
@@ -1545,7 +1558,7 @@
       "Passive storage of liquid oxygen"
      ],
      "benefit": "Stored oxygen and propellant do not boil away, which raises the quality of the base.",
-     "image": "art/cryo.png"
+     "image": "art/cryo.jpg"
     }
    ],
    "insight": {
@@ -1553,7 +1566,7 @@
     "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"
    },
    "real": "2032 onward: Phase Three habitats and nuclear power",
-   "still": "art/cargo.png",
+   "still": "art/cargo.jpg",
    "media": "art/cargo.mp4"
   },
   {
@@ -1580,7 +1593,7 @@
      "costM": 40,
      "risk": 0.05,
      "quality": 2,
-     "image": "art/athlete.png"
+     "image": "art/athlete.jpg"
     },
     {
      "id": "ltvcrane",
@@ -1602,7 +1615,7 @@
     {
      "id": "skid",
      "label": "Winch it on a skid",
-     "months": 11,
+     "months": 8,
      "outcome": "ok",
      "grants": [
       "placed"
@@ -1615,7 +1628,7 @@
     {
      "id": "stay",
      "label": "Leave it on the lander",
-     "months": 7,
+     "months": 5,
      "outcome": "fail",
      "desc": "Use the lander as the base.",
      "resultText": "Tens of metres up, the habitat cannot be shielded and blocks the only pad. The plan is rejected and the move is redone.",
@@ -1627,7 +1640,7 @@
     "url": "https://www.nasa.gov/reference/human-landing-systems/"
    },
    "real": "Not yet dated by NASA",
-   "still": "art/move.png",
+   "still": "art/move.jpg",
    "media": "art/move.mp4"
   },
   {
@@ -1675,7 +1688,7 @@
     {
      "id": "near",
      "label": "Next to the habitat to save cable",
-     "months": 8,
+     "months": 6,
      "outcome": "fail",
      "desc": "Shortest run, fastest job.",
      "resultText": "Radiation at the habitat wall is far over the crew limit. The reactor has to be shut down, cooled and moved.",
@@ -1684,7 +1697,7 @@
     {
      "id": "solar",
      "label": "Leave the reactor off and run on solar",
-     "months": 11,
+     "months": 9,
      "outcome": "setback",
      "desc": "Skip the nuclear work.",
      "resultText": "The first long shadow period drains the batteries and the habitat freezes. Systems are repaired and the reactor is installed after all, at a safe distance.",
@@ -1699,7 +1712,7 @@
     "url": "https://www.nasa.gov/tdm/fission-surface-power/"
    },
    "real": "2032 onward: Phase Three",
-   "still": "art/connect.png",
+   "still": "art/connect.jpg",
    "media": "art/connect.mp4"
   },
   {
@@ -1747,7 +1760,7 @@
     {
      "id": "thin",
      "label": "A thin 30 cm layer",
-     "months": 11,
+     "months": 9,
      "outcome": "setback",
      "desc": "Quicker.",
      "resultText": "A thin layer makes secondary radiation worse, not better. The flight surgeons refuse to certify the base, so the excavators go back and pile on another two metres.",
@@ -1759,7 +1772,7 @@
     {
      "id": "none",
      "label": "No shielding",
-     "months": 8,
+     "months": 6,
      "outcome": "fail",
      "desc": "The habitat walls will do.",
      "resultText": "A solar particle event would be lethal over a long stay. The base is not certified for crew and the work is redone.",
@@ -1771,7 +1784,7 @@
     "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
    },
    "real": "Not yet dated by NASA",
-   "still": "art/shield.png",
+   "still": "art/shield.jpg",
    "media": "art/shield.mp4"
   },
   {
@@ -1785,37 +1798,37 @@
     {
      "id": "starship",
      "label": "Starship lander to the pad",
-     "months": 6,
+     "months": 5,
      "outcome": "ok",
      "grants": [
       "crew"
      ],
      "desc": "Four astronauts ride the elevator down to the pad.",
      "resultText": "The crew is down.",
-     "costM": 2500,
+     "costM": 1800,
      "risk": 0.06,
      "lander": "starship",
-     "image": "art/starship.png"
+     "image": "art/starship.jpg"
     },
     {
      "id": "mk2",
      "label": "Blue Moon Mark 2 crew lander to the pad",
-     "months": 6,
+     "months": 5,
      "outcome": "ok",
      "grants": [
       "crew"
      ],
      "desc": "Four astronauts step off close to the ground.",
      "resultText": "The crew is down.",
-     "costM": 2500,
+     "costM": 1800,
      "risk": 0.06,
      "lander": "mk2",
-     "image": "art/mk2.png"
+     "image": "art/mk2.jpg"
     },
     {
      "id": "offpad",
      "label": "Land beside the habitat to shorten the walk",
-     "months": 8,
+     "months": 6,
      "outcome": "fail",
      "scene": "boom",
      "desc": "Skip the drive.",
@@ -1823,7 +1836,7 @@
      "costM": 1200,
      "lander": "starship",
      "art": {
-      "still": "art/out_nopad.png",
+      "still": "art/out_nopad.jpg",
       "media": "art/out_nopad.mp4"
      }
     }
@@ -1833,7 +1846,7 @@
     "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
    },
    "real": "2028: first landings. 2032 onward: living and working",
-   "still": "art/crew.png",
+   "still": "art/crew.jpg",
    "media": "art/crew.mp4"
   }
  ],
@@ -2160,9 +2173,9 @@
   },
   {
    "id": "china",
-   "label": "China finishes two years early",
-   "desc": "The rival station is declared complete at the end of 2033.",
-   "deadlineShift": -24
+   "label": "China finishes a year early",
+   "desc": "The rival station is declared complete at the end of 2034.",
+   "deadlineShift": -12
   },
   {
    "id": "risk",
@@ -2221,17 +2234,18 @@
  },
  "art": {
   "fail": {
-   "still": "art/out_fail.png",
+   "still": "art/out_fail.jpg",
    "media": "art/out_fail.mp4"
   },
   "win": {
-   "still": "art/out_win.png",
+   "still": "art/out_win.jpg",
    "media": "art/out_win.mp4"
   },
   "loss": {
-   "still": "art/out_loss.png",
+   "still": "art/out_loss.jpg",
    "media": "art/out_loss.mp4"
   },
   "note": "Images and clips generated with Higgsfield. Each option, carrier and item may carry image; each stage may carry still and media; a failing choice may carry art {still, media}."
- }
+ },
+ "shareUrl": "https://kalindc.github.io/moon-base-race/"
 }

@@ -18,6 +18,8 @@ Every lander, rover, payload and choice lists what it can do and why it helps, a
 | `timeline.html` | Timeline explorer: NASA's published milestones next to China's, with a source link for each one. |
 | `scenario.json` | **All the game content.** Every stage, choice, payload, mass, cost, duration, risk, outcome and source lives here. |
 | `src/` | The game engine (JavaScript, CSS and HTML template). |
+| `tools/balance.js` | Plays thousands of games automatically and reports win rates, spending and dead ends. Run `node tools/balance.js 2000`; the latest results are in `tools/balance-report.txt`. |
+| `tools/compress_art.py` | Shrinks the art for the web. |
 | `build.py` | Combines `scenario.json` and `src/` into `index.html` and `timeline.html`, and checks `scenario.json` for mistakes. |
 | `art/` | The AI-generated cutscene videos and card pictures. |
 | `references/` | Links to public domain NASA reference images of the real hardware and places, used as references for the game's art. Browse them at https://kalindc.github.io/moon-base-race/references/ |
@@ -50,6 +52,7 @@ The game was first built as a claude.ai page, where it gets a few extra features
 | Video cutscenes and vehicle pictures | Yes, from the `art/` folder; any file not there yet shows the drawn placeholder scene instead | No, claude.ai pages can't load outside media, so placeholder scenes show |
 | Mission control voice | Yes, using your browser's built-in voice | Yes |
 | Save result card (image) | Yes, as a normal download | Yes |
+| Share link to your result | Yes, links to this site | Yes |
 | Scene editor, drafts and playtesting | Yes, the draft stays in your browser | Yes |
 | Sharing an edit | "Propose on GitHub" opens a pre-filled GitHub issue; you can also download your draft as `scenario.json` | Proposals and publishing inside claude.ai |
 | "Rewrite with Claude" (describe a change in plain words) | No, it needs Claude | Yes |

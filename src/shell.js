@@ -33,7 +33,7 @@ function artPanel(){
     h("p",{class:"note",text:"This page cannot load pictures or clips from outside sites, so the Higgsfield art shows here only after its files are stored with the page. "+have+" of "+jobs.size+" are stored. Download the files from Higgsfield and choose them here. Keep the original file names, or name each one after its game id, such as viper.png, scout.png, scout.mp4 or out_win.mp4."}),inp,msg));
 }
 function start(saved){
-  toStart();
+  toStart();SHARED=readShare();
   if(saved&&saved.G&&!saved.testing&&saved.G.i<LIVE.stages.length&&saved.G.dates){SCN=applyWhatifs(BASE,saved.G.picks||[]);G=saved.G}
   render();
   connect();

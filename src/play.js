@@ -29,6 +29,9 @@ function startView(){
   main.append(screenEl("orbit",SCN.title||"Moon Base Race"));
   const picks=G.picks,box=h("div",{class:"opts"});
   (BASE.whatifs||[]).forEach(w=>box.append(h("button",{class:"opt","aria-pressed":picks.includes(w.id)?"true":"false",onclick:()=>{const p=picks.includes(w.id)?picks.filter(x=>x!==w.id):picks.concat(w.id);newGame(p,"start");render()}},h("span",{class:"box"}),h("span",{},h("strong",{text:w.label}),h("small",{text:w.desc||""})))));
+  if(SHARED){const s=SHARED,T0=(BASE.deadline.y-BASE.start.y)*12+(BASE.deadline.m-BASE.start.m),wl=(BASE.whatifs||[]).filter(w=>s.p.includes(w.id)).map(w=>w.label);
+    main.append(h("div",{class:"card",style:"border-color:var(--sun)"},h("div",{class:"step",text:"A result shared with you"}),h("p",{style:"margin:4px 0 8px",text:(s.w?"They moved the crew in after "+dur(s.m)+" of the "+dur(T0)+" available":"They lost the race")+", spent "+fm(s.s)+" and reached base quality "+s.q+". "+(wl.length?"They played with: "+wl.join("; ")+".":"They played the plan as published.")}),
+      h("div",{class:"row",style:"margin-top:0"},h("button",{class:"btn small",onclick:()=>{const p=SHARED.p;SHARED=null;newGame(p,"brief");sfx.go();render()}},"Try to beat it"),h("button",{class:"btn ghost small",onclick:()=>{SHARED=null;render()}},"Dismiss"))))}
   main.append(h("div",{},h("div",{class:"step",text:"Mission briefing"}),h("h2",{text:"Build the Moon Base before "+dateAt(totalMonths())}),
     h("p",{text:"You run NASA's Moon Base program from "+dateAt(0)+". Each stage is a decision. Every decision costs time and money, and some carry a chance of a mishap. Land the first crew in a powered, shielded habitat before "+((SCN.rival&&SCN.rival.name)||"your rival")+" completes its station, and stay inside the budget. NASA announced "+fm(SCN.budgetM||0)+" over "+(SCN.budgetYears||7)+" years, so "+fm(Math.round(yearly()))+" is released each year and you can never spend more than has been released."}),
     h("h3",{text:"As published, or what if?"}),h("p",{class:"note",text:"Leave these off to play NASA's plan as published. Turn any on to see the knock-on effect."}),box,
@@ -54,15 +57,15 @@ function stageView(){
     const cb=h("div",{class:"opts"});
     st.carriers.forEach(o=>cb.append(h("button",{class:"opt radio","aria-pressed":G.sel.car===o.id?"true":"false",onclick:()=>{G.sel.car=o.id;stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{text:o.label}),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.capKg.toLocaleString()+" kg payload, "+o.months+" months, "+fm(o.costM||0)+"."+availTxt(o)}),rk(o)))));
     const car=st.carriers.find(c=>c.id===G.sel.car),sel=carried(),its=st.items.filter(i=>sel.includes(i.id)),kg=its.reduce((a,i)=>a+i.kg,0),dev=its.filter(devDue).reduce((a,i)=>a+(i.devCostM||0),0),devMo=Math.max(0,...its.filter(devDue).map(i=>(i.devMonths||0)-G.months)),cost=(car?car.costM||0:0)+its.reduce((a,i)=>a+(i.costM||0),0)+dev,lr=car?effRisk((car.risk||0)+its.reduce((a,i)=>a+(i.risk||0),0)):0;
-    const ib=h("div",{class:"opts"});
-    st.items.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{},o.label,o.class?h("span",{class:"cls",text:o.class}):null,o.niac?h("span",{class:"cls niac",text:"NIAC"}):null),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.kg.toLocaleString()+" kg, "+fm(o.costM||0)+"."+availTxt(o)})))));
+    const ib=h("div",{class:"opts"}),nrec=st.items.filter(i=>i.rec).length,few=nrec>0&&nrec<st.items.length&&!showAll[st.id],shown=few?st.items.filter(i=>i.rec||sel.includes(i.id)):st.items;
+    shown.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{},o.label,o.class?h("span",{class:"cls",text:o.class}):null,o.niac?h("span",{class:"cls niac",text:"NIAC"}):null),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.kg.toLocaleString()+" kg, "+fm(o.costM||0)+"."+availTxt(o)})))));
     const over=car&&kg>car.capKg,got=new Set(its.flatMap(i=>i.tags||[]));
     need=cost;
     left.append(h("h3",{text:"Delivery"}),cb,manifest(car,its),h("h3",{text:"Payloads"}),
       h("div",{class:"mono",text:"Loaded "+kg.toLocaleString()+" kg"+(car?" of "+car.capKg.toLocaleString()+" kg":"")+(over?" (over the limit)":"")+". This delivery costs "+fm(cost)+(dev?", including "+fm(dev)+" of development":"")+"."+(devMo?" Development finishes "+dateAt(G.months+devMo)+".":"")+(lr?" Mishap chance "+Math.round(lr*100)+"%.":"")}),
       h("div",{class:"meter"+(over?" over":"")},h("i",{style:"width:"+(car?Math.min(100,kg/car.capKg*100):0)+"%"})),
       (st.needs||[]).length?h("div",{class:"chips"},st.needs.map(n=>h("span",{class:"chip"+(got.has(n.tag)?" on":""),text:n.label}))):null,
-      h("div",{style:"height:8px"}),ib);
+      h("div",{style:"height:8px"}),nrec>0&&nrec<st.items.length?h("p",{class:"note",style:"margin:0 0 8px",text:few?"Showing a recommended starting set. It covers every need.":"Showing all "+st.items.length+" payloads."}):null,ib,nrec>0&&nrec<st.items.length?h("div",{class:"row"},h("button",{class:"btn ghost small",onclick:()=>{showAll[st.id]=few;stageView()}},few?"Show all "+st.items.length+" payloads":"Show the recommended set only")):null);
     go.disabled=!car||over||!sel.length;
   }
   const short=need>funds();if(short)go.disabled=true;
@@ -175,6 +178,7 @@ function endView(won){
   say("e"+G.log.length,won?"The first crew enters the Moon Base. You win.":SCN.rival.name+"'s station is complete. You lose.");
   const msg=h("div",{class:"msg"}),sum=summaryText(won);
   const copy=h("button",{class:"btn ghost",onclick:async()=>{try{await navigator.clipboard.writeText(sum);msg.textContent="Summary copied."}catch(e){msg.textContent="";msg.append(h("textarea",{readonly:true,style:"min-height:90px"},sum))}}},"Copy summary");
+  const link=shareLink(won),share=link?h("button",{class:"btn ghost",onclick:async()=>{try{await navigator.clipboard.writeText(link);msg.textContent="Link copied. It opens the game with your result and what-if choices."}catch(e){msg.textContent="";msg.append(h("textarea",{readonly:true,style:"min-height:70px"},link))}}},"Copy share link"):null;
   const save=h("button",{class:"btn ghost",hidden:!downloads,onclick:()=>{resultCard(won).toBlob(async b=>{try{await downloads.save({filename:"moon-base-race-result.png",data:b});msg.textContent="Result card saved."}catch(e){msg.textContent=e&&e.code==="declined"?"Save cancelled.":"The image could not be saved here. Use Copy summary instead."}},"image/png")}},"Save result card");
   main.append(h("div",{class:"res"+(won?"":" bad")},h("div",{class:"big",text:won?"You win":"You lose"}),
     h("p",{text:won?"Four astronauts walk from the pad down the sintered road, cycle the airlock and step into a powered, shielded, stocked habitat in "+dateAt(G.months)+", "+(totalMonths()-G.months)+" months ahead of "+SCN.rival.name+"'s published date. You spent "+fm(G.spent)+" of "+fm(SCN.budgetM||0)+".":(G.broke?"The program ran out of money before the base was ready for crew. ":"The clock reached "+dateAt(totalMonths())+" before your base was ready for crew. ")+"A Chinese flag passes over the lunar south pole. You had spent "+fm(G.spent)+"."}),
@@ -183,5 +187,5 @@ function endView(won){
     h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},["Stage","Your date","NASA's published plan"].map(t=>h("th",{text:t})))),h("tbody",{},SCN.stages.map(s=>h("tr",{},h("td",{text:s.title}),h("td",{class:"n",text:G.dates[s.id]!=null?dateAt(G.dates[s.id]):"Not reached"}),h("td",{text:s.real||""})))))),
     h("p",{class:"note",style:"margin-top:8px",text:"NASA's Phase Three, living and working on the Moon, starts in 2032. "+(won?(G.months<=moOf({y:2032,m:1})?"You beat that date.":"You moved in "+dur(G.months-moOf({y:2032,m:1}))+" after it opens."):"")}),
     h("h3",{text:"Mission log"}),h("div",{class:"card",style:"max-width:560px"},h("ul",{style:"list-style:none;margin:0;padding:0"},G.log.map(l=>h("li",{style:"display:flex;justify-content:space-between;gap:10px"},h("span",{text:l[0]}),h("span",{class:"mono",style:"white-space:nowrap",text:l[1]+" · "+l[2]}))))),
-    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{toStart();render()}},"Play again"),copy,save),msg));
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{toStart();render()}},"Play again"),copy,share,save),msg));
 }

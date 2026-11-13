@@ -9,8 +9,8 @@ head=old[:old.index('<style>')]
 painter=old[old.index('/* ---------- cutscene painter'):old.index('/* ---------- play ---------- */')]
 editor=old[old.index('/* ---------- scene editor ---------- */'):old.index('/* ---------- shell ---------- */')]
 rep=[
-("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','art','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
-("'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]","'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be \"setback\": it costs its months, then the stage completes with its grants. A stage may carry still (a picture link) and media (a video link) for its cutscene. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. Options, carriers and items may carry caps (a list of short capability phrases) and benefit (one sentence). Items and options may carry quality (points added to the base quality score); items may carry fx: {monthsPct, risk} (changes every later stage: negative monthsPct is faster, negative risk is safer), class (a short label), image (a picture link), devCostM and devMonths (development cost and time charged once), risk (added to the mishap chance of that delivery) and niac: {pi,year,url}. '+\n'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]"),
+("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','art','shareUrl','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
+("'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]","'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be \"setback\": it costs its months, then the stage completes with its grants. A stage may carry still (a picture link) and media (a video link) for its cutscene. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. Options, carriers and items may carry caps (a list of short capability phrases) and benefit (one sentence). Items and options may carry quality (points added to the base quality score); items may carry fx: {monthsPct, risk} (changes every later stage: negative monthsPct is faster, negative risk is safer), class (a short label), image (a picture link), rec (true puts it in the recommended set shown first), devCostM and devMonths (development cost and time charged once), risk (added to the mishap chance of that delivery) and niac: {pi,year,url}. '+\n'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]"),
 ("if(edSel>=draft.stages.length)edSel=0;\n  const st=draft.stages[edSel];","if(edSel>=draft.stages.length)edSel=0;\n  const isSet=edSel<0,st=isSet?Object.fromEntries(SETKEYS.filter(k=>k in draft).map(k=>[k,draft[k]])):draft.stages[edSel];"),
 ("if(!validStage(o)){say(\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};","if(isSet?!(o&&typeof o===\"object\"&&!Array.isArray(o)):!validStage(o)){say(isSet?\"Settings must be one JSON object.\":\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};"),
 ("const apply=()=>{const o=readJson();if(!o)return false;draft.stages[edSel]=o;saveDraft();return true};","const apply=()=>{const o=readJson();if(!o)return false;if(isSet){const t=Object.assign(clone(draft),o);if(!validScenario(t)){say(\"Settings need a start date and a deadline.\",true);return false}draft=t}else draft.stages[edSel]=o;saveDraft();return true};"),
@@ -36,7 +36,7 @@ for a,b in rep:
     assert a in editor,a[:60]; editor=editor.replace(a,b)
 _old='''  if(media)s.append(h("video",{src:media,autoplay:true,muted:true,loop:true,playsinline:true}));
   else if(prompt)s.append(h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}));'''
-_new='''  const key=[sc,caption,media,still,artUrl(media),artUrl(still)].join("|");
+_new='''  const key=[sc,caption,artUrl(media),artUrl(still)].join("|");
   if(lastScr&&lastScr.key===key){cv=lastScr.cv;cancelAnimationFrame(raf);raf=requestAnimationFrame(paint);const v=lastScr.el.querySelector("video");if(v)setTimeout(()=>{try{v.play().catch(()=>{})}catch(e){}},0);return lastScr.el}
   const tag=prompt?h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}):null,gone=()=>{if(tag)tag.remove()};
   const im=artEl("img",still,{class:"art",alt:""},gone);if(im)s.append(im);
@@ -66,9 +66,11 @@ if problems: sys.exit("scenario.json has problems:\n  "+"\n  ".join(problems))
 s=json.dumps(d,ensure_ascii=False).replace('</','<\\/')
 explorer=sys.argv[1] if len(sys.argv)>1 else "timeline.html"
 js=open('src/prelude.js').read()+"const EXPLORER="+json.dumps(explorer)+";\n"+painter+open('src/play.js').read()+open('src/data.js').read()+editor+open('src/shell.js').read()+open('src/hosted.js').read()
-open('index.html','w').write(head+css+"\n"+body+'<script id="scn" type="application/json">'+s+'</script>\n<script>\n'+js+'</script>\n')
+# A plain web page needs its own doctype, charset and viewport (claude.ai adds them for artifacts).
+SKEL='<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
+open('index.html','w').write(SKEL+head+css+"\n"+body+'<script id="scn" type="application/json">'+s+'</script>\n<script>\n'+js+'</script>\n')
 # explorer page
 t=open('src/timeline.html').read()
 ex={k:d.get(k) for k in ("milestones","facts","sources","start","deadline")}
-open('timeline.html','w').write(t.replace('__DATA__',json.dumps(ex,ensure_ascii=False).replace('</','<\\/')).replace('__GAME__',"index.html").replace('target="_blank" rel="noopener">Play the race','>Play the race'))
+open('timeline.html','w').write(SKEL+t.replace('__DATA__',json.dumps(ex,ensure_ascii=False).replace('</','<\\/')).replace('__GAME__',"index.html").replace('target="_blank" rel="noopener">Play the race','>Play the race'))
 print(len(open('index.html').read()))

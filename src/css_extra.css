@@ -38,5 +38,6 @@ aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--
 .screen .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
 .screen .art.ok{opacity:1}
 .ths{display:flex;gap:4px;margin-bottom:6px}
-.th{display:none;flex:1;min-width:0;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:#000}
-.th.ok{display:block}
+.th{display:block;flex:1;min-width:0;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:var(--panel2);opacity:.25;transition:opacity .3s}
+.th.ok{opacity:1}
+@media(max-width:640px){header{position:static}.clock{gap:2px 12px;font-size:12px}nav button{padding:6px 8px}.mani{flex-direction:column;align-items:stretch}.mani .pic{width:64px}}

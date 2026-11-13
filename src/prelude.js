@@ -49,11 +49,15 @@ function fxList(o){const a=[],f=o.fx||{};if(f.monthsPct)a.push("Later stages "+M
 function devTxt(o){return "Still in development: adds "+fm(o.devCostM||0)+", charged once, and cannot fly before "+dateAt(o.devMonths||0)+" ("+pl(o.devMonths||0)+" of development from the program start; both are estimates)."+(o.niac?" NASA NIAC "+o.niac.year+", "+o.niac.pi+".":"")}
 function capKids(o){return [(o.caps||[]).length?h("small",{class:"cap",text:"Can: "+o.caps.join(" · ")}):null,o.benefit?h("small",{class:"ben",text:o.benefit}):null,fxList(o).length?h("small",{class:"fx",text:fxList(o).join(". ")+"."}):null,(o.devCostM||o.devMonths)?h("small",{class:"dev",text:G.dev.includes(o.id)?"Development already paid for.":devTxt(o)}):null,o.risk&&o.kg!=null?h("small",{class:"r",text:"Unproven: +"+pts(Math.round(o.risk*100))+" of mishap chance on this delivery."}):null]}
 /* ---------- art: links first, uploaded copies when the page has them ---------- */
-let ART={},extOk=null,assets=null;
+let ART={},assets=null;const BAD=new Set();
 const jobOf=u=>{const m=/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.\w+$/i.exec(u||"");return m?m[1].toLowerCase():""};
-function artUrl(u){if(!u)return null;const j=jobOf(u);if(j&&ART[j])return "/_blob/"+ART[j];return extOk===false?null:u}
-function artEl(tag,u,attrs,onok){const src=artUrl(u);if(!src)return null;const e=h(tag,Object.assign({src},attrs||{}));const ext=src===u;e.addEventListener(tag==="video"?"loadeddata":"load",()=>{if(ext)extOk=true;e.classList.add("ok");if(onok)onok()});e.addEventListener("error",()=>{if(ext&&extOk===null&&tag==="img")extOk=false;e.remove()});return e}
+function artUrl(u){if(!u)return null;const j=jobOf(u);if(j&&ART[j])return "/_blob/"+ART[j];return BAD.has(u)?null:u}
+function artEl(tag,u,attrs,onok){const src=artUrl(u);if(!src)return null;const e=h(tag,Object.assign({src},attrs||{}));const ext=src===u;e.addEventListener(tag==="video"?"loadeddata":"load",()=>{e.classList.add("ok");if(onok)onok()});e.addEventListener("error",()=>{BAD.add(src);e.remove()});return e}
 function thumb(o){const a=[].concat(o.image||[]).map(u=>artEl("img",u,{class:"th",alt:"",loading:"lazy"})).filter(Boolean);return a.length?h("span",{class:"ths"},a):null}
+/* ---------- shareable result ---------- */
+let SHARED=null;const showAll={};
+function shareLink(won){const d={v:1,w:won?1:0,m:G.months,s:G.spent,q:qScore(),p:G.picks};let base=(!window.claude&&/^https?:/.test(location.protocol))?location.href.split("#")[0]:(SCN.shareUrl||"");return base?base+"#r="+encodeURIComponent(btoa(JSON.stringify(d))):""}
+function readShare(){try{const m=/[#&]r=([^&]+)/.exec(location.hash||"");if(!m)return null;const d=JSON.parse(atob(decodeURIComponent(m[1])));const ids=(LIVE.whatifs||[]).map(w=>w.id);return {w:!!d.w,m:Math.max(0,Math.min(600,Math.round(+d.m)||0)),s:Math.max(0,Math.round(+d.s)||0),q:Math.max(0,Math.min(999,Math.round(+d.q)||0)),p:(Array.isArray(d.p)?d.p:[]).filter(x=>ids.includes(x))}}catch(e){return null}}
 const qScore=()=>Math.max(0,G.quality-((SCN.quality&&SCN.quality.wearPenalty)||0)*G.wear);
 function qGrade(){let g="";for(const x of (SCN.quality&&SCN.quality.grades)||[])if(qScore()>=x[0])g=x[1];return g}
 const qTxt=()=>"Base quality "+qScore()+(qGrade()?" ("+qGrade()+")":"");
