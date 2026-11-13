@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "title": "Moon Base: Race to the South Pole",
  "start": {
   "y": 2026,
@@ -63,7 +63,12 @@
      "months": 8,
      "desc": "Moon Base III lander. Small, flies soon, carries little.",
      "costM": 120,
-     "risk": 0.25
+     "risk": 0.25,
+     "caps": [
+      "130 kg to the surface",
+      "Flies within 8 months"
+     ],
+     "benefit": "The fastest way to get a first instrument down, at a high landing risk."
     },
     {
      "id": "blueghost",
@@ -72,7 +77,12 @@
      "months": 9,
      "desc": "Mid-size CLPS lander with a proven landing.",
      "costM": 130,
-     "risk": 0.1
+     "risk": 0.1,
+     "caps": [
+      "240 kg to the surface",
+      "Proven soft landing"
+     ],
+     "benefit": "A reliable ride for a small instrument set."
     },
     {
      "id": "griffin",
@@ -81,7 +91,12 @@
      "months": 10,
      "desc": "Moon Base II lander. NASA lists more than 1,100 lb of cargo. Rover egress ramps.",
      "costM": 200,
-     "risk": 0.2
+     "risk": 0.2,
+     "caps": [
+      "500 kg to the surface",
+      "Ramps for rover egress"
+     ],
+     "benefit": "Carries a mid-size rover and several instruments on one flight."
     },
     {
      "id": "mk1",
@@ -90,7 +105,13 @@
      "months": 13,
      "desc": "Moon Base I flies the first one, Endurance, to Shackleton Connecting Ridge. A second carries VIPER.",
      "costM": 280,
-     "risk": 0.12
+     "risk": 0.12,
+     "caps": [
+      "3,000 kg to the surface",
+      "Precision landing",
+      "Cryogenic propulsion"
+     ],
+     "benefit": "Room for a large rover and a full instrument suite on one lander."
     }
    ],
    "items": [
@@ -108,7 +129,13 @@
       "y": 2027,
       "m": 11
      },
-     "costM": 430
+     "costM": 430,
+     "caps": [
+      "Drives 20 km class traverses",
+      "Drills 1 m",
+      "Detects and measures water ice"
+     ],
+     "benefit": "Gives you a resource map, so the base is sited next to ice you know is there."
     },
     {
      "id": "promise",
@@ -125,7 +152,13 @@
       "m": 11
      },
      "desc": "Six-wheeled JPL rover built from Curiosity and Perseverance spares. Nuclear power carries it through lunar nights and into shadowed craters. Drills to 1 m. Launches late 2028 for an 18-month mission.",
-     "costM": 300
+     "costM": 300,
+     "caps": [
+      "Nuclear powered",
+      "Works through lunar night and inside shadowed craters",
+      "Drills 1 m"
+     ],
+     "benefit": "Ends night dormancy for your scouting and keeps prospecting for 18 months."
     },
     {
      "id": "flip",
@@ -135,7 +168,12 @@
       "mobility"
      ],
      "desc": "Flies on the Moon Base II Griffin lander. A mobile platform that carries other teams' instruments.",
-     "costM": 80
+     "costM": 80,
+     "caps": [
+      "Carries about 30 kg of other instruments",
+      "Tests mobility in polar soil"
+     ],
+     "benefit": "A mobile base for instruments that would otherwise sit on the lander deck."
     },
     {
      "id": "mapp",
@@ -145,7 +183,12 @@
       "mobility"
      ],
      "desc": "Small autonomous rover that carries one or two instruments.",
-     "costM": 15
+     "costM": 15,
+     "caps": [
+      "Autonomous driving",
+      "Carries one or two small instruments"
+     ],
+     "benefit": "Cheap mobility for a small lander."
     },
     {
      "id": "cuberover",
@@ -155,7 +198,12 @@
       "mobility"
      ],
      "desc": "Shoebox-class rover for short traverses near the lander.",
-     "costM": 10
+     "costM": 10,
+     "caps": [
+      "Short traverses near the lander",
+      "Very low mass"
+     ],
+     "benefit": "The lightest way to tick the mobility box."
     },
     {
      "id": "moonfall",
@@ -170,7 +218,12 @@
       "y": 2028,
       "m": 6
      },
-     "costM": 150
+     "costM": 150,
+     "caps": [
+      "Hops into shadowed terrain",
+      "Surveys landing sites from close range"
+     ],
+     "benefit": "Scouts places wheels cannot reach, in a single lunar day."
     },
     {
      "id": "lidar",
@@ -180,7 +233,15 @@
       "mapping"
      ],
      "desc": "3D terrain mapping that works in darkness.",
-     "costM": 20
+     "costM": 20,
+     "caps": [
+      "3D terrain maps in darkness",
+      "Centimetre-scale relief"
+     ],
+     "benefit": "Pad and road layouts can be planned before construction robots arrive.",
+     "fx": {
+      "risk": -0.01
+     }
     },
     {
      "id": "gpr",
@@ -191,7 +252,15 @@
       "geotech"
      ],
      "desc": "Maps buried rocks, layering and ice lenses under the surface.",
-     "costM": 15
+     "costM": 15,
+     "caps": [
+      "Images layering and buried rocks",
+      "Finds ice lenses"
+     ],
+     "benefit": "Fewer surprises when you dig foundations.",
+     "fx": {
+      "risk": -0.01
+     }
     },
     {
      "id": "prime",
@@ -201,7 +270,12 @@
       "prospecting"
      ],
      "desc": "Lander-mounted 1 m drill with a mass spectrometer that sniffs the cuttings for volatiles.",
-     "costM": 40
+     "costM": 40,
+     "caps": [
+      "Drills 1 m from the lander",
+      "Measures volatiles in cuttings"
+     ],
+     "benefit": "Prospecting without needing a rover."
     },
     {
      "id": "nss",
@@ -211,7 +285,12 @@
       "prospecting"
      ],
      "desc": "Detects hydrogen, a sign of water ice, in the top metre of soil.",
-     "costM": 10
+     "costM": 10,
+     "caps": [
+      "Senses hydrogen to 1 m depth",
+      "Works while driving"
+     ],
+     "benefit": "A light way to map where ice is likely."
     },
     {
      "id": "cone",
@@ -221,7 +300,12 @@
       "geotech"
      ],
      "desc": "Measures bearing strength and cohesion of the regolith for pad and foundation design.",
-     "costM": 10
+     "costM": 10,
+     "caps": [
+      "Measures bearing strength",
+      "Measures soil cohesion"
+     ],
+     "benefit": "The numbers engineers need to design pads and foundations that do not settle."
     },
     {
      "id": "scalpss",
@@ -231,7 +315,15 @@
       "geotech"
      ],
      "desc": "Stereo cameras that record how the engine plume erodes the surface.",
-     "costM": 8
+     "costM": 8,
+     "caps": [
+      "Films plume erosion in stereo",
+      "Measures crater depth under the engine"
+     ],
+     "benefit": "Sizes the pads and berms that heavy landers will need.",
+     "fx": {
+      "risk": -0.01
+     }
     },
     {
      "id": "lra",
@@ -241,7 +333,15 @@
       "nav"
      ],
      "desc": "Passive marker that later landers range against for precision landing.",
-     "costM": 2
+     "costM": 2,
+     "caps": [
+      "Passive laser target",
+      "Lasts for decades"
+     ],
+     "benefit": "Later landers range against it for more precise touchdowns.",
+     "fx": {
+      "risk": -0.02
+     }
     },
     {
      "id": "vertex",
@@ -251,7 +351,12 @@
       "science"
      ],
      "desc": "Studies magnetic swirls. Good science, no help choosing a base site.",
-     "costM": 30
+     "costM": 30,
+     "caps": [
+      "Measures surface magnetic fields",
+      "Studies solar wind interaction"
+     ],
+     "benefit": "Good science. It does not help you build."
     },
     {
      "id": "metal",
@@ -261,7 +366,78 @@
       "science"
      ],
      "desc": "Measures helium-3 abundance in the soil.",
-     "costM": 15
+     "costM": 15,
+     "caps": [
+      "Measures helium-3 in regolith"
+     ],
+     "benefit": "Informs a future resource, not this base."
+    },
+    {
+     "id": "skylight",
+     "label": "Skylight autonomous micro-rovers",
+     "kg": 30,
+     "costM": 30,
+     "devCostM": 120,
+     "devMonths": 24,
+     "risk": 0.03,
+     "tags": [
+      "mobility",
+      "mapping"
+     ],
+     "fx": {
+      "risk": -0.03
+     },
+     "class": "Reliability",
+     "niac": {
+      "pi": "William Whittaker, Carnegie Mellon University",
+      "year": "2019",
+      "url": "https://www.nasa.gov/general/robotic-technologies-enabling-the-exploration-of-lunar-pits/"
+     },
+     "desc": "NIAC concept: fast micro-rovers that explore on their own and build a high-resolution 3D model of rough terrain within one lunar day.",
+     "caps": [
+      "Autonomous exploration",
+      "High-resolution 3D site model in about a week"
+     ],
+     "benefit": "A detailed site model means fewer construction surprises, so every later operation is less likely to go wrong."
+    },
+    {
+     "id": "ndl",
+     "label": "Navigation Doppler Lidar landing sensor",
+     "kg": 5,
+     "costM": 15,
+     "tags": [
+      "nav"
+     ],
+     "fx": {
+      "risk": -0.03
+     },
+     "class": "Reliability",
+     "desc": "Laser sensor that measures a lander's speed and height precisely during descent. Flight-tested class of instrument.",
+     "caps": [
+      "Precise velocity and altitude during descent",
+      "Works in darkness"
+     ],
+     "benefit": "Landing data from this flight makes every later landing less likely to go wrong."
+    },
+    {
+     "id": "relay",
+     "label": "Lunar relay user terminal",
+     "kg": 10,
+     "costM": 40,
+     "tags": [
+      "comms"
+     ],
+     "fx": {
+      "risk": -0.02,
+      "monthsPct": -3
+     },
+     "class": "Speed and reliability",
+     "desc": "Radio terminal that talks to an orbiting relay, such as Lunar Pathfinder, when Earth is below the horizon.",
+     "caps": [
+      "Communication without direct line of sight to Earth",
+      "Higher data rates"
+     ],
+     "benefit": "Robots are supervised around the clock, so work goes a little faster and with fewer errors."
     }
    ],
    "insight": {
@@ -293,7 +469,12 @@
      "months": 14,
      "desc": "NASA's task orders deliver the Lunar Terrain Vehicles this way in 2028.",
      "costM": 188,
-     "risk": 0.15
+     "risk": 0.15,
+     "caps": [
+      "6,000 kg across two landers",
+      "Available on NASA's 2028 schedule"
+     ],
+     "benefit": "Delivers the rovers NASA has already ordered."
     },
     {
      "id": "mk2c",
@@ -302,7 +483,11 @@
      "months": 26,
      "desc": "Far more mass, but the lander is not ready for years.",
      "costM": 2500,
-     "risk": 0.12
+     "risk": 0.12,
+     "caps": [
+      "30,000 kg in one landing"
+     ],
+     "benefit": "Carries the heaviest vehicles, years later."
     }
    ],
    "items": [
@@ -315,7 +500,13 @@
       "ltv"
      ],
      "desc": "NASA contract $219 million. About 2,000 lb, over 6 mph, two suited crew or modular cargo pallets.",
-     "costM": 219
+     "costM": 219,
+     "caps": [
+      "Two suited crew",
+      "Modular cargo pallets",
+      "Drives itself between crews"
+     ],
+     "benefit": "Hauls cargo and tools around the site without astronauts present."
     },
     {
      "id": "pegasus",
@@ -326,7 +517,13 @@
       "ltv"
      ],
      "desc": "NASA contract $220 million. Over 9 mph, built to operate for up to a year, two suited crew.",
-     "costM": 220
+     "costM": 220,
+     "caps": [
+      "Two suited crew",
+      "Over 9 mph",
+      "Built to run for a year"
+     ],
+     "benefit": "A second, independent rover design, so one fault cannot stop surface transport."
     },
     {
      "id": "racer",
@@ -337,7 +534,12 @@
       "ltv"
      ],
      "desc": "A third proposed Lunar Terrain Vehicle design, with a towing trailer. Not selected by NASA.",
-     "costM": 220
+     "costM": 220,
+     "caps": [
+      "Two suited crew",
+      "Tows a trailer"
+     ],
+     "benefit": "Extra hauling capacity."
     },
     {
      "id": "athlete",
@@ -349,7 +551,13 @@
       "tools"
      ],
      "desc": "The largest option. Six wheeled limbs walk or roll, lift a whole habitat off a lander, and swap end effectors: gripper, drill, scoop, cable reel.",
-     "costM": 450
+     "costM": 450,
+     "caps": [
+      "Lifts a habitat off a tall lander",
+      "Walks or rolls on six limbs",
+      "Swaps tools: gripper, drill, scoop, cable reel"
+     ],
+     "benefit": "Unlocks the fastest ways to move, connect and build, and shortens construction."
     },
     {
      "id": "lunarcruiser",
@@ -364,7 +572,13 @@
       "y": 2029,
       "m": 6
      },
-     "costM": 900
+     "costM": 900,
+     "caps": [
+      "Crew live aboard for 28 days",
+      "Long-range traverses"
+     ],
+     "benefit": "Extends crew reach far beyond walking distance and adds living space.",
+     "quality": 5
     },
     {
      "id": "mapp2",
@@ -374,7 +588,12 @@
       "scouts"
      ],
      "desc": "Small scouts. They cannot haul cargo.",
-     "costM": 40
+     "costM": 40,
+     "caps": [
+      "Scout ahead of larger vehicles",
+      "Relay communications"
+     ],
+     "benefit": "Useful eyes on site. They cannot haul."
     }
    ],
    "insight": {
@@ -401,7 +620,8 @@
      ],
      "desc": "Where Moon Base I lands. Sunlit most of the year, with Shackleton and de Gerlache shadowed craters a few kilometres away on either side.",
      "resultText": "Site confirmed. Power towers on the ridge see the Sun most of the year and the ice is a short drive downhill.",
-     "costM": 60
+     "costM": 60,
+     "quality": 3
     },
     {
      "id": "nobile",
@@ -413,7 +633,8 @@
      ],
      "desc": "Broad, flat mountain top near small shadowed craters. VIPER's planned landing area.",
      "resultText": "Site confirmed. Flat ground makes pad building easy, with small cold traps close by.",
-     "costM": 60
+     "costM": 60,
+     "quality": 2
     },
     {
      "id": "malapert",
@@ -492,7 +713,11 @@
      "months": 12,
      "desc": "Available now.",
      "costM": 400,
-     "risk": 0.15
+     "risk": 0.15,
+     "caps": [
+      "6,000 kg across two landers"
+     ],
+     "benefit": "Enough for a lean construction fleet."
     },
     {
      "id": "mk2c",
@@ -501,7 +726,11 @@
      "months": 20,
      "desc": "Carries everything, later.",
      "costM": 2500,
-     "risk": 0.12
+     "risk": 0.12,
+     "caps": [
+      "30,000 kg in one landing"
+     ],
+     "benefit": "Carries every construction option at once."
     }
    ],
    "items": [
@@ -513,7 +742,12 @@
       "excavate"
      ],
      "desc": "NASA Kennedy's bucket-drum diggers. Counter-rotating drums let a light robot dig in low gravity.",
-     "costM": 60
+     "costM": 60,
+     "caps": [
+      "Digs in low gravity with counter-rotating drums",
+      "Hauls regolith"
+     ],
+     "benefit": "Builds berms, trenches and the shielding cover."
     },
     {
      "id": "ipex",
@@ -523,7 +757,12 @@
       "excavate"
      ],
      "desc": "Flight version of RASSOR sized for a pilot plant.",
-     "costM": 30
+     "costM": 30,
+     "caps": [
+      "Digs and delivers regolith",
+      "Light enough for small landers"
+     ],
+     "benefit": "A low-mass way to cover excavation."
     },
     {
      "id": "microwave",
@@ -534,7 +773,12 @@
       "sinter"
      ],
      "desc": "Heats regolith in place until the grains fuse into a hard slab.",
-     "costM": 150
+     "costM": 150,
+     "caps": [
+      "Sinters regolith in place",
+      "Makes a hard dust-free surface"
+     ],
+     "benefit": "Turns loose soil into pads and roads with no binder brought from Earth."
     },
     {
      "id": "solarsinter",
@@ -545,7 +789,12 @@
       "sinter"
      ],
      "desc": "Focuses sunlight to fuse interlocking paving tiles.",
-     "costM": 100
+     "costM": 100,
+     "caps": [
+      "Fuses paving tiles with sunlight",
+      "Low power draw"
+     ],
+     "benefit": "Paving that runs on sunlight alone."
     },
     {
      "id": "laser",
@@ -556,7 +805,12 @@
       "laser"
      ],
      "desc": "High-power laser melts regolith layer by layer into pads, walls and berms.",
-     "costM": 250
+     "costM": 250,
+     "caps": [
+      "Melts regolith layer by layer",
+      "Prints pads, walls and vault blocks"
+     ],
+     "benefit": "The fastest surface construction, and it unlocks a printed vault over the habitat."
     },
     {
      "id": "lasermfg",
@@ -566,7 +820,13 @@
       "spares"
      ],
      "desc": "Prints metal and regolith-ceramic spare parts on site.",
-     "costM": 150
+     "costM": 150,
+     "caps": [
+      "Prints metal and ceramic spare parts",
+      "Repairs tools on site"
+     ],
+     "benefit": "Shortens construction because broken parts are replaced in days.",
+     "quality": 4
     },
     {
      "id": "minicast",
@@ -576,7 +836,13 @@
       "power"
      ],
      "desc": "NASA's kit of Redwire solar arrays, Honeybee Robotics batteries and Yank Technologies wireless power for rovers.",
-     "costM": 200
+     "costM": 200,
+     "caps": [
+      "Solar power tower",
+      "Battery storage",
+      "Wireless power to rovers"
+     ],
+     "benefit": "Stored power ends night dormancy for the construction fleet."
     },
     {
      "id": "lsms",
@@ -586,7 +852,12 @@
       "crane"
      ],
      "desc": "NASA Langley's Lightweight Surface Manipulation System. Lifts cargo off lander decks.",
-     "costM": 80
+     "costM": 80,
+     "caps": [
+      "Lifts cargo off lander decks",
+      "Light truss boom"
+     ],
+     "benefit": "Unlocks moving the habitat by rover and trailer."
     },
     {
      "id": "carbothermal",
@@ -596,7 +867,12 @@
       "oxygen"
      ],
      "desc": "Extracts oxygen from regolith with methane and concentrated heat.",
-     "costM": 200
+     "costM": 200,
+     "caps": [
+      "Extracts oxygen from regolith"
+     ],
+     "benefit": "Breathing oxygen made on site raises the quality of the base.",
+     "quality": 5
     },
     {
      "id": "icemine",
@@ -606,7 +882,12 @@
       "water"
      ],
      "desc": "Heated drill that drives water vapour out of shadowed-region soil and traps it.",
-     "costM": 180
+     "costM": 180,
+     "caps": [
+      "Extracts water from shadowed soil"
+     ],
+     "benefit": "Water for crew and shielding, made on site.",
+     "quality": 6
     },
     {
      "id": "mre",
@@ -621,7 +902,153 @@
      "scene": "boom",
      "desc": "Melts regolith at 1,600 °C and splits it into oxygen and metals. Highest yield on paper.",
      "failText": "The molten pool eats through the electrode seal. The reactor ruptures and sprays slag across the lander and the payloads beside it. The delivery is lost.",
-     "costM": 300
+     "costM": 300,
+     "caps": [
+      "Extracts oxygen and metals from molten regolith"
+     ],
+     "benefit": "The highest yield on paper."
+    },
+    {
+     "id": "float",
+     "label": "FLOAT levitating cargo track",
+     "kg": 800,
+     "costM": 200,
+     "devCostM": 600,
+     "devMonths": 36,
+     "risk": 0.03,
+     "tags": [
+      "transport"
+     ],
+     "fx": {
+      "monthsPct": -15
+     },
+     "quality": 5,
+     "class": "Speed",
+     "niac": {
+      "pi": "Ethan Schaler, NASA JPL",
+      "year": "2024",
+      "url": "https://www.nasa.gov/general/flexible-levitation-on-a-track-float/"
+     },
+     "desc": "NIAC concept: unpowered magnetic robots levitate over a flexible film track that unrolls across the regolith, with no wheels or legs to wear out in dust.",
+     "caps": [
+      "Moves 100,000s of kg of regolith several kilometres a day",
+      "Carries over 30 kg per square metre at over 0.5 m/s",
+      "Track rolls up and can be re-laid"
+     ],
+     "benefit": "Regolith and cargo move without rover trips, so every later stage is 15% faster."
+    },
+    {
+     "id": "lightbender",
+     "label": "Light Bender sunlight relay",
+     "kg": 600,
+     "costM": 150,
+     "devCostM": 400,
+     "devMonths": 30,
+     "risk": 0.03,
+     "tags": [
+      "power"
+     ],
+     "fx": {
+      "monthsPct": -5
+     },
+     "quality": 4,
+     "class": "Speed and quality",
+     "niac": {
+      "pi": "Charles Taylor, NASA Langley",
+      "year": "2021",
+      "url": "https://www.nasa.gov/general/light-bender/"
+     },
+     "desc": "NIAC concept: a heliostat on a sunlit rim concentrates sunlight and a lens sends it kilometres to small solar arrays in shadow.",
+     "caps": [
+      "Captures almost 48 kW of sunlight",
+      "At least 9 kW continuous within 1 km",
+      "About 5 times lighter than cables or laser beaming"
+     ],
+     "benefit": "Counts as power for the fleet, ends night dormancy, and lets robots work inside shadowed areas."
+    },
+    {
+     "id": "thermalmine",
+     "label": "Thermal ice mining dome",
+     "kg": 500,
+     "costM": 150,
+     "devCostM": 350,
+     "devMonths": 30,
+     "risk": 0.03,
+     "tags": [
+      "water"
+     ],
+     "quality": 8,
+     "class": "Quality",
+     "niac": {
+      "pi": "George Sowers, Colorado School of Mines",
+      "year": "2019",
+      "url": "https://www.nasa.gov/general/thermal-mining-of-ices-on-cold-solar-system-bodies/"
+     },
+     "desc": "NIAC concept: heat the icy ground with sunlight or buried heaters, catch the vapour under a dome and refreeze it in cold traps. No digging.",
+     "caps": [
+      "Extracts water without excavation",
+      "About 60% less mass and energy than digging"
+     ],
+     "benefit": "A steady water supply for crew, shielding and propellant raises the quality of the base."
+    },
+    {
+     "id": "eds",
+     "label": "Electrodynamic dust shields",
+     "kg": 20,
+     "costM": 30,
+     "tags": [
+      "dust"
+     ],
+     "fx": {
+      "risk": -0.03
+     },
+     "quality": 2,
+     "class": "Reliability",
+     "desc": "Transparent electrode coatings that throw dust off radiators, solar panels, cameras and seals. Flight-tested class of technology.",
+     "caps": [
+      "Clears dust with no moving parts",
+      "Protects optics, radiators and seals"
+     ],
+     "benefit": "Dust is the main cause of worn mechanisms, so every later operation is less likely to go wrong."
+    },
+    {
+     "id": "cadre",
+     "label": "Cooperative autonomy for the robot fleet",
+     "kg": 30,
+     "costM": 60,
+     "tags": [
+      "autonomy"
+     ],
+     "fx": {
+      "monthsPct": -6
+     },
+     "class": "Speed",
+     "desc": "Software and radios that let robots share a map and divide tasks among themselves with no step-by-step commands from Earth.",
+     "caps": [
+      "Robots plan and share tasks",
+      "Keeps working through communication gaps"
+     ],
+     "benefit": "Less waiting for commands, so every later stage is 6% faster."
+    },
+    {
+     "id": "nde",
+     "label": "Construction inspection sensors",
+     "kg": 25,
+     "costM": 30,
+     "tags": [
+      "inspection"
+     ],
+     "fx": {
+      "risk": -0.04
+     },
+     "quality": 4,
+     "class": "Reliability and quality",
+     "desc": "Laser profilometer, thermal camera and ultrasonic probes that check each sintered or printed layer as it is made.",
+     "caps": [
+      "Finds cracks and voids in sintered regolith",
+      "Verifies flatness and thickness"
+     ],
+     "benefit": "Defects are caught before a lander or habitat sits on them, and the finished base is better built."
     }
    ],
    "insight": {
@@ -665,7 +1092,8 @@
      "desc": "The complete job. ATHLETE, a laser printer and on-site spares each shorten it.",
      "resultText": "A sintered pad with a blast berm, a graded road and level foundations are finished.",
      "costM": 1500,
-     "risk": 0.1
+     "risk": 0.1,
+     "quality": 2
     },
     {
      "id": "twopads",
@@ -690,7 +1118,8 @@
      "desc": "A second pad gives a backup, at a cost in time.",
      "resultText": "Two pads, a road and foundations are finished. Landings no longer depend on one surface.",
      "costM": 2200,
-     "risk": 0.08
+     "risk": 0.08,
+     "quality": 6
     },
     {
      "id": "padonly",
@@ -758,7 +1187,12 @@
      "months": 12,
      "desc": "About 30 tonnes one way.",
      "costM": 2500,
-     "risk": 0.1
+     "risk": 0.1,
+     "caps": [
+      "30,000 kg one way",
+      "Cargo deck near the ground"
+     ],
+     "benefit": "Enough for a lean base in one landing."
     },
     {
      "id": "starship",
@@ -767,7 +1201,12 @@
      "months": 14,
      "desc": "About 100 tonnes, after orbital refuelling. Cargo comes down a 30 m elevator.",
      "costM": 3000,
-     "risk": 0.12
+     "risk": 0.12,
+     "caps": [
+      "100,000 kg",
+      "Cargo elevator"
+     ],
+     "benefit": "Room for a larger habitat and spares."
     },
     {
      "id": "both",
@@ -776,7 +1215,11 @@
      "months": 16,
      "desc": "Two landings, the most mass, the longest campaign.",
      "costM": 5500,
-     "risk": 0.18
+     "risk": 0.18,
+     "caps": [
+      "130,000 kg across two landers"
+     ],
+     "benefit": "Everything at once, with two providers."
     }
    ],
    "items": [
@@ -792,7 +1235,13 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 3000
+     "costM": 3000,
+     "caps": [
+      "100 kW class",
+      "Runs with no sunlight",
+      "Years of operation"
+     ],
+     "benefit": "Powers the habitat through the long polar shadows."
     },
     {
      "id": "fsp2",
@@ -807,7 +1256,12 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 3000
+     "costM": 3000,
+     "caps": [
+      "Second 100 kW class reactor"
+     ],
+     "benefit": "Backup power raises the quality of the base.",
+     "quality": 6
     },
     {
      "id": "inflatable",
@@ -817,7 +1271,13 @@
       "habitat"
      ],
      "desc": "A Phase Two semi-habitable module. Packs small, expands once set on its foundation.",
-     "costM": 2500
+     "costM": 2500,
+     "caps": [
+      "Packs small",
+      "Large volume once inflated"
+     ],
+     "benefit": "A light habitat that fits Blue Moon Mark 2.",
+     "quality": 4
     },
     {
      "id": "rigid",
@@ -831,7 +1291,13 @@
       "y": 2032,
       "m": 1
      },
-     "costM": 4500
+     "costM": 4500,
+     "caps": [
+      "Outfitted on Earth",
+      "Multiple decks"
+     ],
+     "benefit": "A permanent habitat that raises the quality of the base.",
+     "quality": 10
     },
     {
      "id": "cable",
@@ -841,7 +1307,12 @@
       "cable"
      ],
      "desc": "A kilometre of cable to keep the reactor at a safe distance.",
-     "costM": 150
+     "costM": 150,
+     "caps": [
+      "1 km of power cable",
+      "Radiators for the reactor"
+     ],
+     "benefit": "Lets the reactor sit at a safe distance."
     },
     {
      "id": "logistics",
@@ -851,7 +1322,12 @@
       "supplies"
      ],
      "desc": "Food, water, air, spares and suits for the first crew.",
-     "costM": 400
+     "costM": 400,
+     "caps": [
+      "Food, water, air, suits and spares"
+     ],
+     "benefit": "Without it the crew cannot stay.",
+     "quality": 2
     },
     {
      "id": "airlock",
@@ -861,7 +1337,13 @@
       "airlock"
      ],
      "desc": "Keeps dust out of the habitat.",
-     "costM": 400
+     "costM": 400,
+     "caps": [
+      "Suitports keep dust outside",
+      "Faster crew egress"
+     ],
+     "benefit": "Cleaner air and less wear inside the habitat.",
+     "quality": 6
     },
     {
      "id": "solarfarm",
@@ -871,7 +1353,12 @@
       "power"
      ],
      "desc": "Extra daytime power. Not a substitute for the reactor in the long polar shadows.",
-     "costM": 300
+     "costM": 300,
+     "caps": [
+      "Extra daytime power"
+     ],
+     "benefit": "Margin for science and charging.",
+     "quality": 3
     },
     {
      "id": "prover",
@@ -886,7 +1373,88 @@
       "y": 2029,
       "m": 6
      },
-     "costM": 900
+     "costM": 900,
+     "caps": [
+      "Crew live aboard for 28 days"
+     ],
+     "benefit": "Adds mobile living space.",
+     "quality": 5
+    },
+    {
+     "id": "myco",
+     "label": "Mycotecture grown habitat annex",
+     "kg": 1500,
+     "costM": 300,
+     "devCostM": 500,
+     "devMonths": 36,
+     "risk": 0.03,
+     "tags": [
+      "annex"
+     ],
+     "quality": 10,
+     "class": "Quality",
+     "niac": {
+      "pi": "Lynn Rothschild, NASA Ames",
+      "year": "2024, Phase III",
+      "url": "https://www.nasa.gov/general/mycotecture-off-planet-en-route-to-the-moon-and-mars/"
+     },
+     "desc": "NIAC concept: a light frame and fungal mycelium arrive dormant, and the fungus grows into the walls and furniture of extra rooms. It adds to a habitat and does not replace one.",
+     "caps": [
+      "Grows structure on site from a small launch mass",
+      "Technology readiness 3, aiming for 6 with a lander demonstration"
+     ],
+     "benefit": "More living and working volume than you could launch, which raises the quality of the base."
+    },
+    {
+     "id": "lspop",
+     "label": "Lunar South Pole Oxygen Pipeline",
+     "kg": 2000,
+     "costM": 250,
+     "devCostM": 500,
+     "devMonths": 36,
+     "risk": 0.03,
+     "tags": [
+      "pipeline"
+     ],
+     "quality": 8,
+     "class": "Quality",
+     "niac": {
+      "pi": "Peter Curreri, Lunar Resources",
+      "year": "2023, Phase I",
+      "url": "https://www.nasa.gov/general/lunar-south-pole-oxygen-pipeline/"
+     },
+     "desc": "NIAC concept: a 5 km gas pipeline, built by robots from aluminium made on the Moon, carries oxygen from where it is extracted to storage beside the base.",
+     "caps": [
+      "About 2 kg of oxygen an hour",
+      "Sized for 10,000 kg a year",
+      "Designed to last over 10 years"
+     ],
+     "benefit": "Oxygen arrives without rover tanker runs, which raises the quality of the base."
+    },
+    {
+     "id": "cryo",
+     "label": "Solar White cryogenic coating",
+     "kg": 100,
+     "costM": 40,
+     "devCostM": 150,
+     "devMonths": 24,
+     "risk": 0.03,
+     "tags": [
+      "storage"
+     ],
+     "quality": 5,
+     "class": "Quality",
+     "niac": {
+      "pi": "Robert Youngquist, NASA Kennedy",
+      "year": "2016, Phases I and II",
+      "url": "https://www.nasa.gov/general/cryogenic-selective-surfaces/"
+     },
+     "desc": "NIAC concept: a coating predicted to reflect more than 99.9% of sunlight, so tanks of liquid oxygen stay cold with no refrigeration. Theoretical so far.",
+     "caps": [
+      "Predicted to reflect over 99.9% of sunlight",
+      "Passive storage of liquid oxygen"
+     ],
+     "benefit": "Stored oxygen and propellant do not boil away, which raises the quality of the base."
     }
    ],
    "insight": {
@@ -917,7 +1485,8 @@
      "desc": "Two three-limbed halves dock under the habitat, lift it clear and carry it down the road.",
      "resultText": "ATHLETE sets the habitat on its foundation and levels it with its limbs.",
      "costM": 40,
-     "risk": 0.05
+     "risk": 0.05,
+     "quality": 2
     },
     {
      "id": "ltvcrane",
@@ -987,7 +1556,8 @@
      "desc": "ATHLETE swaps to its cable-reel end effector.",
      "resultText": "The reactor goes critical behind its berm and the habitat lights up.",
      "costM": 80,
-     "risk": 0.05
+     "risk": 0.05,
+     "quality": 3
     },
     {
      "id": "farltv",
@@ -1003,7 +1573,8 @@
      "desc": "A rover tows the cable reel while excavators trench.",
      "resultText": "The reactor goes critical behind its berm and the habitat lights up.",
      "costM": 100,
-     "risk": 0.1
+     "risk": 0.1,
+     "quality": 3
     },
     {
      "id": "near",
@@ -1055,7 +1626,8 @@
      "desc": "Excavators haul and dump regolith over a support shell.",
      "resultText": "Only the airlock shows. The crew dose inside is cut to a fraction of the surface rate.",
      "costM": 120,
-     "risk": 0.08
+     "risk": 0.08,
+     "quality": 4
     },
     {
      "id": "arch",
@@ -1071,7 +1643,8 @@
      "desc": "Sintered or laser-printed blocks form an arch that is then covered. Stronger and easier to maintain.",
      "resultText": "A fused regolith vault stands over the habitat, covered with loose soil.",
      "costM": 200,
-     "risk": 0.05
+     "risk": 0.05,
+     "quality": 8
     },
     {
      "id": "thin",
@@ -1200,6 +1773,10 @@
   {
    "label": "Starlust: NASA plan for a 100 kW reactor on the Moon by 2030",
    "url": "https://starlust.org/nasa-planning-to-build-a-100-kilowatt-nuclear-reactor-on-the-moon-by-2030/"
+  },
+  {
+   "label": "NASA NIAC funded studies",
+   "url": "https://www.nasa.gov/niac-funded-studies/"
   }
  ],
  "milestones": [
@@ -1512,5 +2089,26 @@
   ]
  },
  "budgetYears": 7,
- "budgetSource": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+ "budgetSource": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/",
+ "quality": {
+  "grades": [
+   [
+    0,
+    "Bare outpost"
+   ],
+   [
+    15,
+    "Working outpost"
+   ],
+   [
+    35,
+    "Permanent base"
+   ],
+   [
+    60,
+    "Thriving settlement"
+   ]
+  ],
+  "wearPenalty": 3
+ }
 }

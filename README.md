@@ -8,6 +8,8 @@ You make the calls NASA's plan depends on, one cutscene at a time: which Commerc
 
 The game runs on a $20 billion budget released over seven years, as NASA has described it, so you can only spend what has been released so far.
 
+Every lander, rover, payload and choice lists what it can do and why it helps, and is tagged for **Speed**, **Reliability** or **Quality**. Fast choices shorten every later stage, reliable ones lower the chance of a mishap, and quality choices raise your **base quality score**, so the debrief grades you from a bare outpost to a thriving settlement. You can also back seven early-stage concepts from NASA's Innovative Advanced Concepts (NIAC) program, such as a levitating cargo track and an oxygen pipeline. Each one costs development money and time before it can fly.
+
 ## What's in this repository
 
 | Path | What it is |
@@ -26,6 +28,7 @@ The game follows NASA's published Moon Base plan and timeline (its three phases,
 - most payload and vehicle masses, and how many fit on each lander,
 - most costs (the Lunar Terrain Vehicle and PROMISE rover contract values are the published exceptions),
 - how long each step takes, and the chance of a mishap,
+- the Speed, Reliability and Quality effects, the quality points, and the development cost and time of the NIAC concepts (none of which are funded for flight),
 - what happens when a choice goes wrong.
 
 Deliberate game design rather than predictions: The "what if" modes are hypothetical scenarios. Treat the game as an informed simulation, not an official NASA projection. NASA has not reviewed or endorsed it.
@@ -42,7 +45,7 @@ The game was first built as a claude.ai page, where it gets a few extra features
 
 | Feature | On this site | On the [claude.ai version](https://claude.ai/artifact/T3U7q59bmcxbcfezXhHe6i) |
 | --- | --- | --- |
-| Playing the game, sound, what-if modes, site map, debrief | Yes | Yes |
+| Playing the game, sound, what-if modes, site map, quality score, NIAC concepts, debrief | Yes | Yes |
 | Mission control voice | Yes, using your browser's built-in voice | Yes |
 | Save result card (image) | Yes, as a normal download | Yes |
 | Scene editor, drafts and playtesting | Yes, the draft stays in your browser | Yes |

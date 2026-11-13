@@ -24,7 +24,7 @@ function applyWhatifs(base,picks){
   }
   return s;
 }
-function newGame(picks,phase){picks=picks||[];SCN=applyWhatifs(BASE,picks);G={site:"",broke:false,i:0,months:0,spent:0,wear:0,tags:[],assets:[],log:[],dates:{},phase:phase||"brief",sel:{},result:null,rec:null,picks}}
+function newGame(picks,phase){picks=picks||[];SCN=applyWhatifs(BASE,picks);G={speed:0,rel:0,quality:0,dev:[],site:"",broke:false,i:0,months:0,spent:0,wear:0,tags:[],assets:[],log:[],dates:{},phase:phase||"brief",sel:{},result:null,rec:null,picks}}
 const toStart=()=>newGame([],"start");
 const totalMonths=()=>(SCN.deadline.y-SCN.start.y)*12+(SCN.deadline.m-SCN.start.m);
 const moOf=d=>(d.y-SCN.start.y)*12+(d.m-SCN.start.m);
@@ -40,6 +40,17 @@ const released=m=>Math.min(SCN.budgetM||0,Math.round(yearly()*(Math.floor(m/12)+
 const funds=()=>released(G.months)-G.spent;
 const moreComing=()=>released(G.months)<(SCN.budgetM||0);
 const nightSafe=()=>!SCN.night||SCN.night.tags.some(has);
+/* ---------- capabilities, effects, development, quality ---------- */
+const effRisk=b=>b>0?Math.max(0.02,b+(SCN.riskAdd||0)+Math.max(-0.1,G.rel)):0;
+const pts=n=>n+(n===1?" point":" points");
+const speedPct=()=>Math.max(-40,G.speed);
+const devDue=o=>!!(o&&(o.devCostM||o.devMonths)&&!G.dev.includes(o.id));
+function fxList(o){const a=[],f=o.fx||{};if(f.monthsPct)a.push("Later stages "+Math.abs(f.monthsPct)+"% "+(f.monthsPct<0?"faster":"slower"));if(f.risk)a.push("Mishap chance "+(f.risk<0?"down ":"up ")+pts(Math.round(Math.abs(f.risk)*100))+" from now on");if(o.quality)a.push("Base quality +"+o.quality);return a}
+function devTxt(o){return "Still in development: adds "+fm(o.devCostM||0)+", charged once, and cannot fly before "+dateAt(o.devMonths||0)+" ("+pl(o.devMonths||0)+" of development from the program start; both are estimates)."+(o.niac?" NASA NIAC "+o.niac.year+", "+o.niac.pi+".":"")}
+function capKids(o){return [(o.caps||[]).length?h("small",{class:"cap",text:"Can: "+o.caps.join(" · ")}):null,o.benefit?h("small",{class:"ben",text:o.benefit}):null,fxList(o).length?h("small",{class:"fx",text:fxList(o).join(". ")+"."}):null,(o.devCostM||o.devMonths)?h("small",{class:"dev",text:G.dev.includes(o.id)?"Development already paid for.":devTxt(o)}):null,o.risk&&o.kg!=null?h("small",{class:"r",text:"Unproven: +"+pts(Math.round(o.risk*100))+" of mishap chance on this delivery."}):null]}
+const qScore=()=>Math.max(0,G.quality-((SCN.quality&&SCN.quality.wearPenalty)||0)*G.wear);
+function qGrade(){let g="";for(const x of (SCN.quality&&SCN.quality.grades)||[])if(qScore()>=x[0])g=x[1];return g}
+const qTxt=()=>"Base quality "+qScore()+(qGrade()?" ("+qGrade()+")":"");
 
 /* ---------- sound and voice ---------- */
 let soundOn=ls.get("mb-sound")==="1",voiceOn=false,tts=null,actx=null,spoken="";

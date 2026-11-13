@@ -27,3 +27,10 @@ aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--
 .bay.over{border-color:var(--halt)}.bay i{display:block;height:100%}
 .load{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px}
 .load .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+
+.opt .cap{font-size:12px;color:var(--dim)}
+.opt .ben{font-size:13px;color:var(--dust)}
+.opt .fx{font:12px var(--mono);color:var(--go)}
+.opt .dev{font:12px var(--mono);color:var(--ice)}
+.cls{display:inline-block;margin-left:8px;padding:0 6px;border:1px solid var(--line);border-radius:3px;font:10px var(--mono);color:var(--dim);vertical-align:middle;text-transform:uppercase;letter-spacing:.04em}
+.cls.niac{color:var(--ice);border-color:var(--ice)}
