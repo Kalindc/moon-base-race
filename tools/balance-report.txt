@@ -1,139 +1,139 @@
 Moon Base Race balance run: 4000 games per player, seed 1, as published. Deadline at month 109, budget $20.0B.
 
-== sensible ==  win 52.9%   ends {"won":2117,"broke":613,"deadline":1270}
-   winners finish at month p10/median/p90 90/99/107, spend median $17.5B (all games $15.0B to $19.7B)
-   quality p10/median/p90 34/46/59  grades {"Permanent base":1678,"Working outpost":232,"Thriving settlement":207}
-   mishaps per game 0.68, failed attempts per game 0
-   lost at stage {"crew":791,"connect":226,"shield":561,"move":180,"cargo":120,"build":5}
-   had to wait for funding at (% of games) {"cargo":8.9,"mobility":0.8,"move":0.1,"connect":0}
+== sensible ==  win 34.9%   ends {"deadline":2180,"won":1395,"broke":425}
+   winners finish at month p10/median/p90 91/100/107, spend median $17.9B (all games $15.3B to $19.7B)
+   quality p10/median/p90 36/48/61  grades {"Permanent base":1099,"Thriving settlement":189,"Working outpost":107}
+   mishaps per game 0.65, failed attempts per game 0
+   lost at stage {"crew":549,"cargo":559,"shield":541,"move":474,"build":121,"connect":332,"site":12,"construct":17}
+   had to wait for funding at (% of games) {"cargo":3.5,"mobility":0.3,"move":0.1}
 
-== careful ==  win 61.2%   ends {"deadline":1423,"won":2449,"broke":128}
-   winners finish at month p10/median/p90 91/101/107, spend median $16.0B (all games $13.8B to $18.9B)
-   quality p10/median/p90 28/37/47  grades {"Permanent base":1518,"Working outpost":925,"Thriving settlement":6}
-   mishaps per game 0.47, failed attempts per game 0
-   lost at stage {"shield":534,"crew":746,"cargo":12,"connect":177,"move":82}
-   had to wait for funding at (% of games) {"cargo":2.6,"mobility":0.8}
+== careful ==  win 46.5%   ends {"deadline":2079,"broke":63,"won":1858}
+   winners finish at month p10/median/p90 93/101/107, spend median $16.2B (all games $13.6B to $18.7B)
+   quality p10/median/p90 28/37/46  grades {"Permanent base":1124,"Working outpost":732,"Thriving settlement":2}
+   mishaps per game 0.42, failed attempts per game 0
+   lost at stage {"cargo":485,"connect":211,"shield":414,"build":149,"crew":571,"move":294,"site":12,"construct":6}
+   had to wait for funding at (% of games) {"mobility":0.8,"cargo":1.1}
 
-== ambitious ==  win 50.5%   ends {"broke":1451,"won":2020,"deadline":529}
-   winners finish at month p10/median/p90 87/96/105, spend median $18.4B (all games $15.5B to $19.9B)
-   quality p10/median/p90 43/55/68  grades {"Thriving settlement":653,"Permanent base":1337,"Working outpost":30}
-   mishaps per game 0.57, failed attempts per game 0
-   lost at stage {"cargo":291,"connect":215,"crew":899,"move":149,"shield":426}
-   had to wait for funding at (% of games) {"cargo":28.9,"move":0.4,"mobility":0.5,"connect":0}
+== ambitious ==  win 31.4%   ends {"won":1254,"broke":1206,"deadline":1540}
+   winners finish at month p10/median/p90 88/97/105, spend median $18.6B (all games $16.3B to $19.9B)
+   quality p10/median/p90 45/57/71  grades {"Thriving settlement":528,"Permanent base":719,"Working outpost":7}
+   mishaps per game 0.52, failed attempts per game 0
+   lost at stage {"crew":598,"move":449,"shield":497,"cargo":711,"connect":397,"build":69,"site":5,"construct":20}
+   had to wait for funding at (% of games) {"cargo":10.2,"mobility":0.5,"move":0.4}
 
-== expert ==  win 97.3%   ends {"won":3892,"deadline":108}
-   winners finish at month p10/median/p90 86/91/101, spend median $10.9B (all games $10.8B to $11.5B)
-   quality p10/median/p90 15/18/18  grades {"Working outpost":3586,"Bare outpost":306}
-   mishaps per game 1.15, failed attempts per game 0
-   lost at stage {"crew":86,"shield":19,"connect":3}
+== expert ==  win 96.5%   ends {"won":3858,"deadline":142}
+   winners finish at month p10/median/p90 86/91/101, spend median $11.3B (all games $11.2B to $12.1B)
+   quality p10/median/p90 15/18/18  grades {"Working outpost":3563,"Bare outpost":295}
+   mishaps per game 1.12, failed attempts per game 0
+   lost at stage {"crew":122,"shield":20}
    had to wait for funding at (% of games) {}
 
-== firsttime ==  win 9.5%   ends {"deadline":2584,"broke":1035,"won":381}
-   winners finish at month p10/median/p90 94/103/108, spend median $18.1B (all games $12.3B to $19.9B)
-   quality p10/median/p90 34/47/64  grades {"Working outpost":43,"Permanent base":280,"Thriving settlement":58}
-   mishaps per game 0.53, failed attempts per game 1.89
-   lost at stage {"shield":789,"connect":759,"cargo":808,"move":646,"crew":461,"build":149,"construct":7}
-   had to wait for funding at (% of games) {"cargo":4.3,"mobility":0.4,"move":0.1}
+== firsttime ==  win 5%   ends {"broke":693,"deadline":3108,"won":199}
+   winners finish at month p10/median/p90 93/102/108, spend median $18.6B (all games $9.8B to $19.9B)
+   quality p10/median/p90 38/52/65  grades {"Permanent base":144,"Thriving settlement":46,"Working outpost":9}
+   mishaps per game 0.48, failed attempts per game 1.72
+   lost at stage {"cargo":887,"connect":578,"shield":560,"crew":344,"build":533,"move":662,"construct":213,"site":24}
+   had to wait for funding at (% of games) {"mobility":0.6,"cargo":2}
 
 Choices, sensible player (used %, win % with, win % without, difference):
  scout
-   novac          3.2%   44.9   53.2  -8.3
-   blueghost      4.7%   47.3   53.2  -5.9
-   griffin         19%   52.8     53  -0.2
-   mk1           73.1%   53.7   50.9  +2.8
-   viper         51.7%   52.3   53.6  -1.3
-   promise         48%   56.6   49.5  +7.1
-   flip          29.9%   54.1   52.4  +1.7
-   mapp          30.6%   52.8     53  -0.2
-   cuberover     33.5%   54.4   52.2  +2.2
-   moonfall      35.7%   50.9   54.1  -3.2
-   lidar         33.6%   56.3   51.2  +5.1
-   gpr           55.7%   53.3   52.5  +0.8
-   prime         40.9%   52.3   53.4  -1.1
-   nss           42.1%   53.2   52.7  +0.5
-   cone          49.8%   51.1   54.8  -3.7
-   scalpss       49.5%   53.8     52  +1.8
-   lra             28%   54.8   52.2  +2.6
-   vertex        25.7%   53.9   52.6  +1.3
-   metal         27.3%   51.9   53.3  -1.4
-   skylight        39%   44.4   58.4  -14.0
-   ndl           27.7%   54.4   52.4  +2.0
-   relay         27.2%   56.7   51.5  +5.2
+   novac            3%     30     35  -5.0
+   blueghost      3.6%     31     35  -4.0
+   griffin       17.6%   34.8   34.9  -0.1
+   mk1           75.8%   35.3   33.6  +1.7
+   viper         49.5%   35.8   33.9  +1.9
+   promise       50.8%   37.5   32.1  +5.4
+   flip          28.8%     32     36  -4.0
+   mapp          34.8%   34.7     35  -0.3
+   cuberover     34.3%   35.6   34.5  +1.1
+   moonfall      35.8%   33.5   35.6  -2.1
+   lidar         34.2%   35.9   34.3  +1.6
+   gpr           55.4%   36.7   32.6  +4.1
+   prime           41%   34.6   35.1  -0.5
+   nss           42.4%   33.8   35.7  -1.9
+   cone          51.1%   33.8     36  -2.2
+   scalpss       50.6%   33.7   36.1  -2.4
+   lra             28%     38   33.7  +4.3
+   vertex        27.6%   35.5   34.6  +0.9
+   metal         28.1%   34.9   34.9  +0.0
+   skylight      38.7%   25.5   40.8  -15.3
+   ndl           27.5%   38.9   33.4  +5.5
+   relay         27.6%   37.7   33.8  +3.9
  mobility
-   mk1x2         41.2%   73.5   38.5  +35.0
-   mk2c          58.8%   38.5   73.5  -35.0
-   flex          42.7%   52.1   53.5  -1.4
-   pegasus       42.1%   52.1   53.5  -1.4
-   racer         42.9%   53.8   52.3  +1.5
-   athlete       43.7%   62.6   45.4  +17.2
-   lunarcruiser  30.9%   34.9     61  -26.1
-   mapp2         28.9%   51.2   53.6  -2.4
+   mk1x2         39.4%   59.6   18.8  +40.8
+   mk2c          60.6%   18.8   59.6  -40.8
+   flex          42.6%   33.5   35.9  -2.4
+   pegasus       43.4%   35.1   34.7  +0.4
+   racer         43.4%   34.8   34.9  -0.1
+   athlete       42.4%   45.2   27.3  +17.9
+   lunarcruiser  31.3%    0.1   50.7  -50.6
+   mapp2           29%   33.1   35.6  -2.5
  site
-   ridge         34.9%   57.5   50.5  +7.0
-   nobile        32.3%   54.2   52.3  +1.9
-   malapert      32.8%   46.8   55.9  -9.1
+   ridge         34.2%   37.1   33.7  +3.4
+   nobile        33.7%   35.2   34.7  +0.5
+   malapert      32.2%   32.1   36.2  -4.1
    floor          never chosen
    reiner         never chosen
    tranq          never chosen
  construct
-   mk1x2           50%   65.3   40.6  +24.7
-   mk2c            50%   40.6   65.3  -24.7
-   rassor        64.2%   52.9   52.9  +0.0
-   ipex          65.6%   54.2   50.6  +3.6
-   microwave     54.2%   50.5   55.8  -5.3
-   solarsinter   51.9%   53.4   52.4  +1.0
-   laser         52.2%   56.8   48.7  +8.1
-   lasermfg      29.6%   53.2   52.8  +0.4
-   minicast      64.4%   52.5   53.7  -1.2
-   lsms            31%   53.4   52.7  +0.7
-   carbothermal  30.2%   51.1   53.7  -2.6
-   icemine       30.2%   52.7     53  -0.3
+   mk1x2         50.1%   41.8   28.1  +13.7
+   mk2c          49.6%   28.1   41.8  -13.7
+   rassor          65%   35.6   33.8  +1.8
+   ipex          64.7%   34.8   35.3  -0.5
+   microwave     52.5%   33.5   36.6  -3.1
+   solarsinter   52.5%   34.5   35.5  -1.0
+   laser         53.8%   36.4   33.4  +3.0
+   lasermfg      30.5%   34.3   35.3  -1.0
+   minicast      64.5%   34.5   35.9  -1.4
+   lsms          29.5%   34.8     35  -0.2
+   carbothermal  29.1%     37   34.2  +2.8
+   icemine       30.1%   35.4   34.8  +0.6
    mre            never chosen
-   float         30.5%   61.9     49  +12.9
-   lightbender   65.2%   53.2   52.4  +0.8
-   thermalmine   30.2%   50.5     54  -3.5
-   eds           29.6%   54.2   52.4  +1.8
-   cadre         29.9%     56   51.6  +4.4
-   nde           28.9%   54.2   52.4  +1.8
+   float         31.6%   40.9   32.3  +8.6
+   lightbender   64.7%   35.1   34.8  +0.3
+   thermalmine   29.2%   32.9   35.8  -2.9
+   eds           29.2%     34   35.4  -1.4
+   cadre         29.8%   38.2   33.6  +4.6
+   nde           30.3%   33.9   35.5  -1.6
  build
-   full          49.5%     59     47  +12.0
-   twopads       50.5%     47     59  -12.0
+   full          48.1%   39.9   30.6  +9.3
+   twopads       51.1%   30.6   39.9  -9.3
    padonly        never chosen
    nopad          never chosen
  cargo
-   mk2           18.7%   69.3   49.6  +19.7
-   starship      45.4%   54.5   52.4  +2.1
-   both          35.1%   43.3   58.8  -15.5
-   fsp           57.1%   52.4   54.6  -2.2
-   fsp2          51.7%   50.5   56.4  -5.9
-   inflatable    59.3%   54.8   51.2  +3.6
-   rigid         51.1%   46.3   60.9  -14.6
-   cable         99.2%   53.3      0  +53.3
-   logistics     99.2%   53.3      0  +53.3
-   airlock       18.2%   45.5   55.1  -9.6
-   solarfarm     17.7%   46.9   54.7  -7.8
-   prover        15.5%   43.7   55.1  -11.4
-   myco          18.8%   43.3   55.7  -12.4
-   lspop         20.3%   46.8     55  -8.2
-   cryo            21%   50.2   54.2  -4.0
+   mk2            never chosen
+   starship      50.7%   40.6   31.6  +9.0
+   both          45.3%   31.6   40.6  -9.0
+   fsp           56.6%   35.4   37.7  -2.3
+   fsp2          55.4%     34   39.6  -5.6
+   inflatable      56%   36.2   36.6  -0.4
+   rigid         55.9%   33.1   40.9  -7.8
+   cable           96%   36.3      0  +36.3
+   logistics       96%   36.3      0  +36.3
+   airlock       23.2%   33.5   37.3  -3.8
+   solarfarm     23.3%   35.4   36.6  -1.2
+   prover        21.4%   30.6     38  -7.4
+   myco          22.7%   30.7   38.1  -7.4
+   lspop         22.4%   32.1   37.6  -5.5
+   cryo            24%   33.8   37.2  -3.4
  move
-   athlete         19%   69.6   51.6  +18.0
-   ltvcrane      11.6%   61.2   54.4  +6.8
-   skid          65.3%   49.9   66.4  -16.5
+   athlete       16.7%   58.6   38.7  +19.9
+   ltvcrane       9.2%     44   42.7  +1.3
+   skid          55.6%   37.9   53.4  -15.5
    stay           never chosen
  connect
-   far           20.1%   68.7   54.9  +13.8
-   farltv        71.3%   54.9   68.7  -13.8
+   far             17%   58.6   47.4  +11.2
+   farltv        52.6%   47.4   58.6  -11.2
    near           never chosen
    solar          never chosen
  shield
-   berm          42.5%   65.1   59.1  +6.0
-   arch          42.8%   59.1   65.1  -6.0
+   berm          30.2%   60.4   53.8  +6.6
+   arch          30.9%   53.8   60.4  -6.6
    thin           never chosen
    none           never chosen
  crew
-   starship      31.4%   83.2   85.2  -2.0
-   mk2           31.4%   85.2   83.2  +2.0
+   starship      20.7%     82     82  +0.0
+   mk2           21.8%     82     82  +0.0
    offpad         never chosen
 
 Static checks: {

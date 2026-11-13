@@ -1,7 +1,7 @@
 /* ---------- data and sources ---------- */
 function dataView(){
   const main=$("main");main.textContent="";const S=LIVE;
-  main.append(h("div",{},h("h2",{text:"Data and sources"}),h("p",{text:"Every number the game uses, as it stands in the live version. The timeline, contract values and mission details come from NASA's Moon Base pages and releases and from CBS, ABC and NBC coverage, linked below. Most payload masses, costs, mishap chances and lead times are working estimates, because NASA has not published them. Each one can be corrected in the scene editor."}),
+  main.append(h("div",{},h("h2",{text:"Data and sources"}),h("p",{text:"Every number the game uses, as it stands in the live version. The timeline, contract values and mission details come from NASA's Moon Base pages and releases and from CBS, ABC and NBC coverage, linked below. Where a cost, mass or date has been published, the last column of each stage table says so and links the source. Rows marked Estimate are this game's working numbers, because nothing has been published. All mishap chances, failure penalties and the times for surface work are estimates. Each one can be corrected in the scene editor."}),
     EXPLORER?h("p",{},h("a",{href:EXPLORER,target:"_blank",rel:"noopener",text:"Open the timeline explorer"})," to filter and search the published timeline on its own page."):null));
   const lk=u=>u?h("a",{href:u,target:"_blank",rel:"noopener",text:"source"}):"";
   const tbl=(heads,rows)=>h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},heads.map(x=>h("th",{text:x})))),h("tbody",{},rows.map(r=>h("tr",{},r.map((x,i)=>h("td",{class:i===0?"n":""},x&&x.nodeType?x:String(x==null?"":x))))))));
@@ -17,14 +17,15 @@ function dataView(){
   main.append(h("div",{},h("h3",{text:"Game rules"}),tbl(["Rule","How it works"],rules)));
   const pc=r=>r?Math.round(r*100)+"%":"";
   const fxs=o=>{const a=[],f=o.fx||{};if(f.monthsPct)a.push("later stages "+f.monthsPct+"%");if(f.risk)a.push("mishap chance "+Math.round(f.risk*100)+" points");if(o.quality)a.push("quality +"+o.quality);return a.join(", ")};
+  const bs=o=>o.src?h("span",{},o.src.text+" ",lk(o.src.url)):"Estimate";
   const cb=o=>[(o.caps||[]).join("; "),o.benefit||"",fxs(o)?"Effect: "+fxs(o)+".":""].filter(Boolean).join(" ");
   const nia=S.stages.flatMap(st=>(st.items||[]).filter(i=>i.devCostM||i.devMonths));
   if(nia.length)main.append(h("div",{},h("h3",{text:"Technologies in development"}),h("p",{class:"note",text:"Concepts funded by NASA Innovative Advanced Concepts (NIAC). The concept, lead and year come from NASA's NIAC pages. Development cost and time are this game's estimates."}),tbl(["Concept","NIAC lead and year","Development cost","Development time","Effect in the game","Source"],nia.map(i=>[i.label,i.niac?i.niac.pi+", "+i.niac.year:"",fm(i.devCostM||0),(i.devMonths||0)+" mo",fxs(i),lk(i.niac&&i.niac.url)]))));
   S.stages.forEach((st,n)=>{
     const rows=[];
-    if(st.type==="loadout"){st.carriers.forEach(c=>rows.push(["Delivery",c.label,c.capKg.toLocaleString()+" kg",c.months+" mo",fm(c.costM||0),pc(c.risk),availTxt(c).trim(),cb(c)]));st.items.forEach(i=>rows.push([i.outcome==="fail"?"Payload (always fails)":i.class?"Payload: "+i.class.toLowerCase():"Payload",i.label,i.kg.toLocaleString()+" kg","",fm(i.costM||0),"",(i.tags||[]).join(", ")+(i.availableAt?". "+availTxt(i).trim():""),cb(i)]))}
-    else st.options.forEach(o=>rows.push([o.outcome==="ok"?"Works":o.outcome==="setback"?"Setback":"Fails",o.label,"",(o.months||0)+" mo",fm(o.costM||0),pc(o.risk),(o.requires?"needs "+o.requires.join(", "):""),cb(o)]));
-    main.append(h("div",{},h("h3",{text:"Stage "+(n+1)+": "+st.title}),tbl(["Kind","Name","Mass","Time","Cost","Mishap","Provides or needs","Capabilities and benefit"],rows),st.insight?h("p",{class:"note",style:"margin-top:6px"},st.insight.text+" ",lk(st.insight.url)):null));
+    if(st.type==="loadout"){st.carriers.forEach(c=>rows.push(["Delivery",c.label,c.capKg.toLocaleString()+" kg",c.months+" mo",fm(c.costM||0),pc(c.risk),availTxt(c).trim(),cb(c),bs(c)]));st.items.forEach(i=>rows.push([i.outcome==="fail"?"Payload (always fails)":i.class?"Payload: "+i.class.toLowerCase():"Payload",i.label,i.kg.toLocaleString()+" kg","",fm(i.costM||0),"",(i.tags||[]).join(", ")+(i.availableAt?". "+availTxt(i).trim():""),cb(i),bs(i)]))}
+    else st.options.forEach(o=>rows.push([o.outcome==="ok"?"Works":o.outcome==="setback"?"Setback":"Fails",o.label,"",(o.months||0)+" mo",fm(o.costM||0),pc(o.risk),(o.requires?"needs "+o.requires.join(", "):""),cb(o),bs(o)]));
+    main.append(h("div",{},h("h3",{text:"Stage "+(n+1)+": "+st.title}),tbl(["Kind","Name","Mass","Time","Cost","Mishap","Provides or needs","Capabilities and benefit","Basis for the numbers"],rows),st.insight?h("p",{class:"note",style:"margin-top:6px"},st.insight.text+" ",lk(st.insight.url)):null));
   });
   main.append(h("div",{},h("h3",{text:"Sources"}),h("ul",{},(S.sources||[]).map(s=>h("li",{},h("a",{href:s.url,target:"_blank",rel:"noopener",text:s.label}))))));
 }

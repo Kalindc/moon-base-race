@@ -1,5 +1,5 @@
 {
- "version": 7,
+ "version": 8,
  "title": "Moon Base: Race to the South Pole",
  "start": {
   "y": 2026,
@@ -59,47 +59,59 @@
     {
      "id": "novac",
      "label": "Intuitive Machines Nova-C Trinity",
-     "capKg": 130,
+     "capKg": 100,
      "months": 8,
      "desc": "Moon Base III lander. Small, flies soon, carries little.",
-     "costM": 120,
+     "costM": 148,
      "risk": 0.25,
      "caps": [
       "130 kg to the surface",
       "Flies within 8 months"
      ],
      "benefit": "The fastest way to get a first instrument down, at a high landing risk.",
-     "image": "art/novac.jpg"
+     "image": "art/novac.jpg",
+     "src": {
+      "text": "Payload 100 kg (Wikipedia). $148.3M Intuitive Machines award, June 2026. Moon Base III slipped to 2027.",
+      "url": "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+     }
     },
     {
      "id": "blueghost",
      "label": "Firefly Blue Ghost",
-     "capKg": 240,
+     "capKg": 150,
      "months": 9,
      "desc": "Mid-size CLPS lander with a proven landing.",
-     "costM": 130,
+     "costM": 144,
      "risk": 0.1,
      "caps": [
       "240 kg to the surface",
       "Proven soft landing"
      ],
      "benefit": "A reliable ride for a small instrument set.",
-     "image": "art/blueghost.jpg"
+     "image": "art/blueghost.jpg",
+     "src": {
+      "text": "Payload 150 kg (Wikipedia). $144.2M Firefly award, June 2026.",
+      "url": "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+     }
     },
     {
      "id": "griffin",
      "label": "Astrobotic Griffin",
      "capKg": 500,
-     "months": 10,
+     "months": 3,
      "desc": "Moon Base II lander. NASA lists more than 1,100 lb of cargo. Rover egress ramps.",
-     "costM": 200,
+     "costM": 149,
      "risk": 0.2,
      "caps": [
       "500 kg to the surface",
       "Ramps for rover egress"
      ],
      "benefit": "Carries a mid-size rover and several instruments on one flight.",
-     "image": "art/griffin.jpg"
+     "image": "art/griffin.jpg",
+     "src": {
+      "text": "$297M for two Astrobotic deliveries, June 2026. Griffin Mission One launch no earlier than November 2026. Payload capacity is not published.",
+      "url": "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+     }
     },
     {
      "id": "mk1",
@@ -107,7 +119,7 @@
      "capKg": 3000,
      "months": 13,
      "desc": "Moon Base I flies the first one, Endurance, to Shackleton Connecting Ridge. A second carries VIPER.",
-     "costM": 280,
+     "costM": 190,
      "risk": 0.12,
      "caps": [
       "3,000 kg to the surface",
@@ -115,7 +127,11 @@
       "Cryogenic propulsion"
      ],
      "benefit": "Room for a large rover and a full instrument suite on one lander.",
-     "image": "art/mk1.jpg"
+     "image": "art/mk1.jpg",
+     "src": {
+      "text": "Payload up to 3,000 kg. $190M task order to deliver VIPER on the second Mark 1, landing late 2027.",
+      "url": "https://www.nasa.gov/news-release/nasa-selects-blue-origin-to-deliver-viper-rover-to-moons-south-pole/"
+     }
     }
    ],
    "items": [
@@ -133,7 +149,7 @@
       "y": 2027,
       "m": 11
      },
-     "costM": 430,
+     "costM": 450,
      "caps": [
       "Drives 20 km class traverses",
       "Drills 1 m",
@@ -141,7 +157,11 @@
      ],
      "benefit": "Gives you a resource map, so the base is sited next to ice you know is there.",
      "image": "art/viper.jpg",
-     "rec": true
+     "rec": true,
+     "src": {
+      "text": "Dry mass 430 kg. About $450M spent when cancelled in July 2024. Landing late 2027.",
+      "url": "https://en.wikipedia.org/wiki/VIPER_(rover)"
+     }
     },
     {
      "id": "promise",
@@ -171,7 +191,7 @@
     {
      "id": "flip",
      "label": "Astrolab FLIP rover",
-     "kg": 450,
+     "kg": 500,
      "tags": [
       "mobility"
      ],
@@ -182,7 +202,11 @@
       "Tests mobility in polar soil"
      ],
      "benefit": "A mobile base for instruments that would otherwise sit on the lander deck.",
-     "image": "art/flip.jpg"
+     "image": "art/flip.jpg",
+     "src": {
+      "text": "500 kg rover that carries 30 kg of payload. Cost is not published.",
+      "url": "https://en.wikipedia.org/wiki/Griffin_Mission_One"
+     }
     },
     {
      "id": "mapp",
@@ -227,15 +251,19 @@
      "desc": "Four JPL propulsive hoppers that fly into shadowed terrain and survey landing sites over one lunar day. They fly in 2028.",
      "availableAt": {
       "y": 2028,
-      "m": 6
+      "m": 1
      },
-     "costM": 150,
+     "costM": 75,
      "caps": [
       "Hops into shadowed terrain",
       "Surveys landing sites from close range"
      ],
      "benefit": "Scouts places wheels cannot reach, in a single lunar day.",
-     "image": "art/moonfall.jpg"
+     "image": "art/moonfall.jpg",
+     "src": {
+      "text": "$75M Firefly subcontract, excluding launch. Delivery 2028.",
+      "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+     }
     },
     {
      "id": "lidar",
@@ -496,7 +524,7 @@
      "id": "mk1x2",
      "label": "Two Blue Moon Mark 1 cargo flights",
      "capKg": 6000,
-     "months": 10,
+     "months": 14,
      "desc": "NASA's task orders deliver the Lunar Terrain Vehicles this way in 2028.",
      "costM": 188,
      "risk": 0.15,
@@ -505,7 +533,11 @@
       "Available on NASA's 2028 schedule"
      ],
      "benefit": "Delivers the rovers NASA has already ordered.",
-     "image": "art/mk1x2.jpg"
+     "image": "art/mk1x2.jpg",
+     "src": {
+      "text": "$188M to Blue Origin to deliver both Lunar Terrain Vehicles in 2028.",
+      "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+     }
     },
     {
      "id": "mk2c",
@@ -519,7 +551,11 @@
       "30,000 kg in one landing"
      ],
      "benefit": "Carries the heaviest vehicles, years later.",
-     "image": "art/mk2c.jpg"
+     "image": "art/mk2c.jpg",
+     "src": {
+      "text": "30,000 kg one way, 20,000 kg reusable. Uncrewed demonstration planned for 2027. No per-flight price is published; the $3.4B contract covers development.",
+      "url": "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+     }
     }
    ],
    "items": [
@@ -539,7 +575,11 @@
       "Drives itself between crews"
      ],
      "benefit": "Hauls cargo and tools around the site without astronauts present.",
-     "image": "art/flex.jpg"
+     "image": "art/flex.jpg",
+     "src": {
+      "text": "$219M Lunar Terrain Vehicle contract, May 2026. Delivery 2028.",
+      "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+     }
     },
     {
      "id": "pegasus",
@@ -557,7 +597,11 @@
       "Built to run for a year"
      ],
      "benefit": "A second, independent rover design, so one fault cannot stop surface transport.",
-     "image": "art/pegasus.jpg"
+     "image": "art/pegasus.jpg",
+     "src": {
+      "text": "$220M Lunar Terrain Vehicle contract, May 2026. Delivery 2028.",
+      "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+     }
     },
     {
      "id": "racer",
@@ -605,8 +649,8 @@
      ],
      "desc": "NASA expects it in Phase Two. A mobile habitat for 28-day missions with resupply every 14 days. Too heavy for Mark 1.",
      "availableAt": {
-      "y": 2029,
-      "m": 6
+      "y": 2032,
+      "m": 1
      },
      "costM": 900,
      "caps": [
@@ -615,7 +659,11 @@
      ],
      "benefit": "Extends crew reach far beyond walking distance and adds living space.",
      "quality": 5,
-     "image": "art/lunarcruiser.jpg"
+     "image": "art/lunarcruiser.jpg",
+     "src": {
+      "text": "Launch no earlier than 2032. Mass and cost are not published.",
+      "url": "https://en.wikipedia.org/wiki/Lunar_Cruiser"
+     }
     },
     {
      "id": "mapp2",
@@ -780,7 +828,11 @@
       "30,000 kg in one landing"
      ],
      "benefit": "Carries every construction option at once.",
-     "image": "art/mk2c.jpg"
+     "image": "art/mk2c.jpg",
+     "src": {
+      "text": "30,000 kg one way. No per-flight price is published.",
+      "url": "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+     }
     }
    ],
    "items": [
@@ -984,7 +1036,7 @@
      "kg": 800,
      "costM": 200,
      "devCostM": 600,
-     "devMonths": 36,
+     "devMonths": 38,
      "risk": 0.03,
      "tags": [
       "transport"
@@ -1006,7 +1058,11 @@
       "Track rolls up and can be re-laid"
      ],
      "benefit": "Regolith and cargo move without rover trips, so every later stage is 15% faster.",
-     "image": "art/float.jpg"
+     "image": "art/float.jpg",
+     "src": {
+      "text": "NIAC Phase II, up to $600,000 over two years. JPL says it could operate as soon as the 2030s. Development cost is this game's estimate.",
+      "url": "https://www.jpl.nasa.gov/news/nasa-doubles-down-advances-6-innovative-tech-concepts-to-new-phase/"
+     }
     },
     {
      "id": "lightbender",
@@ -1279,7 +1335,11 @@
       "Cargo deck near the ground"
      ],
      "benefit": "Enough for a lean base in one landing.",
-     "image": "art/mk2.jpg"
+     "image": "art/mk2.jpg",
+     "src": {
+      "text": "30,000 kg one way. No per-flight price is published.",
+      "url": "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+     }
     },
     {
      "id": "starship",
@@ -1294,7 +1354,11 @@
       "Cargo elevator"
      ],
      "benefit": "Room for a larger habitat and spares.",
-     "image": "art/starship.jpg"
+     "image": "art/starship.jpg",
+     "src": {
+      "text": "100,000 kg to the lunar surface. No per-flight price is published; the contracts are $2.89B plus $1.15B for development and landings.",
+      "url": "https://en.wikipedia.org/wiki/Starship_HLS"
+     }
     },
     {
      "id": "both",
@@ -1318,13 +1382,13 @@
     {
      "id": "fsp",
      "label": "Fission Surface Power reactor",
-     "kg": 6000,
+     "kg": 15000,
      "tags": [
       "reactor"
      ],
      "desc": "100 kW-class reactor that runs through the dark with no sunlight.",
      "availableAt": {
-      "y": 2032,
+      "y": 2030,
       "m": 1
      },
      "costM": 2000,
@@ -1334,19 +1398,23 @@
       "Years of operation"
      ],
      "benefit": "Powers the habitat through the long polar shadows.",
-     "image": "art/fsp.jpg"
+     "image": "art/fsp.jpg",
+     "src": {
+      "text": "100 kW reactor, mass limit 15 tonnes, on the Moon by 2030. Idaho National Laboratory scenarios cost $1B to $3B.",
+      "url": "https://thespacereview.com/article/5065/1"
+     }
     },
     {
      "id": "fsp2",
      "label": "Second fission reactor",
-     "kg": 6000,
+     "kg": 30000,
      "tags": [
       "reactor",
       "redundant"
      ],
      "desc": "Backup power.",
      "availableAt": {
-      "y": 2032,
+      "y": 2030,
       "m": 1
      },
      "costM": 2800,
@@ -1355,7 +1423,11 @@
      ],
      "benefit": "Backup power raises the quality of the base.",
      "quality": 6,
-     "image": "art/fsp2.jpg"
+     "image": "art/fsp2.jpg",
+     "src": {
+      "text": "Two units at the 15 tonne limit each. Cost is this game's estimate inside the $1B to $3B range per programme.",
+      "url": "https://thespacereview.com/article/5065/1"
+     }
     },
     {
      "id": "inflatable",
@@ -1372,7 +1444,15 @@
      ],
      "benefit": "A light habitat that fits Blue Moon Mark 2.",
      "quality": 4,
-     "image": "art/inflatable.jpg"
+     "image": "art/inflatable.jpg",
+     "availableAt": {
+      "y": 2032,
+      "m": 1
+     },
+     "src": {
+      "text": "First habitats arrive in Phase Three (NASA: from 2032; Astronomy reports 2033 to 2036). Cost and mass are not published.",
+      "url": "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+     }
     },
     {
      "id": "rigid",
@@ -1393,7 +1473,11 @@
      ],
      "benefit": "A permanent habitat that raises the quality of the base.",
      "quality": 10,
-     "image": "art/rigid.jpg"
+     "image": "art/rigid.jpg",
+     "src": {
+      "text": "First habitats arrive in Phase Three. Cost and mass are not published.",
+      "url": "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+     }
     },
     {
      "id": "cable",
@@ -1442,7 +1526,15 @@
      ],
      "benefit": "Cleaner air and less wear inside the habitat.",
      "quality": 6,
-     "image": "art/airlock.jpg"
+     "image": "art/airlock.jpg",
+     "availableAt": {
+      "y": 2032,
+      "m": 1
+     },
+     "src": {
+      "text": "Airlocks arrive with the Phase Three habitats. Cost and mass are not published.",
+      "url": "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+     }
     },
     {
      "id": "solarfarm",
@@ -1470,8 +1562,8 @@
      ],
      "desc": "Mobile habitat for long traverses.",
      "availableAt": {
-      "y": 2029,
-      "m": 6
+      "y": 2032,
+      "m": 1
      },
      "costM": 900,
      "caps": [
@@ -1479,7 +1571,11 @@
      ],
      "benefit": "Adds mobile living space.",
      "quality": 5,
-     "image": "art/lunarcruiser.jpg"
+     "image": "art/lunarcruiser.jpg",
+     "src": {
+      "text": "Launch no earlier than 2032. Carries 3,000 kg of cargo and two crew.",
+      "url": "https://en.wikipedia.org/wiki/Lunar_Cruiser"
+     }
     },
     {
      "id": "myco",
@@ -1898,6 +1994,82 @@
   {
    "label": "NASA NIAC funded studies",
    "url": "https://www.nasa.gov/niac-funded-studies/"
+  },
+  {
+   "label": "SpacePolicyOnline: initial Moon Base rover and lander contracts",
+   "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+  },
+  {
+   "label": "SpacePolicyOnline: NASA rolls out new Moon plan",
+   "url": "https://spacepolicyonline.com/news/nasa-rolls-out-new-moon-plan/"
+  },
+  {
+   "label": "Astronomy: NASA's plan to build a Moon base",
+   "url": "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+  },
+  {
+   "label": "Starlust: four new lunar lander missions",
+   "url": "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+  },
+  {
+   "label": "NASA: Blue Origin to deliver VIPER",
+   "url": "https://www.nasa.gov/news-release/nasa-selects-blue-origin-to-deliver-viper-rover-to-moons-south-pole/"
+  },
+  {
+   "label": "The Space Review: lunar reactor directive",
+   "url": "https://thespacereview.com/article/5065/1"
+  },
+  {
+   "label": "Payload: lunar fission power",
+   "url": "https://payloadspace.com/nasa-wants-to-hit-the-accelerator-on-lunar-atomics/"
+  },
+  {
+   "label": "Wikipedia: Blue Moon",
+   "url": "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+  },
+  {
+   "label": "Wikipedia: Starship HLS",
+   "url": "https://en.wikipedia.org/wiki/Starship_HLS"
+  },
+  {
+   "label": "Wikipedia: Nova-C",
+   "url": "https://en.wikipedia.org/wiki/Nova-C"
+  },
+  {
+   "label": "Wikipedia: Blue Ghost",
+   "url": "https://en.wikipedia.org/wiki/Firefly_Aerospace_Blue_Ghost"
+  },
+  {
+   "label": "Wikipedia: Griffin Mission One",
+   "url": "https://en.wikipedia.org/wiki/Griffin_Mission_One"
+  },
+  {
+   "label": "Wikipedia: VIPER",
+   "url": "https://en.wikipedia.org/wiki/VIPER_(rover)"
+  },
+  {
+   "label": "Wikipedia: Lunar Cruiser",
+   "url": "https://en.wikipedia.org/wiki/Lunar_Cruiser"
+  },
+  {
+   "label": "Wikipedia: International Lunar Research Station",
+   "url": "https://en.wikipedia.org/wiki/International_Lunar_Research_Station"
+  },
+  {
+   "label": "The Register: 2023 Tipping Point awards",
+   "url": "https://www.theregister.com/2023/07/26/nasa_moon_funding/"
+  },
+  {
+   "label": "Space.com: ICON lunar construction contract",
+   "url": "https://www.space.com/icon-moon-construction-project-olympus-nasa-funding"
+  },
+  {
+   "label": "JPL: NIAC Phase II concepts",
+   "url": "https://www.jpl.nasa.gov/news/nasa-doubles-down-advances-6-innovative-tech-concepts-to-new-phase/"
+  },
+  {
+   "label": "SpacePolicyOnline: Artemis launch cost",
+   "url": "https://spacepolicyonline.com/news/first-four-artemis-flights-will-cost-4-1-billion-each-nasa-ig-tells-congress/"
   }
  ],
  "milestones": [
@@ -2130,6 +2302,61 @@
    "Shackleton crater",
    "More than twice as deep as the Grand Canyon and believed to hold ice",
    "https://www.nasa.gov/reference/moonbase-about/"
+  ],
+  [
+   "Moon Base phases",
+   "Three phases of about $10 billion each. Phase 1 to 2028: 25 launches, 21 landings. Phase 2, 2029 to 2032: 27 launches, 24 landings, about 60 tonnes. Phase 3, 2033 to 2036: about 150 tonnes and the first habitats",
+   "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+  ],
+  [
+   "Small lander awards, June 2026",
+   "Nearly $600 million for four landings in late 2028: Astrobotic $297 million for two, Firefly $144.2 million, Intuitive Machines $148.3 million",
+   "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+  ],
+  [
+   "VIPER",
+   "Dry mass 430 kg. Budgeted at $433.5 million, about $450 million spent by July 2024. Blue Origin delivers it on a Blue Moon Mark 1 in late 2027 for up to $190 million",
+   "https://www.nasa.gov/news-release/nasa-selects-blue-origin-to-deliver-viper-rover-to-moons-south-pole/"
+  ],
+  [
+   "Fission Surface Power",
+   "100 kW reactor, mass limit 15 tonnes, closed Brayton cycle, on the Moon by 2030. Idaho National Laboratory scenarios cost $1 billion to $3 billion",
+   "https://thespacereview.com/article/5065/1"
+  ],
+  [
+   "Crew landers",
+   "Blue Moon Mark 2: $3.4 billion contract, 30 tonnes one way or 20 tonnes reusable. Starship: $2.89 billion plus $1.15 billion, 100 tonnes to the surface",
+   "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+  ],
+  [
+   "Crew launch cost",
+   "NASA's Inspector General put each of the first four Artemis launches at $4.1 billion for rocket, capsule and ground systems. The game does not charge this to the Moon Base budget",
+   "https://spacepolicyonline.com/news/first-four-artemis-flights-will-cost-4-1-billion-each-nasa-ig-tells-congress/"
+  ],
+  [
+   "JAXA pressurized rover",
+   "Two crew, 3,000 kg of cargo, ten-year life. Toyota's Lunar Cruiser launches no earlier than 2032",
+   "https://en.wikipedia.org/wiki/Lunar_Cruiser"
+  ],
+  [
+   "MoonFall drones",
+   "$75 million Firefly subcontract, excluding launch, for delivery in 2028",
+   "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+  ],
+  [
+   "Construction and resource technology awards",
+   "ICON lunar construction $57.2 million (2022). 2023 Tipping Point: Blue Origin regolith electrolysis and solar cells $34.7 million with a demonstration in 2026, Astrobotic power line $34.6 million, Redwire regolith manufacturing $12.9 million",
+   "https://www.theregister.com/2023/07/26/nasa_moon_funding/"
+  ],
+  [
+   "NIAC awards",
+   "Phase II studies receive up to $600,000 over two years. JPL says the FLOAT track could operate as soon as the 2030s",
+   "https://www.jpl.nasa.gov/news/nasa-doubles-down-advances-6-innovative-tech-concepts-to-new-phase/"
+  ],
+  [
+   "China's station",
+   "Construction 2026 to 2035, five facility missions from 2031 to 2035, use from 2036. Chang'e-7 in 2026, Chang'e-8 in 2028",
+   "https://en.wikipedia.org/wiki/International_Lunar_Research_Station"
   ]
  ],
  "budgetM": 20000,
@@ -2193,8 +2420,8 @@
     "label": "Chang'e-7 surveys the south pole"
    },
    {
-    "y": 2029,
-    "m": 1,
+    "y": 2028,
+    "m": 12,
     "label": "Chang'e-8 tests building with regolith"
    },
    {

@@ -26,10 +26,9 @@ Every lander, rover, payload and choice lists what it can do and why it helps, a
 
 ## How accurate is it?
 
-The game follows NASA's published Moon Base plan and timeline (its three phases, Artemis missions, contract values and "ready no earlier than" dates), and the **Data and sources** tab links every source used. But a game needs numbers NASA hasn't published, so **many values are estimates**, including:
+The game follows NASA's published Moon Base plan and timeline (its three phases, Artemis missions, contract values and "ready no earlier than" dates), and the **Data and sources** tab links every source used. Where a cost, mass or date has been published (contract values, lander capacities, vehicle masses), the game uses it, and the **Basis for the numbers** column says which figures are published and links the source. But a game needs numbers nobody has published, so **many values are still estimates**, including:
 
-- most payload and vehicle masses, and how many fit on each lander,
-- most costs (the Lunar Terrain Vehicle and PROMISE rover contract values are the published exceptions),
+- the masses and costs of hardware still in early design,
 - how long each step takes, and the chance of a mishap,
 - the Speed, Reliability and Quality effects, the quality points, and the development cost and time of the NIAC concepts (none of which are funded for flight),
 - what happens when a choice goes wrong.
