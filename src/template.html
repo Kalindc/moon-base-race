@@ -1,0 +1,381 @@
+<title>Moon Base Race</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: mission-control console. Sticky mission clock on top, one cutscene screen, decisions beneath it. Single dark look by choice. */
+:root{
+  color-scheme:dark;
+  --void:#0b0d12; --panel:#141821; --panel2:#1c212c; --line:#2c3341;
+  --dust:#c9c4b8; --dim:#8b8f99; --sun:#f2b84b; --go:#6fd08c; --halt:#ff5a4d; --ice:#7fc8e8;
+  --display:"Chakra Petch","Trebuchet MS",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{background:var(--void)}
+body{color:var(--dust);font-family:var(--body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--void)}
+.wrap{max-width:1060px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--void);border-bottom:1px solid var(--line)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding-block:10px}
+h1{font-family:var(--display);font-size:18px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#fff}
+.clock{font-family:var(--mono);font-size:13px;display:flex;gap:16px;flex-wrap:wrap;margin-left:auto}
+.clock b{color:var(--sun);font-weight:600}.clock .cn b{color:var(--halt)}
+.tl{position:relative;height:30px;margin-bottom:6px}
+.tl .track{position:absolute;left:0;right:0;top:5px;height:4px;background:var(--panel2);border-radius:2px}
+.tl .fill{position:absolute;left:0;top:5px;height:4px;background:var(--sun);border-radius:2px;transition:width .6s}
+.tl .mk{position:absolute;top:0;width:2px;height:14px;background:var(--dim)}
+.tl .mk.cn{background:var(--halt);width:3px}
+.tl .mk span{position:absolute;top:14px;left:0;font:11px var(--mono);color:var(--dim);white-space:nowrap}
+.tl .mk.cn span{left:auto;right:0;display:block;color:var(--halt)}
+nav{display:flex;gap:4px;padding-bottom:8px}
+nav button{font:600 13px var(--display);letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid transparent;color:var(--dim);padding:6px 12px;border-radius:4px;cursor:pointer}
+nav button[aria-selected=true]{color:#fff;border-color:var(--line);background:var(--panel)}
+main{padding-block:18px 60px;display:flex;flex-direction:column;gap:18px}
+.screen{position:relative;aspect-ratio:16/9;max-width:100%;background:#000;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.screen canvas,.screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.screen .tag{position:absolute;left:10px;top:10px;font:11px var(--mono);background:rgba(0,0,0,.6);color:var(--dim);padding:3px 7px;border-radius:3px;max-width:calc(100% - 20px)}
+.screen .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:var(--display);font-size:clamp(16px,3vw,26px);color:#fff;text-wrap:balance}
+.step{font:12px var(--mono);color:var(--sun);letter-spacing:.08em;text-transform:uppercase}
+h2{font-family:var(--display);font-size:22px;margin:2px 0 6px;color:#fff;text-wrap:balance}
+h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:14px 0 8px}
+p{margin:0 0 8px;max-width:68ch}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:20px}
+@media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}.tl .mk span{display:none}}td.n{white-space:normal;min-width:9ch}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:10px 12px;color:inherit;font:inherit;cursor:pointer;min-width:0}
+.opt:hover{border-color:var(--dim)}
+.opt[aria-pressed=true]{border-color:var(--sun);background:var(--panel2)}
+.opt[disabled]{opacity:.45;cursor:not-allowed}
+.opt .box{flex:none;width:16px;height:16px;border:2px solid var(--dim);border-radius:3px;margin-top:3px}
+.opt.radio .box{border-radius:50%}
+.opt[aria-pressed=true] .box{background:var(--sun);border-color:var(--sun)}
+.opt strong{display:block;color:#fff;font-weight:600}
+.opt small{display:block;color:var(--dim);font-size:13px}
+.opt .m{font:12px var(--mono);color:var(--ice)}
+.meter{height:8px;background:var(--panel2);border-radius:4px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--go)}
+.meter.over i{background:var(--halt)}
+.mono{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:12px var(--mono);border:1px solid var(--line);border-radius:20px;padding:2px 10px;color:var(--dim)}
+.chip.on{border-color:var(--go);color:var(--go)}
+.btn{font:700 14px var(--display);letter-spacing:.08em;text-transform:uppercase;background:var(--sun);color:#1a1405;border:0;border-radius:4px;padding:10px 20px;cursor:pointer}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--dust);border:1px solid var(--line)}
+.btn.small{font-size:12px;padding:6px 12px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;align-self:start}
+aside ul{list-style:none;margin:0;padding:0;font-size:13px;display:flex;flex-direction:column;gap:4px}
+aside{min-width:0}aside li{display:flex;justify-content:space-between;gap:8px}aside li span:first-child{min-width:0;overflow-wrap:anywhere}
+aside li span:last-child{font-family:var(--mono);color:var(--dim);white-space:nowrap}
+.res{border-left:3px solid var(--go);padding-left:12px}.res.bad{border-color:var(--halt)}
+.res .big{font-family:var(--display);font-size:20px;color:var(--go)}.res.bad .big{color:var(--halt)}
+textarea,input[type=text],select{width:100%;background:var(--panel);color:var(--dust);border:1px solid var(--line);border-radius:4px;padding:8px 10px;font:13px var(--mono)}
+textarea{min-height:120px;resize:vertical}
+textarea.json{min-height:320px;white-space:pre;overflow:auto}
+label{display:block;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:12px 0 4px}
+.note{font-size:13px;color:var(--dim)}
+.msg{font:13px var(--mono);color:var(--ice);min-height:1.4em}
+.msg.err{color:var(--halt)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--ice)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.props{display:flex;flex-direction:column;gap:8px}
+</style>
+
+<header><div class="wrap">
+  <div class="bar"><h1>Moon Base Race</h1>
+    <div class="clock"><span>Mission date <b id="cDate"></b></span><span>Elapsed <b id="cEl"></b></span><span class="cn">China deadline <b id="cCn"></b></span></div></div>
+  <div class="tl" id="tl" aria-hidden="true"></div>
+  <nav role="tablist"><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button></nav>
+</div></header>
+<div class="wrap"><main id="main"></main></div>
+
+<script id="scn" type="application/json">__SCENARIO__</script>
+<script>
+"use strict";
+const DEFAULT=JSON.parse(document.getElementById("scn").textContent);
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const $=id=>document.getElementById(id);
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in attrs||{}){const v=attrs[k];if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(k==="text")e.textContent=v;else e.setAttribute(k,v===true?"":v)}for(const c of kids.flat()){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const clone=o=>JSON.parse(JSON.stringify(o));
+function validScenario(s){return s&&Array.isArray(s.stages)&&s.stages.length>0&&s.start&&s.deadline&&s.stages.every(validStage)}
+function validStage(s){return s&&typeof s.id==="string"&&typeof s.title==="string"&&((s.type==="choice"&&Array.isArray(s.options)&&s.options.some(o=>o.outcome==="ok"))||(s.type==="loadout"&&Array.isArray(s.carriers)&&s.carriers.length&&Array.isArray(s.items)))}
+
+let LIVE=clone(DEFAULT);          // scenario everyone plays
+let SCN=LIVE;                      // scenario in play (live or a draft under test)
+let testing=false;
+let G=null;
+const totalMonths=()=>(SCN.deadline.y-SCN.start.y)*12+(SCN.deadline.m-SCN.start.m);
+function dateAt(mo){const t=SCN.start.y*12+SCN.start.m-1+mo;return MONTHS[t%12]+" "+Math.floor(t/12)}
+function dur(mo){const y=Math.floor(mo/12),m=mo%12;return (y?y+" yr ":"")+m+" mo"}
+function newGame(){G={i:0,months:0,tags:[],assets:[],log:[],phase:"brief",sel:{},result:null};}
+const has=t=>G.tags.includes(t);
+const availMo=o=>o&&o.availableAt?(o.availableAt.y-SCN.start.y)*12+(o.availableAt.m-SCN.start.m):0;
+const availTxt=o=>o&&o.availableAt?" Ready no earlier than "+MONTHS[o.availableAt.m-1]+" "+o.availableAt.y+".":"";
+
+/* ---------- header ---------- */
+function drawClock(){
+  $("cDate").textContent=dateAt(G.months);$("cEl").textContent=dur(G.months);$("cCn").textContent=dateAt(totalMonths());
+  const T=totalMonths(),tl=$("tl");tl.textContent="";
+  tl.append(h("div",{class:"track"}),h("div",{class:"fill",style:"width:"+Math.min(100,G.months/T*100)+"%"}));
+  for(const m of SCN.markers||[]){const mo=(m.y-SCN.start.y)*12+(m.m-SCN.start.m);if(mo>0&&mo<T)tl.append(h("div",{class:"mk",style:"left:"+mo/T*100+"%"},h("span",{text:m.label})))}
+  tl.append(h("div",{class:"mk cn",style:"left:calc(100% - 3px)"},h("span",{text:"China"})));
+}
+
+/* ---------- cutscene painter (placeholder until video clips are attached) ---------- */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let scene="lander",sceneT0=performance.now(),cv=null,raf=0;
+const STARS=Array.from({length:140},(_,i)=>[(i*97.13)%1,(i*57.77)%0.62,((i*31)%7)/7]);
+function setScene(s){scene=s;sceneT0=performance.now()}
+function paint(now){
+  raf=0;if(!cv||!cv.isConnected)return;
+  const w=cv.width,hh=cv.height,c=cv.getContext("2d"),t=reduce?3:(now-sceneT0)/1000,u=w/640;
+  c.fillStyle="#020308";c.fillRect(0,0,w,hh);
+  for(const s of STARS){c.fillStyle="rgba(255,255,255,"+(0.3+0.7*s[2])+")";c.fillRect(s[0]*w,s[1]*hh,u*(1+s[2]),u*(1+s[2]))}
+  if(scene==="orbit"||scene==="flag"){ // moon from orbit
+    const R=hh*0.62,cx=w/2,cy=hh*0.95;const g=c.createRadialGradient(cx-R*.4,cy-R*.6,R*.1,cx,cy,R);g.addColorStop(0,"#d8d4c8");g.addColorStop(.7,"#77746c");g.addColorStop(1,"#15151a");
+    c.fillStyle=g;c.beginPath();c.arc(cx,cy,R,0,7);c.fill();
+    for(let i=0;i<16;i++){const a=i*2.4,r=R*(0.15+((i*37)%50)/70),x=cx+Math.cos(a)*r,y=cy-Math.abs(Math.sin(a))*r*0.9;c.fillStyle="rgba(0,0,0,"+(0.25+(i%3)*0.15)+")";c.beginPath();c.ellipse(x,y,R*(0.03+(i%4)*0.02),R*(0.02+(i%4)*0.012),0,0,7);c.fill()}
+    if(scene==="orbit"){c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.setLineDash([6*u,6*u]);c.beginPath();c.arc(cx,cy-R*.72,R*.12,0,7);c.stroke();c.setLineDash([]);const a=t*0.6;c.fillStyle="#fff";c.fillRect(cx+Math.cos(a)*R*1.1-3*u,cy-R*.75+Math.sin(a)*R*.12,6*u,3*u)}
+    else{ // flag passes over the Moon
+      const fx=((t*0.11)%1.4-0.2)*w,fy=hh*0.2,fw=220*u,fh=140*u;c.save();c.translate(fx-fw/2,fy);
+      c.fillStyle="#de2910";c.beginPath();for(let x=0;x<=fw;x+=4){const y=Math.sin(x/28/u+t*3)*5*u;x?c.lineTo(x,y):c.moveTo(x,y)}for(let x=fw;x>=0;x-=4)c.lineTo(x,fh+Math.sin(x/28/u+t*3)*5*u);c.fill();
+      c.fillStyle="#ffde00";star(c,fw*.17,fh*.27,fh*.15);[[.33,.1],[.4,.2],[.4,.35],[.33,.45]].forEach(p=>star(c,fw*p[0],fh*p[1],fh*.05));c.restore();
+      c.fillStyle="rgba(0,0,0,.35)";c.beginPath();c.ellipse(fx,cy-R*.75,fw*.5,22*u,0,0,7);c.fill()}
+  }else{ // surface view
+    const ex=w*.8,ey=hh*.2;c.fillStyle="#3d7fd6";c.beginPath();c.arc(ex,ey,16*u,0,7);c.fill();c.fillStyle="rgba(255,255,255,.6)";c.beginPath();c.arc(ex-4*u,ey-3*u,7*u,0,7);c.fill();c.fillStyle="#020308";c.beginPath();c.arc(ex+9*u,ey,16*u,0,7);c.fill();
+    const hz=hh*.66;c.fillStyle="#2a2a2e";c.beginPath();c.moveTo(0,hz);for(let x=0;x<=w;x+=w/40)c.lineTo(x,hz-18*u*Math.abs(Math.sin(x/w*7+1))-10*u*Math.sin(x/w*23));c.lineTo(w,hh);c.lineTo(0,hh);c.fill();
+    const g=c.createLinearGradient(0,hz,0,hh);g.addColorStop(0,"#8f8b80");g.addColorStop(1,"#3a3833");c.fillStyle=g;c.fillRect(0,hz+6*u,w,hh);
+    for(let i=0;i<9;i++){c.fillStyle="rgba(0,0,0,.28)";c.beginPath();c.ellipse(((i*173)%600+20)*u,hz+(30+(i*41)%90)*u,(14+i*3)*u,(3+i*.7)*u,0,0,7);c.fill()}
+    const gy=hz+70*u;
+    const pad=()=>{c.fillStyle="#5c5a55";c.beginPath();c.ellipse(w*.5,gy+8*u,150*u,18*u,0,0,7);c.fill();c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.beginPath();c.ellipse(w*.5,gy+8*u,120*u,13*u,0,0,7);c.stroke()};
+    const lander=(x,y,s,tall)=>{c.fillStyle="#d9d9de";if(tall){c.beginPath();c.moveTo(x-14*s,y);c.lineTo(x-14*s,y-110*s);c.quadraticCurveTo(x,y-150*s,x+14*s,y-110*s);c.lineTo(x+14*s,y);c.fill();c.fillStyle="#222";c.fillRect(x-4*s,y-80*s,8*s,10*s)}else{c.fillRect(x-22*s,y-34*s,44*s,22*s);c.fillStyle="#b08a3a";c.fillRect(x-16*s,y-46*s,32*s,12*s)}c.strokeStyle="#999";c.lineWidth=3*s;c.beginPath();c.moveTo(x-18*s,y-12*s);c.lineTo(x-34*s,y+4*s);c.moveTo(x+18*s,y-12*s);c.lineTo(x+34*s,y+4*s);c.stroke()};
+    const flame=(x,y,s)=>{c.fillStyle="rgba(255,200,120,.8)";c.beginPath();c.moveTo(x-8*s,y);c.lineTo(x,y+(26+Math.sin(t*30)*6)*s);c.lineTo(x+8*s,y);c.fill()};
+    const rover=(x,y,s)=>{c.fillStyle="#cfcfd4";c.fillRect(x-22*s,y-20*s,44*s,10*s);c.fillRect(x-6*s,y-34*s,4*s,14*s);c.fillStyle="#f2b84b";c.fillRect(x-12*s,y-38*s,16*s,5*s);c.fillStyle="#333";for(const dx of[-18,0,18]){c.beginPath();c.arc(x+dx*s,y-5*s,7*s,0,7);c.fill()}};
+    const athlete=(x,y,s)=>{c.strokeStyle="#cfcfd4";c.lineWidth=4*s;for(const dx of[-30,-12,12,30]){const k=Math.sin(t*3+dx)*4*s;c.beginPath();c.moveTo(x+dx*.4*s,y-44*s);c.lineTo(x+dx*s,y-26*s+k);c.lineTo(x+dx*1.1*s,y-6*s);c.stroke();c.fillStyle="#333";c.beginPath();c.arc(x+dx*1.1*s,y-5*s,6*s,0,7);c.fill()}c.fillStyle="#b08a3a";c.beginPath();c.ellipse(x,y-46*s,22*s,7*s,0,0,7);c.fill()};
+    const hab=(x,y,s,cover)=>{c.fillStyle="#e4e4e8";c.beginPath();c.moveTo(x-50*s,y);c.lineTo(x-50*s,y-22*s);c.quadraticCurveTo(x,y-54*s,x+50*s,y-22*s);c.lineTo(x+50*s,y);c.fill();c.fillStyle="#ffd98a";c.fillRect(x-8*s,y-20*s,16*s,20*s);if(cover>0){c.fillStyle="#7d796f";c.beginPath();c.moveTo(x-90*s,y);c.quadraticCurveTo(x,y-(110*cover)*s,x+90*s,y);c.fill();c.fillStyle="#ffd98a";c.fillRect(x-8*s,y-14*s,16*s,14*s)}};
+    const reactor=(x,y,s)=>{c.fillStyle="#9aa";c.fillRect(x-8*s,y-30*s,16*s,30*s);c.fillStyle="#c9d2dc";c.fillRect(x-40*s,y-70*s,30*s,44*s);c.fillRect(x+10*s,y-70*s,30*s,44*s);c.fillStyle="rgba(127,200,232,"+(0.4+0.3*Math.sin(t*4))+")";c.beginPath();c.arc(x,y-34*s,5*s,0,7);c.fill()};
+    const person=(x,y,s)=>{c.fillStyle="#fff";c.fillRect(x-4*s,y-18*s,8*s,12*s);c.beginPath();c.arc(x,y-22*s,5*s,0,7);c.fill();c.fillRect(x-4*s,y-6*s,3*s,6*s+Math.sin(t*8+x)*2*s);c.fillRect(x+1*s,y-6*s,3*s,6*s-Math.sin(t*8+x)*2*s);c.fillStyle="#f2b84b";c.fillRect(x-3*s,y-24*s,6*s,3*s)};
+    const drop=Math.max(0,1-t/4);
+    if(scene==="lander"){const y=gy-drop*hh*.5;if(drop>0)flame(w*.5,y-10*u,u*1.4);lander(w*.5,y,u*1.6);if(drop===0)rover(w*.5+(Math.min(t-4,6)*14+50)*u,gy+14*u,u)}
+    else if(scene==="rover"){lander(w*.2,gy,u*1.4);rover(w*.2+((t*22)%380+60)*u,gy+20*u,u*1.3);athlete(w*.7,gy+10*u,u*1.5)}
+    else if(scene==="build"){pad();rover(w*.5+Math.sin(t*.7)*100*u,gy+10*u,u);c.strokeStyle="rgba(255,90,77,.9)";c.lineWidth=2*u;c.beginPath();c.moveTo(w*.5+Math.sin(t*.7)*100*u,gy-10*u);c.lineTo(w*.5+Math.sin(t*.7)*100*u+10*u,gy+8*u);c.stroke();c.fillStyle="#6d6a63";c.fillRect(w*.62,gy+2*u,w*.4,10*u);athlete(w*.86,gy+2*u,u)}
+    else if(scene==="cargo"){pad();const y=gy+6*u-drop*hh*.5;if(drop>0)flame(w*.5,y,u*1.6);lander(w*.5,y,u*1.5,true);lander(w*.14,gy-6*u,u*1.1)}
+    else if(scene==="habitat"){pad();lander(w*.5,gy+6*u,u*1.2,true);const x=w*.5+Math.min(t*18,170)*u;hab(x,gy-34*u,u*.8,0);athlete(x,gy+20*u,u*1.6)}
+    else if(scene==="reactor"){hab(w*.2,gy+16*u,u*1.1,0);reactor(w*.82,gy-4*u,u);c.fillStyle="#7d796f";c.beginPath();c.moveTo(w*.6,gy+4*u);c.quadraticCurveTo(w*.68,gy-40*u,w*.76,gy+4*u);c.fill();c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.beginPath();c.moveTo(w*.3,gy+16*u);c.lineTo(w*.3+Math.min(t/5,1)*w*.5,gy+10*u);c.stroke()}
+    else if(scene==="shield"){hab(w*.5,gy+16*u,u*1.4,Math.min(t/6,1));rover(w*.5+Math.sin(t)*150*u,gy+30*u,u)}
+    else if(scene==="crew"||scene==="win"){pad();lander(w*.5,gy+6*u,u*1.2,true);hab(w*.86,gy+14*u,u*.9,1);reactor(w*.08,gy-10*u,u*.6);const n=4;for(let i=0;i<n;i++){const x=w*.52+Math.min(Math.max(t*26-i*22,0),190+0*i)*u;if(scene==="crew"||x<w*.52+188*u)person(x,gy+24*u,u*1.2)}if(scene==="win"){c.fillStyle="rgba(255,217,138,"+(0.25+0.2*Math.sin(t*2))+")";c.beginPath();c.arc(w*.86,gy+2*u,40*u,0,7);c.fill()}}
+    else if(scene==="boom"){lander(w*.5,gy,u*1.5);const k=Math.min(t/1.2,1);const gr=c.createRadialGradient(w*.5,gy-20*u,0,w*.5,gy-20*u,220*u*k+1);gr.addColorStop(0,"rgba(255,255,220,"+(1-k*.3)+")");gr.addColorStop(.4,"rgba(255,140,40,"+(0.9-k*.4)+")");gr.addColorStop(1,"rgba(255,60,20,0)");c.fillStyle=gr;c.fillRect(0,0,w,hh);for(let i=0;i<40;i++){const a=i*0.61,r=(t*90+i*4)%260*u;c.fillStyle="#ffb347";c.fillRect(w*.5+Math.cos(a)*r,gy-20*u-Math.abs(Math.sin(a))*r+t*t*4*u,3*u,3*u)}}
+    else{lander(w*.5,gy,u*1.5);rover(w*.72,gy+20*u,u);c.fillStyle="rgba(255,90,77,"+(0.12+0.08*Math.sin(t*5))+")";c.fillRect(0,0,w,hh)}
+  }
+  if(!reduce)raf=requestAnimationFrame(paint);
+}
+function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.4:r;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}c.fill()}
+function screenEl(sc,caption,prompt,media){
+  setScene(sc);cv=h("canvas",{width:960,height:540,role:"img","aria-label":caption});
+  const s=h("div",{class:"screen"},cv);
+  if(media)s.append(h("video",{src:media,autoplay:true,muted:true,loop:true,playsinline:true}));
+  else if(prompt)s.append(h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}));
+  s.append(h("div",{class:"cap",text:caption}));
+  cancelAnimationFrame(raf);raf=requestAnimationFrame(paint);return s;
+}
+
+/* ---------- play ---------- */
+function carried(){return G.sel.items||[]}
+function stageView(){
+  const st=SCN.stages[G.i],main=$("main");main.textContent="";
+  const left=h("div",{});
+  if(testing)main.append(h("div",{class:"card note"},"You are playtesting your draft. ",h("button",{class:"btn ghost small",onclick:()=>{testing=false;SCN=LIVE;newGame();show("edit")}},"Back to editor")));
+  main.append(screenEl(st.scene||"lander",st.title,st.videoPrompt,st.media));
+  left.append(h("div",{class:"step",text:"Stage "+(G.i+1)+" of "+SCN.stages.length}),h("h2",{text:st.title}),h("p",{text:st.narration||""}));
+  const go=h("button",{class:"btn",disabled:true,onclick:commit},"Commit decision");
+  if(st.type==="choice"){
+    const box=h("div",{class:"opts"});
+    st.options.forEach(o=>{const miss=(o.requires||[]).filter(t=>!has(t));
+      box.append(h("button",{class:"opt radio","aria-pressed":G.sel.opt===o.id?"true":"false",disabled:miss.length>0,onclick:()=>{G.sel.opt=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),miss.length?h("small",{class:"m",text:"Needs a landed asset: "+miss.join(", ")}):null)))});
+    left.append(h("h3",{text:"Choose one"}),box);go.disabled=!G.sel.opt;
+  }else{
+    const cb=h("div",{class:"opts"});
+    st.carriers.forEach(o=>cb.append(h("button",{class:"opt radio","aria-pressed":G.sel.car===o.id?"true":"false",onclick:()=>{G.sel.car=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),h("small",{class:"m",text:o.capKg.toLocaleString()+" kg payload, "+o.months+" months."+availTxt(o)})))));
+    const car=st.carriers.find(c=>c.id===G.sel.car),sel=carried(),kg=st.items.filter(i=>sel.includes(i.id)).reduce((a,i)=>a+i.kg,0);
+    const ib=h("div",{class:"opts"});
+    st.items.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),h("small",{class:"m",text:o.kg.toLocaleString()+" kg."+availTxt(o)})))));
+    const over=car&&kg>car.capKg,got=new Set(st.items.filter(i=>sel.includes(i.id)).flatMap(i=>i.tags||[]));
+    left.append(h("h3",{text:"Delivery"}),cb,h("h3",{text:"Payloads"}),
+      h("div",{class:"mono",text:"Loaded "+kg.toLocaleString()+" kg"+(car?" of "+car.capKg.toLocaleString()+" kg":"")+(over?" (over the limit)":"")}),
+      h("div",{class:"meter"+(over?" over":"")},h("i",{style:"width:"+(car?Math.min(100,kg/car.capKg*100):0)+"%"})),
+      (st.needs||[]).length?h("div",{class:"chips"},st.needs.map(n=>h("span",{class:"chip"+(got.has(n.tag)||has(n.tag)&&false?" on":""),text:n.label}))):null,
+      h("div",{style:"height:8px"}),ib);
+    go.disabled=!car||over||!sel.length;
+  }
+  left.append(h("div",{class:"row"},go));
+  main.append(h("div",{class:"cols"},left,sidebar()));
+}
+function sidebar(){
+  return h("aside",{},h("h3",{style:"margin-top:0",text:"Landed assets"}),G.assets.length?h("ul",{},G.assets.map(a=>h("li",{},h("span",{text:a})))):h("p",{class:"note",text:"Nothing on the surface yet."}),
+    h("h3",{text:"Mission log"}),G.log.length?h("ul",{},G.log.map(l=>h("li",{},h("span",{text:l[0]}),h("span",{text:l[1]})))):h("p",{class:"note",text:"Each decision adds its real-world lead time to the clock."}));
+}
+function commit(){
+  const st=SCN.stages[G.i];let ok=true,months=0,text="",sc=null,grants=[],assets=[];
+  if(st.type==="choice"){
+    const o=st.options.find(x=>x.id===G.sel.opt);ok=o.outcome==="ok";months=o.months||0;
+    for(const m of o.modifiers||[])if(has(m.has))months+=m.months;months=Math.max(1,months);
+    text=o.resultText||(ok?"Done.":"That did not work.");sc=o.scene;grants=o.grants||[];if(ok)assets=[];
+  }else{
+    const car=st.carriers.find(c=>c.id===G.sel.car),its=st.items.filter(i=>carried().includes(i.id));
+    const bad=its.find(i=>i.outcome==="fail"),tags=new Set(its.flatMap(i=>i.tags||[])),miss=(st.needs||[]).filter(n=>!tags.has(n.tag));
+    if(bad){ok=false;months=bad.failMonths||st.failMonths||8;text=bad.failText||"The payload failed.";sc=bad.scene}
+    else if(miss.length){ok=false;months=st.failMonths||8;text="The delivery lands but the mission falls short. Nothing on board covers: "+miss.map(n=>n.label.toLowerCase()).join(", ")+". A second delivery has to be prepared."}
+    else{const ready=Math.max(availMo(car),...its.map(availMo));months=Math.max(car.months,ready-G.months);text=(st.successText||"Delivered.")+(months>car.months?" The delivery waited for hardware that was not ready until "+dateAt(G.months+months)+".":"");grants=[...tags].concat(car.grants||[]);assets=its.map(i=>i.label)}
+  }
+  G.months+=months;G.log.push([st.title+(ok?"":" (failed)"),"+"+months+" mo"]);
+  if(ok){for(const t of grants)if(!has(t))G.tags.push(t);G.assets.push(...assets)}
+  G.result={ok,months,text,scene:sc||(ok?st.scene:"fail")};
+  G.phase=G.months>=totalMonths()?"lost":"result";render();
+}
+function resultView(){
+  const st=SCN.stages[G.i],r=G.result,main=$("main");main.textContent="";
+  const last=G.i===SCN.stages.length-1;
+  main.append(screenEl(r.scene,r.ok?"Success":"Failure"));
+  const left=h("div",{class:"res"+(r.ok?"":" bad")},h("div",{class:"big",text:r.ok?"Stage complete":"Stage failed"}),h("h2",{text:st.title}),h("p",{text:r.text}),
+    h("p",{class:"mono",text:"Time added: "+r.months+" months. Mission date is now "+dateAt(G.months)+". "+(totalMonths()-G.months)+" months remain before the deadline."}),
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{G.sel={};G.result=null;if(r.ok){if(last){G.phase="won"}else{G.i++;G.phase="brief"}}else G.phase="brief";render()}},r.ok?(last?"Enter the base":"Next stage"):"Try this stage again")));
+  main.append(h("div",{class:"cols"},left,sidebar()));
+}
+function endView(won){
+  const main=$("main");main.textContent="";
+  main.append(screenEl(won?"win":"flag",won?"The first crew enters the Moon Base":dateAt(totalMonths())+": China's station is declared complete"));
+  main.append(h("div",{class:"res"+(won?"":" bad")},h("div",{class:"big",text:won?"You win":"You lose"}),
+    h("p",{text:won?"Four astronauts walk from the pad down the sintered road, cycle the airlock and step into a powered, shielded, stocked habitat in "+dateAt(G.months)+", "+(totalMonths()-G.months)+" months ahead of China's published date.":"The clock reached "+dateAt(totalMonths())+" before your base was ready for crew. A Chinese flag passes over the lunar south pole."}),
+    h("h3",{text:"Mission log"}),h("div",{class:"card",style:"max-width:520px"},h("ul",{style:"list-style:none;margin:0;padding:0"},G.log.map(l=>h("li",{style:"display:flex;justify-content:space-between;gap:10px"},h("span",{text:l[0]}),h("span",{class:"mono",style:"white-space:nowrap",text:l[1]}))))),
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{newGame();render()}},"Play again"))));
+}
+
+/* ---------- data and sources ---------- */
+function dataView(){
+  const main=$("main");main.textContent="";const S=LIVE;
+  main.append(h("div",{},h("h2",{text:"Data and sources"}),h("p",{text:"Every number the game uses, as it stands in the live version. The timeline, contract values and mission details come from NASA's Moon Base pages and releases and from CBS, ABC and NBC coverage, linked below. Most payload masses, lander capacities and lead times are still working estimates, because NASA has not published them. Each one can be corrected in the scene editor."})));
+  const lk=u=>u?h("a",{href:u,target:"_blank",rel:"noopener",text:"source"}):"";
+  const tbl=(heads,rows)=>h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},heads.map(x=>h("th",{text:x})))),h("tbody",{},rows.map(r=>h("tr",{},h("td",{class:"n",text:r[0]}),h("td",{text:r[1]}),h("td",{},lk(r[2])))))));
+  if((S.milestones||[]).length)main.append(h("div",{},h("h3",{text:"Published timeline"}),tbl(["When","Milestone","Source"],S.milestones)));
+  if((S.facts||[]).length)main.append(h("div",{},h("h3",{text:"Program facts"}),tbl(["Item","Published figure","Source"],S.facts)));
+  S.stages.forEach((st,n)=>{
+    const rows=[];
+    if(st.type==="loadout"){st.carriers.forEach(c=>rows.push(["Delivery",c.label,c.capKg.toLocaleString()+" kg",c.months+" mo",availTxt(c).trim()]));st.items.forEach(i=>rows.push([i.outcome==="fail"?"Payload (always fails)":"Payload",i.label,i.kg.toLocaleString()+" kg","",(i.tags||[]).join(", ")+(i.availableAt?". "+availTxt(i).trim():"")]))}
+    else st.options.forEach(o=>rows.push([o.outcome==="ok"?"Works":"Fails",o.label,"",(o.months||0)+" mo",(o.requires?"needs "+o.requires.join(", "):"")]));
+    main.append(h("div",{},h("h3",{text:"Stage "+(n+1)+": "+st.title}),h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},["Kind","Name","Mass","Time","Provides or needs"].map(x=>h("th",{text:x})))),h("tbody",{},rows.map(r=>h("tr",{},r.map((x,i)=>h("td",{class:i>1&&i<4?"n":"",text:x})))))))));
+  });
+  main.append(h("div",{},h("h3",{text:"Sources"}),h("ul",{},(S.sources||[]).map(s=>h("li",{},h("a",{href:s.url,target:"_blank",rel:"noopener",text:s.label}))))));
+}
+
+/* ---------- scene editor ---------- */
+let db=null,user=null,sample=null,canPublish=false,myId=null,proposals=[],draft=null,edSel=0,edMsg=["",false];
+function loadDraft(){if(draft)return;try{const d=JSON.parse(ls.get("mb-draft")||"null");draft=validScenario(d)?d:clone(LIVE)}catch(e){draft=clone(LIVE)}}
+function saveDraft(){ls.set("mb-draft",JSON.stringify(draft))}
+const SCHEMA='A stage is a JSON object. Common fields: id (short unique string), type ("choice" or "loadout"), title, narration, scene (one of lander, rover, orbit, build, cargo, habitat, reactor, shield, crew, boom), videoPrompt (a text-to-video brief for the cutscene). '+
+'A "choice" stage has options: [{id,label,desc,months (time the choice costs),outcome ("ok" or "fail"),resultText,requires (asset tags the player must already have),grants (asset tags gained),modifiers ([{has:tag,months:delta}]),scene}]. At least one option must have outcome "ok". A failed choice adds its months and the player retries. '+
+'A "loadout" stage has carriers: [{id,label,capKg,months,desc}], items: [{id,label,kg,tags,desc, and optionally outcome:"fail",failText,failMonths,scene:"boom" for a payload that always fails}], needs: [{tag,label}] (tags the chosen items must cover), successText, failMonths.';
+function editView(){
+  loadDraft();const main=$("main");main.textContent="";
+  if(edSel>=draft.stages.length)edSel=0;
+  const st=draft.stages[edSel];
+  const ta=h("textarea",{class:"json",id:"edJson",spellcheck:"false"});ta.value=JSON.stringify(st,null,1);
+  const pr=h("textarea",{id:"edPrompt",placeholder:"Example: add a fourth payload called Lunar Flashlight scout, 14 kg, that provides mapping. Or: make the microwave paver always fail with a cracked magnetron."});
+  const msg=h("div",{class:"msg"+(edMsg[1]?" err":""),id:"edMsg",text:edMsg[0]});edMsg=["",false];
+  const say=(t,err)=>{msg.textContent=t;msg.className="msg"+(err?" err":"")};
+  const readJson=()=>{let o;try{o=JSON.parse(ta.value)}catch(e){say("That is not valid JSON: "+e.message,true);return null}if(!validStage(o)){say("A stage needs an id, a title, a type, and either options with one that works or carriers and items.",true);return null}return o};
+  const apply=()=>{const o=readJson();if(!o)return false;draft.stages[edSel]=o;saveDraft();return true};
+  const sel=h("select",{id:"edStage",onchange:e=>{edSel=+e.target.value;editView()}},draft.stages.map((s,i)=>{const o=h("option",{value:i,text:(i+1)+". "+s.title});if(i===edSel)o.selected=true;return o}));
+  const askBtn=h("button",{class:"btn",disabled:!sample,onclick:async()=>{
+    const want=pr.value.trim();if(!want){say("Describe the change first.",true);return}
+    askBtn.disabled=true;say("Claude is rewriting this stage...");
+    try{const out=await sample.json("You edit one stage of a data-driven game about building NASA's lunar base. "+SCHEMA+"\n\nAsset tags already used elsewhere in the game: "+[...new Set(draft.stages.flatMap(s=>(s.items||[]).flatMap(i=>i.tags||[]).concat((s.options||[]).flatMap(o=>(o.grants||[]).concat(o.requires||[])))))].join(", ")+"\n\nCurrent stage:\n"+JSON.stringify(st)+"\n\nRequested change:\n"+want+"\n\nReply with only the complete updated stage as one JSON object. Keep every field you were not asked to change. Use plain factual wording and realistic masses and durations.",{cache:false});
+      if(!validStage(out)){say("Claude's answer was not a usable stage. Try wording the change differently.",true)}else{ta.value=JSON.stringify(out,null,1);say("Rewritten below. Review it, then save it to your draft.")}}
+    catch(e){say(e&&e.code==="rate_limited"?"Too many requests. Wait a minute and try again.":"Claude could not rewrite the stage"+(e&&e.code?" ("+e.code+")":"")+". You can still edit the JSON by hand.",true)}
+    askBtn.disabled=false}},"Rewrite with Claude");
+  const left=h("div",{},
+    h("h2",{text:"Scene editor"}),h("p",{text:"Change any cutscene, the actions it offers, and what each action leads to. Describe the change in plain language, or edit the stage data directly. Your draft stays in this browser until you publish or propose it."}),
+    h("label",{for:"edStage",text:"Stage"}),sel,
+    h("div",{class:"row",style:"margin-top:8px"},
+      h("button",{class:"btn ghost small",onclick:()=>{const id="stage"+Date.now().toString(36);draft.stages.splice(edSel+1,0,{id,type:"choice",title:"New stage",scene:"lander",narration:"Describe the situation.",videoPrompt:"",options:[{id:"a",label:"The right call",desc:"",months:3,outcome:"ok",resultText:"It works."},{id:"b",label:"The wrong call",desc:"",months:6,outcome:"fail",resultText:"It fails."}]});edSel++;saveDraft();editView()}},"Add a stage after this one"),
+      h("button",{class:"btn ghost small",disabled:edSel===0,onclick:()=>{const s=draft.stages.splice(edSel,1)[0];draft.stages.splice(--edSel,0,s);saveDraft();editView()}},"Move earlier"),
+      h("button",{class:"btn ghost small",disabled:edSel===draft.stages.length-1,onclick:()=>{const s=draft.stages.splice(edSel,1)[0];draft.stages.splice(++edSel,0,s);saveDraft();editView()}},"Move later"),
+      h("button",{class:"btn ghost small",disabled:draft.stages.length<2,onclick:()=>{draft.stages.splice(edSel,1);edSel=0;saveDraft();editView()}},"Delete stage")),
+    h("label",{for:"edPrompt",text:"Describe a change"}),pr,
+    h("div",{class:"row",style:"margin-top:8px"},askBtn,sample?null:h("span",{class:"note",text:"Claude rewriting is not available in this view. Edit the data below instead."})),
+    h("label",{for:"edJson",text:"Stage data"}),ta,msg,
+    h("div",{class:"row"},
+      h("button",{class:"btn",onclick:()=>{if(apply()){edMsg=["Saved to your draft.",false];editView()}}},"Save to draft"),
+      h("button",{class:"btn ghost",onclick:()=>{if(!apply())return;testing=true;SCN=clone(draft);newGame();G.i=edSel;G.tags=[...new Set(draft.stages.slice(0,edSel).flatMap(s=>(s.items||[]).filter(i=>i.outcome!=="fail").flatMap(i=>i.tags||[]).concat((s.options||[]).flatMap(o=>o.grants||[]))))];show("play")}},"Playtest from this stage"),
+      h("button",{class:"btn ghost",onclick:()=>{draft=clone(LIVE);saveDraft();edMsg=["Draft reset to the live version.",false];editView()}},"Discard draft")));
+  const side=h("aside",{},h("h3",{style:"margin-top:0",text:"Share your changes"}));
+  if(!db)side.append(h("p",{class:"note",text:"Sign in to claude.ai to publish or propose changes. Your draft still works for playtesting."}));
+  else{
+    if(canPublish)side.append(h("p",{class:"note",text:"You can publish. The live version is what everyone plays."}),h("button",{class:"btn small",onclick:async()=>{if(!apply())return;try{await db.doc("game/live").set({json:JSON.stringify(draft),at:Date.now(),by:myId||""});edMsg=["Published. Everyone now plays this version.",false]}catch(e){edMsg=["Publishing failed ("+(e.code||"error")+").",true]}editView()}},"Publish draft as live"),
+      h("div",{style:"height:8px"}),h("button",{class:"btn ghost small",onclick:async()=>{try{await db.doc("game/live").delete();edMsg=["Live version restored to the built-in game.",false]}catch(e){edMsg=["Could not restore ("+(e.code||"error")+").",true]}editView()}},"Restore built-in game"));
+    const note=h("input",{type:"text",id:"edNote",placeholder:"What did you change and why?"});
+    side.append(h("h3",{text:"Propose this stage"}),h("p",{class:"note",text:"Sends the stage above to the owner for approval."}),note,h("div",{style:"height:8px"}),
+      h("button",{class:"btn ghost small",onclick:async()=>{const o=readJson();if(!o)return;try{await db.collection("proposals").add({stage:JSON.stringify(o),note:note.value.slice(0,300),by:myId||"",at:Date.now()});edMsg=["Proposal sent.",false]}catch(e){edMsg=["Could not send the proposal ("+(e.code||"error")+"). Contributors need at least Contributor access.",true]}editView()}},"Send proposal"));
+    side.append(h("h3",{text:"Open proposals"}));
+    if(!proposals.length)side.append(h("p",{class:"note",text:"None yet. Proposed stages appear here for the owner to approve."}));
+    else side.append(h("div",{class:"props"},proposals.map(p=>{let s=null;try{s=JSON.parse(p.stage)}catch(e){}
+      return h("div",{class:"card"},h("strong",{text:s?s.title:"Unreadable proposal"}),h("div",{class:"note",text:(names[p.by]||"Someone")+": "+(p.note||"no note")}),
+        h("div",{class:"row",style:"margin-top:6px"},
+          s?h("button",{class:"btn ghost small",onclick:()=>{const i=draft.stages.findIndex(x=>x.id===s.id);if(i>=0){draft.stages[i]=s;edSel=i}else{draft.stages.push(s);edSel=draft.stages.length-1}saveDraft();edMsg=["Loaded into your draft. Playtest it, then publish to approve.",false];editView()}},"Load into draft"):null,
+          canPublish||p.by===myId?h("button",{class:"btn ghost small",onclick:async()=>{try{await db.doc("proposals/"+p.id).delete()}catch(e){}}},"Dismiss"):null))})));
+  }
+  main.append(h("div",{class:"cols"},left,side));
+}
+
+/* ---------- shell ---------- */
+let tab="play";
+function show(t){tab=t;render();scrollTo(0,0)}
+function render(){
+  for(const b of document.querySelectorAll("nav button"))b.setAttribute("aria-selected",b.dataset.tab===tab?"true":"false");
+  if(tab!=="play"){cancelAnimationFrame(raf);cv=null}
+  drawClock();
+  if(tab==="edit")return editView();
+  if(tab==="data")return dataView();
+  if(G.phase==="brief")stageView();else if(G.phase==="result")resultView();else endView(G.phase==="won");
+}
+document.querySelector("nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b){if(testing&&b.dataset.tab!=="play"){testing=false;SCN=LIVE;newGame()}show(b.dataset.tab)}});
+
+let names={};
+function start(saved){
+  newGame();if(saved&&saved.G&&!saved.testing&&saved.G.i<SCN.stages.length)G=saved.G;
+  render();
+  connect();
+}
+async function connect(){
+  const C=window.claude;if(!C||!C.use)return;
+  C.use("sample").then(s=>{sample=s;if(tab==="edit")render()});
+  user=await C.use("user");
+  if(user){try{canPublish=await user.canEdit();myId=await user.id()}catch(e){}}
+  db=await C.use("db");if(!db){if(tab==="edit")render();return}
+  db.doc("game/live").onSnapshot(snap=>{
+    let s=null;if(snap.exists){try{s=JSON.parse(snap.data().json)}catch(e){}}
+    const next=validScenario(s)?s:clone(DEFAULT);
+    const fresh=G.months===0&&G.i===0;LIVE=next;
+    if(!testing&&fresh){SCN=LIVE;newGame()} else if(!testing){SCN=LIVE;if(G.i>=SCN.stages.length)newGame()}
+    if(!ls.get("mb-draft"))draft=null;
+    render();
+  },()=>{});
+  db.collection("proposals").orderBy("at","desc").limit(30).onSnapshot(async q=>{
+    proposals=q.docs.map(d=>Object.assign({id:d.id},d.data()));
+    if(user&&user.profiles){try{const ps=await user.profiles([...new Set(proposals.map(p=>p.by).filter(Boolean))]);names={};for(const id in ps)names[id]=ps[id].name||""}catch(e){}}
+    if(tab==="edit"&&document.activeElement.tagName!=="TEXTAREA"&&document.activeElement.tagName!=="INPUT")render();
+  },()=>{});
+  if(tab==="edit")render();
+}
+const hot=window.claude&&window.claude.hot;
+if(hot&&hot.snapshot)hot.snapshot(()=>({G,testing}));
+if(hot&&hot.ready)hot.ready(start);else start((hot&&hot.data)||{});
+</script>

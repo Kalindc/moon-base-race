@@ -1,0 +1,29 @@
+.race{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;align-items:center;margin-bottom:4px;font:11px var(--mono);color:var(--dim)}
+.race .rb{position:relative;height:14px}
+.race .track{position:absolute;left:0;right:0;top:5px;height:4px;background:var(--panel2);border-radius:2px}
+.race .fill{position:absolute;left:0;top:5px;height:4px;background:var(--sun);border-radius:2px;transition:width .6s}
+.race .cn .fill{background:var(--halt)}
+.race .mk{position:absolute;top:0;width:2px;height:14px;background:var(--dim)}
+.race .cn .mk{background:var(--line);width:3px}.race .cn .mk.hit{background:var(--halt)}
+.race .mk.end{background:var(--halt);width:3px}
+.racenote{font:11px var(--mono);color:var(--dim);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.racenote b{color:var(--halt);font-weight:400}
+nav{align-items:center;flex-wrap:wrap}
+nav .sp{flex:1}
+nav button.tog{font-size:11px;padding:4px 10px;border-color:var(--line)}
+nav button.tog[aria-pressed=true]{color:var(--go);border-color:var(--go)}
+.map{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:#17181c}
+.insight{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice);border-radius:4px;padding:10px 14px;max-width:68ch;margin-top:12px}
+.insight h3{margin:0 0 4px;color:var(--ice)}
+.notes{margin:0 0 8px;padding-left:18px;color:var(--sun);font-size:14px;max-width:68ch}
+.stat{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.res.soft{border-color:var(--sun)}.res.soft .big{color:var(--sun)}
+.opt .r{font:12px var(--mono);color:var(--sun)}
+aside li span.c{color:var(--ice)}
+aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--dust)}
+.mani{display:flex;gap:14px;align-items:center;margin:8px 0 4px}
+.mani .pic{flex:none;width:84px}.mani svg{display:block;width:100%;height:auto}
+.bay{display:flex;height:12px;background:var(--panel2);border-radius:3px;overflow:hidden;margin:6px 0 4px;border:1px solid var(--line)}
+.bay.over{border-color:var(--halt)}.bay i{display:block;height:100%}
+.load{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px}
+.load .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}

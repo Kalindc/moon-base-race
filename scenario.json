@@ -1,0 +1,1516 @@
+{
+ "version": 4,
+ "title": "Moon Base: Race to the South Pole",
+ "start": {
+  "y": 2026,
+  "m": 11
+ },
+ "deadline": {
+  "y": 2035,
+  "m": 12,
+  "label": "China's published date for its lunar research station"
+ },
+ "markers": [
+  {
+   "y": 2028,
+   "m": 1,
+   "label": "Artemis IV"
+  },
+  {
+   "y": 2029,
+   "m": 1,
+   "label": "Phase 2"
+  },
+  {
+   "y": 2032,
+   "m": 1,
+   "label": "Phase 3"
+  }
+ ],
+ "stages": [
+  {
+   "id": "scout",
+   "type": "loadout",
+   "scene": "lander",
+   "title": "Scout the South Pole",
+   "narration": "NASA Moon Base Phase One runs to 2029: 25 launches and 21 robotic landings to scout the south pole. Pick one lander and fill it, within its mass limit, with payloads that give you mobility, mapping, prospecting and geotechnical data. Miss any of the four and the base team cannot choose a site. Some hardware is not ready yet, and the delivery waits for the latest item on board.",
+   "videoPrompt": "Photorealistic commercial lunar lander descending to the Moon's south pole, long shadows, low sun on the horizon, dust plume, cinematic 35mm",
+   "successText": "The lander is down and the instruments are returning data. You have a resource map, terrain models and soil strength numbers.",
+   "failMonths": 8,
+   "needs": [
+    {
+     "tag": "mobility",
+     "label": "Mobility"
+    },
+    {
+     "tag": "mapping",
+     "label": "Mapping and surveying"
+    },
+    {
+     "tag": "prospecting",
+     "label": "Prospecting"
+    },
+    {
+     "tag": "geotech",
+     "label": "Geotechnical properties"
+    }
+   ],
+   "carriers": [
+    {
+     "id": "novac",
+     "label": "Intuitive Machines Nova-C Trinity",
+     "capKg": 130,
+     "months": 8,
+     "desc": "Moon Base III lander. Small, flies soon, carries little.",
+     "costM": 120,
+     "risk": 0.25
+    },
+    {
+     "id": "blueghost",
+     "label": "Firefly Blue Ghost",
+     "capKg": 240,
+     "months": 9,
+     "desc": "Mid-size CLPS lander with a proven landing.",
+     "costM": 130,
+     "risk": 0.1
+    },
+    {
+     "id": "griffin",
+     "label": "Astrobotic Griffin",
+     "capKg": 500,
+     "months": 10,
+     "desc": "Moon Base II lander. NASA lists more than 1,100 lb of cargo. Rover egress ramps.",
+     "costM": 200,
+     "risk": 0.2
+    },
+    {
+     "id": "mk1",
+     "label": "Blue Origin Blue Moon Mark 1",
+     "capKg": 3000,
+     "months": 13,
+     "desc": "Moon Base I flies the first one, Endurance, to Shackleton Connecting Ridge. A second carries VIPER.",
+     "costM": 280,
+     "risk": 0.12
+    }
+   ],
+   "items": [
+    {
+     "id": "viper",
+     "label": "VIPER rover",
+     "kg": 430,
+     "tags": [
+      "mobility",
+      "prospecting",
+      "mapping"
+     ],
+     "desc": "1 m TRIDENT drill, neutron and infrared spectrometers and a mass spectrometer. Builds a resource map of water ice.",
+     "availableAt": {
+      "y": 2027,
+      "m": 11
+     },
+     "costM": 430
+    },
+    {
+     "id": "promise",
+     "label": "PROMISE nuclear rover",
+     "kg": 900,
+     "tags": [
+      "mobility",
+      "prospecting",
+      "mapping",
+      "nuclear"
+     ],
+     "availableAt": {
+      "y": 2028,
+      "m": 11
+     },
+     "desc": "Six-wheeled JPL rover built from Curiosity and Perseverance spares. Nuclear power carries it through lunar nights and into shadowed craters. Drills to 1 m. Launches late 2028 for an 18-month mission.",
+     "costM": 300
+    },
+    {
+     "id": "flip",
+     "label": "Astrolab FLIP rover",
+     "kg": 450,
+     "tags": [
+      "mobility"
+     ],
+     "desc": "Flies on the Moon Base II Griffin lander. A mobile platform that carries other teams' instruments.",
+     "costM": 80
+    },
+    {
+     "id": "mapp",
+     "label": "Lunar Outpost MAPP rover",
+     "kg": 10,
+     "tags": [
+      "mobility"
+     ],
+     "desc": "Small autonomous rover that carries one or two instruments.",
+     "costM": 15
+    },
+    {
+     "id": "cuberover",
+     "label": "Astrobotic CubeRover",
+     "kg": 6,
+     "tags": [
+      "mobility"
+     ],
+     "desc": "Shoebox-class rover for short traverses near the lander.",
+     "costM": 10
+    },
+    {
+     "id": "moonfall",
+     "label": "MoonFall scout drones (4)",
+     "kg": 200,
+     "tags": [
+      "mobility",
+      "mapping"
+     ],
+     "desc": "Four JPL propulsive hoppers that fly into shadowed terrain and survey landing sites over one lunar day. They fly in 2028.",
+     "availableAt": {
+      "y": 2028,
+      "m": 6
+     },
+     "costM": 150
+    },
+    {
+     "id": "lidar",
+     "label": "Lunar LiDAR demonstration",
+     "kg": 15,
+     "tags": [
+      "mapping"
+     ],
+     "desc": "3D terrain mapping that works in darkness.",
+     "costM": 20
+    },
+    {
+     "id": "gpr",
+     "label": "Ground-penetrating radar",
+     "kg": 5,
+     "tags": [
+      "mapping",
+      "geotech"
+     ],
+     "desc": "Maps buried rocks, layering and ice lenses under the surface.",
+     "costM": 15
+    },
+    {
+     "id": "prime",
+     "label": "TRIDENT drill and MSolo",
+     "kg": 40,
+     "tags": [
+      "prospecting"
+     ],
+     "desc": "Lander-mounted 1 m drill with a mass spectrometer that sniffs the cuttings for volatiles.",
+     "costM": 40
+    },
+    {
+     "id": "nss",
+     "label": "Neutron Spectrometer System",
+     "kg": 2,
+     "tags": [
+      "prospecting"
+     ],
+     "desc": "Detects hydrogen, a sign of water ice, in the top metre of soil.",
+     "costM": 10
+    },
+    {
+     "id": "cone",
+     "label": "Cone penetrometer and shear vane",
+     "kg": 8,
+     "tags": [
+      "geotech"
+     ],
+     "desc": "Measures bearing strength and cohesion of the regolith for pad and foundation design.",
+     "costM": 10
+    },
+    {
+     "id": "scalpss",
+     "label": "SCALPSS plume cameras",
+     "kg": 5,
+     "tags": [
+      "geotech"
+     ],
+     "desc": "Stereo cameras that record how the engine plume erodes the surface.",
+     "costM": 8
+    },
+    {
+     "id": "lra",
+     "label": "Laser Retroreflector Array",
+     "kg": 1,
+     "tags": [
+      "nav"
+     ],
+     "desc": "Passive marker that later landers range against for precision landing.",
+     "costM": 2
+    },
+    {
+     "id": "vertex",
+     "label": "Lunar Vertex magnetometer suite",
+     "kg": 30,
+     "tags": [
+      "science"
+     ],
+     "desc": "Studies magnetic swirls. Good science, no help choosing a base site.",
+     "costM": 30
+    },
+    {
+     "id": "metal",
+     "label": "METAL helium-3 sensor",
+     "kg": 12,
+     "tags": [
+      "science"
+     ],
+     "desc": "Measures helium-3 abundance in the soil.",
+     "costM": 15
+    }
+   ],
+   "insight": {
+    "text": "NASA's Phase One plans 25 launches and 21 landings to carry about 4 tonnes to the surface. VIPER and PROMISE both carry 1 m drills because the ice is expected below the surface, not on it.",
+    "url": "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"
+   },
+   "real": "2026 to 2028: Moon Base I, II and III, VIPER late 2027, PROMISE late 2028"
+  },
+  {
+   "id": "mobility",
+   "type": "loadout",
+   "scene": "rover",
+   "title": "Land the mobility fleet",
+   "narration": "The base needs vehicles that can haul cargo and carry tools. NASA awarded Lunar Terrain Vehicle contracts worth $439 million to Astrolab and Lunar Outpost, with Blue Origin delivering them in 2028. Choose a delivery and the vehicles to send. You need at least one crew-class vehicle or larger. What you land here decides which options you get when the habitats arrive.",
+   "videoPrompt": "Photorealistic six-limbed wheeled robot and an open lunar rover driving off a cargo lander at the lunar south pole, harsh side lighting, dust trails",
+   "successText": "The vehicles drive off the deck and start their checkout traverses.",
+   "failMonths": 8,
+   "needs": [
+    {
+     "tag": "haul",
+     "label": "Crew-class vehicle or larger"
+    }
+   ],
+   "carriers": [
+    {
+     "id": "mk1x2",
+     "label": "Two Blue Moon Mark 1 cargo flights",
+     "capKg": 6000,
+     "months": 14,
+     "desc": "NASA's task orders deliver the Lunar Terrain Vehicles this way in 2028.",
+     "costM": 188,
+     "risk": 0.15
+    },
+    {
+     "id": "mk2c",
+     "label": "Wait for Blue Moon Mark 2 cargo",
+     "capKg": 30000,
+     "months": 26,
+     "desc": "Far more mass, but the lander is not ready for years.",
+     "costM": 2500,
+     "risk": 0.12
+    }
+   ],
+   "items": [
+    {
+     "id": "flex",
+     "label": "Astrolab CLV-1 Lunar Terrain Vehicle",
+     "kg": 900,
+     "tags": [
+      "haul",
+      "ltv"
+     ],
+     "desc": "NASA contract $219 million. About 2,000 lb, over 6 mph, two suited crew or modular cargo pallets.",
+     "costM": 219
+    },
+    {
+     "id": "pegasus",
+     "label": "Lunar Outpost Pegasus Lunar Terrain Vehicle",
+     "kg": 1200,
+     "tags": [
+      "haul",
+      "ltv"
+     ],
+     "desc": "NASA contract $220 million. Over 9 mph, built to operate for up to a year, two suited crew.",
+     "costM": 220
+    },
+    {
+     "id": "racer",
+     "label": "Intuitive Machines Moon RACER",
+     "kg": 1200,
+     "tags": [
+      "haul",
+      "ltv"
+     ],
+     "desc": "A third proposed Lunar Terrain Vehicle design, with a towing trailer. Not selected by NASA.",
+     "costM": 220
+    },
+    {
+     "id": "athlete",
+     "label": "JPL ATHLETE",
+     "kg": 2500,
+     "tags": [
+      "haul",
+      "athlete",
+      "tools"
+     ],
+     "desc": "The largest option. Six wheeled limbs walk or roll, lift a whole habitat off a lander, and swap end effectors: gripper, drill, scoop, cable reel.",
+     "costM": 450
+    },
+    {
+     "id": "lunarcruiser",
+     "label": "JAXA pressurized rover",
+     "kg": 10000,
+     "tags": [
+      "haul",
+      "pressurized"
+     ],
+     "desc": "NASA expects it in Phase Two. A mobile habitat for 28-day missions with resupply every 14 days. Too heavy for Mark 1.",
+     "availableAt": {
+      "y": 2029,
+      "m": 6
+     },
+     "costM": 900
+    },
+    {
+     "id": "mapp2",
+     "label": "MAPP rover swarm (3)",
+     "kg": 30,
+     "tags": [
+      "scouts"
+     ],
+     "desc": "Small scouts. They cannot haul cargo.",
+     "costM": 40
+    }
+   ],
+   "insight": {
+    "text": "NASA bought two different Lunar Terrain Vehicles, from Astrolab and Lunar Outpost, for $439 million, so that one design problem cannot ground every crew. JPL built ATHLETE prototypes to unload cargo from tall landers.",
+    "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
+   },
+   "real": "2028: both Lunar Terrain Vehicles delivered"
+  },
+  {
+   "id": "site",
+   "type": "choice",
+   "scene": "orbit",
+   "title": "Choose the base site",
+   "narration": "Use the scouting data to place the base. You want near-continuous sunlight, a line of sight to Earth, flat ground for pads, and a short drive to water ice in permanently shadowed regions.",
+   "videoPrompt": "Photorealistic orbital view of the lunar south pole, Shackleton crater in deep shadow, sunlit ridges, Earth low on the horizon",
+   "options": [
+    {
+     "id": "ridge",
+     "label": "Shackleton Connecting Ridge",
+     "months": 3,
+     "outcome": "ok",
+     "grants": [
+      "site"
+     ],
+     "desc": "Where Moon Base I lands. Sunlit most of the year, with Shackleton and de Gerlache shadowed craters a few kilometres away on either side.",
+     "resultText": "Site confirmed. Power towers on the ridge see the Sun most of the year and the ice is a short drive downhill.",
+     "costM": 60
+    },
+    {
+     "id": "nobile",
+     "label": "Nobile Rim (Mons Mouton)",
+     "months": 4,
+     "outcome": "ok",
+     "grants": [
+      "site"
+     ],
+     "desc": "Broad, flat mountain top near small shadowed craters. VIPER's planned landing area.",
+     "resultText": "Site confirmed. Flat ground makes pad building easy, with small cold traps close by.",
+     "costM": 60
+    },
+    {
+     "id": "malapert",
+     "label": "Malapert Massif",
+     "months": 6,
+     "outcome": "ok",
+     "grants": [
+      "site"
+     ],
+     "desc": "Always in view of Earth for communications, but a long drive to large ice deposits.",
+     "resultText": "Site confirmed. Communications are excellent. Ice runs take longer, so planning adds time.",
+     "costM": 80
+    },
+    {
+     "id": "floor",
+     "label": "Floor of Shackleton crater",
+     "months": 10,
+     "outcome": "fail",
+     "desc": "Sit directly on the ice.",
+     "resultText": "The crater floor never sees the Sun or the Earth. At -334 °F the hardware freezes and you have no direct link home. The survey is redone.",
+     "costM": 120
+    },
+    {
+     "id": "reiner",
+     "label": "Reiner Gamma",
+     "months": 10,
+     "outcome": "fail",
+     "desc": "A bright magnetic swirl on the near side, easy to reach. Moon Base III lands here for science.",
+     "resultText": "It is an interesting place with no permanently shadowed regions and no water ice. The base cannot live off the land here. The survey is redone.",
+     "costM": 120
+    },
+    {
+     "id": "tranq",
+     "label": "Mare Tranquillitatis",
+     "months": 10,
+     "outcome": "fail",
+     "desc": "Flat, well-mapped equatorial plain.",
+     "resultText": "Fourteen-day nights and no polar volatiles. The site fails the resource review and the survey is redone.",
+     "costM": 120
+    }
+   ],
+   "insight": {
+    "text": "Moon Base I targets Shackleton Connecting Ridge. Sunlit ground there exceeds 130 °F while the crater floor beside it sits at -334 °F, and that cold is what has trapped the water ice.",
+    "url": "https://www.nasa.gov/reference/moonbase-about/"
+   },
+   "real": "Moon Base I targets Shackleton Connecting Ridge"
+  },
+  {
+   "id": "construct",
+   "type": "loadout",
+   "scene": "lander",
+   "title": "Send construction and resource payloads",
+   "narration": "Before heavy landers arrive you need machines on the surface to dig, to turn regolith into hard surfaces, and to power the work. Choose a delivery and payloads. You must cover excavation, surface construction and power. Resource processing is optional and risky.",
+   "videoPrompt": "Photorealistic small robotic excavators with counter-rotating bucket drums unloading from a lunar cargo lander, solar tower deploying in the background",
+   "successText": "The construction fleet is unloaded and the power tower is up.",
+   "failMonths": 9,
+   "needs": [
+    {
+     "tag": "excavate",
+     "label": "Excavation"
+    },
+    {
+     "tag": "surface",
+     "label": "Sintering or laser construction"
+    },
+    {
+     "tag": "power",
+     "label": "Power"
+    }
+   ],
+   "carriers": [
+    {
+     "id": "mk1x2",
+     "label": "Two Blue Moon Mark 1 cargo flights",
+     "capKg": 6000,
+     "months": 12,
+     "desc": "Available now.",
+     "costM": 400,
+     "risk": 0.15
+    },
+    {
+     "id": "mk2c",
+     "label": "Blue Moon Mark 2 cargo",
+     "capKg": 30000,
+     "months": 20,
+     "desc": "Carries everything, later.",
+     "costM": 2500,
+     "risk": 0.12
+    }
+   ],
+   "items": [
+    {
+     "id": "rassor",
+     "label": "RASSOR excavators (2)",
+     "kg": 140,
+     "tags": [
+      "excavate"
+     ],
+     "desc": "NASA Kennedy's bucket-drum diggers. Counter-rotating drums let a light robot dig in low gravity.",
+     "costM": 60
+    },
+    {
+     "id": "ipex",
+     "label": "ISRU Pilot Excavator (IPEx)",
+     "kg": 30,
+     "tags": [
+      "excavate"
+     ],
+     "desc": "Flight version of RASSOR sized for a pilot plant.",
+     "costM": 30
+    },
+    {
+     "id": "microwave",
+     "label": "Microwave sintering paver",
+     "kg": 600,
+     "tags": [
+      "surface",
+      "sinter"
+     ],
+     "desc": "Heats regolith in place until the grains fuse into a hard slab.",
+     "costM": 150
+    },
+    {
+     "id": "solarsinter",
+     "label": "Solar concentrator sintering rig",
+     "kg": 400,
+     "tags": [
+      "surface",
+      "sinter"
+     ],
+     "desc": "Focuses sunlight to fuse interlocking paving tiles.",
+     "costM": 100
+    },
+    {
+     "id": "laser",
+     "label": "Laser regolith 3D printer",
+     "kg": 900,
+     "tags": [
+      "surface",
+      "laser"
+     ],
+     "desc": "High-power laser melts regolith layer by layer into pads, walls and berms.",
+     "costM": 250
+    },
+    {
+     "id": "lasermfg",
+     "label": "Laser powder-bed manufacturing cell",
+     "kg": 500,
+     "tags": [
+      "spares"
+     ],
+     "desc": "Prints metal and regolith-ceramic spare parts on site.",
+     "costM": 150
+    },
+    {
+     "id": "minicast",
+     "label": "miniCAST solar and comms tower",
+     "kg": 800,
+     "tags": [
+      "power"
+     ],
+     "desc": "NASA's kit of Redwire solar arrays, Honeybee Robotics batteries and Yank Technologies wireless power for rovers.",
+     "costM": 200
+    },
+    {
+     "id": "lsms",
+     "label": "LSMS crane",
+     "kg": 300,
+     "tags": [
+      "crane"
+     ],
+     "desc": "NASA Langley's Lightweight Surface Manipulation System. Lifts cargo off lander decks.",
+     "costM": 80
+    },
+    {
+     "id": "carbothermal",
+     "label": "Carbothermal oxygen reactor",
+     "kg": 700,
+     "tags": [
+      "oxygen"
+     ],
+     "desc": "Extracts oxygen from regolith with methane and concentrated heat.",
+     "costM": 200
+    },
+    {
+     "id": "icemine",
+     "label": "Ice mining thermal extractor",
+     "kg": 500,
+     "tags": [
+      "water"
+     ],
+     "desc": "Heated drill that drives water vapour out of shadowed-region soil and traps it.",
+     "costM": 180
+    },
+    {
+     "id": "mre",
+     "label": "Molten Regolith Electrolysis reactor",
+     "kg": 900,
+     "tags": [
+      "oxygen",
+      "metals"
+     ],
+     "outcome": "fail",
+     "failMonths": 12,
+     "scene": "boom",
+     "desc": "Melts regolith at 1,600 °C and splits it into oxygen and metals. Highest yield on paper.",
+     "failText": "The molten pool eats through the electrode seal. The reactor ruptures and sprays slag across the lander and the payloads beside it. The delivery is lost.",
+     "costM": 300
+    }
+   ],
+   "insight": {
+    "text": "NASA's first power kit, miniCAST, is solar arrays, batteries and wireless power, and a larger integrated power system goes out for bids in early 2027. Power comes before construction in the real plan too.",
+    "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+   },
+   "real": "2027 onward: integrated power system solicitation"
+  },
+  {
+   "id": "build",
+   "type": "choice",
+   "scene": "build",
+   "title": "Build pads, roads and foundations",
+   "narration": "Your landers and robots now build the ground infrastructure. A 100-tonne lander's exhaust throws regolith at more than a kilometre per second, so what you build here protects everything that follows.",
+   "videoPrompt": "Photorealistic robots sintering a circular landing pad on the Moon, glowing regolith under a laser, berms, a graded road leading to the horizon",
+   "options": [
+    {
+     "id": "full",
+     "label": "Landing pad with blast berm, then road, then habitat foundations",
+     "months": 16,
+     "outcome": "ok",
+     "grants": [
+      "pad",
+      "road",
+      "foundation"
+     ],
+     "modifiers": [
+      {
+       "has": "athlete",
+       "months": -3
+      },
+      {
+       "has": "laser",
+       "months": -2
+      },
+      {
+       "has": "spares",
+       "months": -1
+      }
+     ],
+     "desc": "The complete job. ATHLETE, a laser printer and on-site spares each shorten it.",
+     "resultText": "A sintered pad with a blast berm, a graded road and level foundations are finished.",
+     "costM": 1500,
+     "risk": 0.1
+    },
+    {
+     "id": "twopads",
+     "label": "Two pads, road and foundations",
+     "months": 22,
+     "outcome": "ok",
+     "grants": [
+      "pad",
+      "road",
+      "foundation"
+     ],
+     "modifiers": [
+      {
+       "has": "athlete",
+       "months": -4
+      },
+      {
+       "has": "laser",
+       "months": -3
+      }
+     ],
+     "desc": "A second pad gives a backup, at a cost in time.",
+     "resultText": "Two pads, a road and foundations are finished. Landings no longer depend on one surface.",
+     "costM": 2200,
+     "risk": 0.08
+    },
+    {
+     "id": "padonly",
+     "label": "Pad only, skip the road and foundations",
+     "months": 19,
+     "outcome": "setback",
+     "desc": "Get the heavy landers down sooner.",
+     "resultText": "The pad works, but vehicles bog down in loose regolith and there is nowhere level to set a habitat. The team goes back and finishes the road and foundations, ten months later than a single campaign would have taken.",
+     "costM": 1200,
+     "grants": [
+      "pad",
+      "road",
+      "foundation"
+     ]
+    },
+    {
+     "id": "nopad",
+     "label": "Skip the pad and land on bare regolith",
+     "months": 10,
+     "outcome": "fail",
+     "scene": "boom",
+     "desc": "Apollo did it.",
+     "resultText": "The heavy lander's plume digs a crater under itself and sandblasts the construction fleet. Repairs and a rebuilt site cost you most of a year.",
+     "costM": 900
+    }
+   ],
+   "insight": {
+    "text": "NASA flies SCALPSS plume cameras on Moon Base I to measure how engine exhaust erodes the surface. That data sizes the pads and berms that heavy landers will need.",
+    "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
+   },
+   "real": "Not yet dated by NASA"
+  },
+  {
+   "id": "cargo",
+   "type": "loadout",
+   "scene": "cargo",
+   "title": "Land the heavy cargo",
+   "narration": "The pads are ready for the big landers. NASA's Phase Three, from 2032, brings larger permanent habitats and nuclear power, with equipment from Italy and Canada. Choose Blue Origin's Blue Moon Mark 2, SpaceX's Starship, or both, and load them. The base needs a fission reactor, a habitat, the cabling to join them, and supplies.",
+   "videoPrompt": "Photorealistic SpaceX Starship lunar lander touching down on a sintered landing pad at the lunar south pole, Blue Moon Mark 2 lander in the distance, dramatic low sun",
+   "successText": "Touchdown on the pad. The blast berm does its job and the cargo is intact.",
+   "failMonths": 9,
+   "needs": [
+    {
+     "tag": "reactor",
+     "label": "Fission reactor"
+    },
+    {
+     "tag": "habitat",
+     "label": "Habitat"
+    },
+    {
+     "tag": "cable",
+     "label": "Power cabling"
+    },
+    {
+     "tag": "supplies",
+     "label": "Supplies"
+    }
+   ],
+   "carriers": [
+    {
+     "id": "mk2",
+     "label": "Blue Moon Mark 2 cargo",
+     "capKg": 30000,
+     "months": 12,
+     "desc": "About 30 tonnes one way.",
+     "costM": 2500,
+     "risk": 0.1
+    },
+    {
+     "id": "starship",
+     "label": "SpaceX Starship cargo",
+     "capKg": 100000,
+     "months": 14,
+     "desc": "About 100 tonnes, after orbital refuelling. Cargo comes down a 30 m elevator.",
+     "costM": 3000,
+     "risk": 0.12
+    },
+    {
+     "id": "both",
+     "label": "Both landers",
+     "capKg": 130000,
+     "months": 16,
+     "desc": "Two landings, the most mass, the longest campaign.",
+     "costM": 5500,
+     "risk": 0.18
+    }
+   ],
+   "items": [
+    {
+     "id": "fsp",
+     "label": "Fission Surface Power reactor",
+     "kg": 6000,
+     "tags": [
+      "reactor"
+     ],
+     "desc": "100 kW-class reactor that runs through the dark with no sunlight.",
+     "availableAt": {
+      "y": 2032,
+      "m": 1
+     },
+     "costM": 3000
+    },
+    {
+     "id": "fsp2",
+     "label": "Second fission reactor",
+     "kg": 6000,
+     "tags": [
+      "reactor",
+      "redundant"
+     ],
+     "desc": "Backup power.",
+     "availableAt": {
+      "y": 2032,
+      "m": 1
+     },
+     "costM": 3000
+    },
+    {
+     "id": "inflatable",
+     "label": "Inflatable surface habitat",
+     "kg": 12000,
+     "tags": [
+      "habitat"
+     ],
+     "desc": "A Phase Two semi-habitable module. Packs small, expands once set on its foundation.",
+     "costM": 2500
+    },
+    {
+     "id": "rigid",
+     "label": "Rigid multi-deck habitat",
+     "kg": 25000,
+     "tags": [
+      "habitat"
+     ],
+     "desc": "A Phase Three permanent habitat, outfitted on Earth with Italian and Canadian equipment. Heavy.",
+     "availableAt": {
+      "y": 2032,
+      "m": 1
+     },
+     "costM": 4500
+    },
+    {
+     "id": "cable",
+     "label": "Power cable reels and radiators",
+     "kg": 1500,
+     "tags": [
+      "cable"
+     ],
+     "desc": "A kilometre of cable to keep the reactor at a safe distance.",
+     "costM": 150
+    },
+    {
+     "id": "logistics",
+     "label": "Logistics and supplies",
+     "kg": 8000,
+     "tags": [
+      "supplies"
+     ],
+     "desc": "Food, water, air, spares and suits for the first crew.",
+     "costM": 400
+    },
+    {
+     "id": "airlock",
+     "label": "Airlock and suitport module",
+     "kg": 4000,
+     "tags": [
+      "airlock"
+     ],
+     "desc": "Keeps dust out of the habitat.",
+     "costM": 400
+    },
+    {
+     "id": "solarfarm",
+     "label": "Solar array farm",
+     "kg": 3000,
+     "tags": [
+      "power"
+     ],
+     "desc": "Extra daytime power. Not a substitute for the reactor in the long polar shadows.",
+     "costM": 300
+    },
+    {
+     "id": "prover",
+     "label": "JAXA pressurized rover",
+     "kg": 10000,
+     "tags": [
+      "pressurized",
+      "haul"
+     ],
+     "desc": "Mobile habitat for long traverses.",
+     "availableAt": {
+      "y": 2029,
+      "m": 6
+     },
+     "costM": 900
+    }
+   ],
+   "insight": {
+    "text": "Both crew landers must complete an uncrewed landing before they carry astronauts. Larger habitats and nuclear power are Phase Three items, from 2032.",
+    "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"
+   },
+   "real": "2032 onward: Phase Three habitats and nuclear power"
+  },
+  {
+   "id": "move",
+   "type": "choice",
+   "scene": "habitat",
+   "title": "Move the habitat",
+   "narration": "The habitat is sitting on top of a lander on the pad. It has to reach its foundation. Your options depend on the vehicles you landed.",
+   "videoPrompt": "Photorealistic six-limbed ATHLETE robot carrying a cylindrical habitat along a sintered lunar road, tall lander behind it",
+   "options": [
+    {
+     "id": "athlete",
+     "label": "ATHLETE lifts and walks it over",
+     "months": 3,
+     "outcome": "ok",
+     "requires": [
+      "athlete"
+     ],
+     "grants": [
+      "placed"
+     ],
+     "desc": "Two three-limbed halves dock under the habitat, lift it clear and carry it down the road.",
+     "resultText": "ATHLETE sets the habitat on its foundation and levels it with its limbs.",
+     "costM": 40,
+     "risk": 0.05
+    },
+    {
+     "id": "ltvcrane",
+     "label": "Crane it onto a Lunar Terrain Vehicle trailer",
+     "months": 6,
+     "outcome": "ok",
+     "requires": [
+      "ltv",
+      "crane"
+     ],
+     "grants": [
+      "placed"
+     ],
+     "desc": "The LSMS crane lowers the habitat to a trailer and the rover tows it along the road.",
+     "resultText": "Slow and careful, but the habitat is on its foundation.",
+     "costM": 60,
+     "risk": 0.12
+    },
+    {
+     "id": "skid",
+     "label": "Winch it on a skid",
+     "months": 11,
+     "outcome": "ok",
+     "grants": [
+      "placed"
+     ],
+     "desc": "Works with any vehicle. Takes many short pulls and a lot of anchoring.",
+     "resultText": "After months of short pulls the habitat reaches its foundation.",
+     "costM": 80,
+     "risk": 0.25
+    },
+    {
+     "id": "stay",
+     "label": "Leave it on the lander",
+     "months": 7,
+     "outcome": "fail",
+     "desc": "Use the lander as the base.",
+     "resultText": "Tens of metres up, the habitat cannot be shielded and blocks the only pad. The plan is rejected and the move is redone.",
+     "costM": 60
+    }
+   ],
+   "insight": {
+    "text": "Starship's cargo comes down an elevator from tens of metres up, and Blue Moon Mark 2 keeps its payload low. How cargo gets off the lander shapes every vehicle NASA is buying.",
+    "url": "https://www.nasa.gov/reference/human-landing-systems/"
+   },
+   "real": "Not yet dated by NASA"
+  },
+  {
+   "id": "connect",
+   "type": "choice",
+   "scene": "reactor",
+   "title": "Place the reactor and connect power",
+   "narration": "The fission reactor has to power the habitat without irradiating the crew. Decide where it goes and how it is connected.",
+   "videoPrompt": "Photorealistic lunar fission reactor with tall radiator panels behind a regolith berm, robot laying power cable toward a distant habitat",
+   "options": [
+    {
+     "id": "far",
+     "label": "One kilometre away behind a berm, with ATHLETE laying cable",
+     "months": 3,
+     "outcome": "ok",
+     "requires": [
+      "athlete"
+     ],
+     "grants": [
+      "powered"
+     ],
+     "desc": "ATHLETE swaps to its cable-reel end effector.",
+     "resultText": "The reactor goes critical behind its berm and the habitat lights up.",
+     "costM": 80,
+     "risk": 0.05
+    },
+    {
+     "id": "farltv",
+     "label": "One kilometre away behind a berm, with a rover laying cable",
+     "months": 5,
+     "outcome": "ok",
+     "requires": [
+      "haul"
+     ],
+     "grants": [
+      "powered"
+     ],
+     "desc": "A rover tows the cable reel while excavators trench.",
+     "resultText": "The reactor goes critical behind its berm and the habitat lights up.",
+     "costM": 100,
+     "risk": 0.1
+    },
+    {
+     "id": "near",
+     "label": "Next to the habitat to save cable",
+     "months": 8,
+     "outcome": "fail",
+     "desc": "Shortest run, fastest job.",
+     "resultText": "Radiation at the habitat wall is far over the crew limit. The reactor has to be shut down, cooled and moved.",
+     "costM": 150
+    },
+    {
+     "id": "solar",
+     "label": "Leave the reactor off and run on solar",
+     "months": 11,
+     "outcome": "setback",
+     "desc": "Skip the nuclear work.",
+     "resultText": "The first long shadow period drains the batteries and the habitat freezes. Systems are repaired and the reactor is installed after all, at a safe distance.",
+     "costM": 120,
+     "grants": [
+      "powered"
+     ]
+    }
+   ],
+   "insight": {
+    "text": "NASA's Fission Surface Power design runs for years with no sunlight, which is why it is the Phase Three answer to long polar shadows. Reactors sit far from habitats and behind terrain for shielding.",
+    "url": "https://www.nasa.gov/tdm/fission-surface-power/"
+   },
+   "real": "2032 onward: Phase Three"
+  },
+  {
+   "id": "shield",
+   "type": "choice",
+   "scene": "shield",
+   "title": "Shield the habitat",
+   "narration": "With no atmosphere or magnetic field, the crew needs mass overhead against solar storms and cosmic rays. Cover the habitat with regolith.",
+   "videoPrompt": "Photorealistic small excavator robots piling regolith over a lunar habitat until only the airlock shows, time-lapse feel",
+   "options": [
+    {
+     "id": "berm",
+     "label": "Bury it under 2 to 3 metres of loose regolith",
+     "months": 6,
+     "outcome": "ok",
+     "requires": [
+      "excavate"
+     ],
+     "grants": [
+      "shielded"
+     ],
+     "desc": "Excavators haul and dump regolith over a support shell.",
+     "resultText": "Only the airlock shows. The crew dose inside is cut to a fraction of the surface rate.",
+     "costM": 120,
+     "risk": 0.08
+    },
+    {
+     "id": "arch",
+     "label": "Build a sintered regolith vault over it",
+     "months": 8,
+     "outcome": "ok",
+     "requires": [
+      "surface"
+     ],
+     "grants": [
+      "shielded"
+     ],
+     "desc": "Sintered or laser-printed blocks form an arch that is then covered. Stronger and easier to maintain.",
+     "resultText": "A fused regolith vault stands over the habitat, covered with loose soil.",
+     "costM": 200,
+     "risk": 0.05
+    },
+    {
+     "id": "thin",
+     "label": "A thin 30 cm layer",
+     "months": 11,
+     "outcome": "setback",
+     "desc": "Quicker.",
+     "resultText": "A thin layer makes secondary radiation worse, not better. The flight surgeons refuse to certify the base, so the excavators go back and pile on another two metres.",
+     "costM": 100,
+     "grants": [
+      "shielded"
+     ]
+    },
+    {
+     "id": "none",
+     "label": "No shielding",
+     "months": 8,
+     "outcome": "fail",
+     "desc": "The habitat walls will do.",
+     "resultText": "A solar particle event would be lethal over a long stay. The base is not certified for crew and the work is redone.",
+     "costM": 100
+    }
+   ],
+   "insight": {
+    "text": "NASA calls Moon Base a proving ground for Mars. Living under regolith shielding for months is one of the skills a Mars crew cannot learn anywhere else.",
+    "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+   },
+   "real": "Not yet dated by NASA"
+  },
+  {
+   "id": "crew",
+   "type": "choice",
+   "scene": "crew",
+   "title": "Land the crew",
+   "narration": "Artemis crews have landed for short stays every six months since 2028. This crew is the first to move in. The base is powered, shielded and stocked. Choose how they arrive.",
+   "videoPrompt": "Photorealistic astronauts in white suits walking from a lunar lander on a sintered pad toward a regolith-covered habitat with a glowing airlock, Earth above the horizon",
+   "options": [
+    {
+     "id": "starship",
+     "label": "Starship lander to the pad",
+     "months": 6,
+     "outcome": "ok",
+     "grants": [
+      "crew"
+     ],
+     "desc": "Four astronauts ride the elevator down to the pad.",
+     "resultText": "The crew is down.",
+     "costM": 2500,
+     "risk": 0.06,
+     "lander": "starship"
+    },
+    {
+     "id": "mk2",
+     "label": "Blue Moon Mark 2 crew lander to the pad",
+     "months": 6,
+     "outcome": "ok",
+     "grants": [
+      "crew"
+     ],
+     "desc": "Four astronauts step off close to the ground.",
+     "resultText": "The crew is down.",
+     "costM": 2500,
+     "risk": 0.06,
+     "lander": "mk2"
+    },
+    {
+     "id": "offpad",
+     "label": "Land beside the habitat to shorten the walk",
+     "months": 8,
+     "outcome": "fail",
+     "scene": "boom",
+     "desc": "Skip the drive.",
+     "resultText": "The plume strips the regolith cover off the habitat and peppers the radiators. The landing is waved off and the damage is repaired.",
+     "costM": 1200,
+     "lander": "starship"
+    }
+   ],
+   "insight": {
+    "text": "NASA plans crewed landings every six months after Artemis V in late 2028, with at least two lander providers. Short visits come years before anyone moves in.",
+    "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+   },
+   "real": "2028: first landings. 2032 onward: living and working"
+  }
+ ],
+ "sources": [
+  {
+   "label": "NASA Moon Base overview",
+   "url": "https://www.nasa.gov/moonbase/"
+  },
+  {
+   "label": "NASA: about Moon Base",
+   "url": "https://www.nasa.gov/reference/moonbase-about/"
+  },
+  {
+   "label": "NASA Moon Base phases",
+   "url": "https://www.nasa.gov/moonbase-phases/"
+  },
+  {
+   "label": "NASA release, 7 Nov 2026: transportation, technology and science awards",
+   "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  },
+  {
+   "label": "NASA release, 26 May 2026: rovers, landers and missions update",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
+  },
+  {
+   "label": "CBS News: NASA's Moon Base plan",
+   "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+  },
+  {
+   "label": "ABC News, Mar 2026: $20 billion Moon Base strategy",
+   "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"
+  },
+  {
+   "label": "ABC News, May 2026: new details of the plan",
+   "url": "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"
+  },
+  {
+   "label": "NBC Right Now, Nov 2026: $15 billion in contracts and funding",
+   "url": "https://www.nbcrightnow.com/yakima/news/syndicated/nasa-outlines-15-billion-for-moon-base-program/article_053f5607-6ab4-5d8e-b2bf-67d659ff680f.html"
+  },
+  {
+   "label": "Space.com: China plans a south pole Moon base by 2035",
+   "url": "https://space.com/china-moon-base-south-pole-2035"
+  },
+  {
+   "label": "Starlust: NASA plan for a 100 kW reactor on the Moon by 2030",
+   "url": "https://starlust.org/nasa-planning-to-build-a-100-kilowatt-nuclear-reactor-on-the-moon-by-2030/"
+  }
+ ],
+ "milestones": [
+  {
+   "when": "24 Mar 2026",
+   "y": 2026,
+   "m": 3,
+   "text": "NASA announces Moon Base at its Ignition event: about $20 billion over seven years, dozens of missions. The Gateway station is paused and its hardware repurposed for the surface.",
+   "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/",
+   "cat": "program",
+   "who": "NASA"
+  },
+  {
+   "when": "1 Apr 2026",
+   "y": 2026,
+   "m": 4,
+   "text": "Artemis II launches, the first crewed lunar flyby in about 50 years.",
+   "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493",
+   "cat": "crew",
+   "who": "NASA"
+  },
+  {
+   "when": "2026",
+   "y": 2026,
+   "m": 8,
+   "text": "Chang'e-7 is due to survey the lunar south pole for water ice with an orbiter, lander, rover and hopping probe.",
+   "url": "https://space.com/china-moon-base-south-pole-2035",
+   "cat": "rival",
+   "who": "China"
+  },
+  {
+   "when": "Fall 2026 or later",
+   "y": 2026,
+   "m": 10,
+   "text": "Moon Base I: Blue Moon Mark 1 Endurance lands on Shackleton Connecting Ridge with SCALPSS and a retroreflector.",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "Late 2026",
+   "y": 2026,
+   "m": 11,
+   "text": "Moon Base II: Griffin lander carries more than 1,100 lb of cargo, including Astrolab's FLIP rover.",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "7 Nov 2026",
+   "y": 2026,
+   "m": 11,
+   "text": "CLPS 2 awarded to eight companies, up to $10 billion over ten years. CLPS 1.0 ceiling raised from $2.6 billion to $4.2 billion. PROMISE rover and about $1.3 billion of launch task orders announced.",
+   "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/",
+   "cat": "program",
+   "who": "NASA"
+  },
+  {
+   "when": "2026",
+   "y": 2026,
+   "m": 12,
+   "text": "Moon Base III: Nova-C Trinity lands at Reiner Gamma with Lunar Vertex and payloads from ESA and Korea's KASI.",
+   "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "2027",
+   "y": 2027,
+   "m": 6,
+   "text": "Artemis III tests Orion and one or both landers in low Earth orbit. CAPSTONE 02 launches.",
+   "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493",
+   "cat": "crew",
+   "who": "NASA"
+  },
+  {
+   "when": "Late 2027",
+   "y": 2027,
+   "m": 11,
+   "text": "VIPER arrives at the south pole on the second Blue Moon Mark 1.",
+   "url": "https://www.nasa.gov/moonbase-phases/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "2028",
+   "y": 2028,
+   "m": 6,
+   "text": "Artemis IV, the first crewed landing since 1972, then Artemis V late in the year. After that, a crewed landing every six months on SpaceX and Blue Origin landers.",
+   "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493",
+   "cat": "crew",
+   "who": "NASA"
+  },
+  {
+   "when": "2028",
+   "y": 2028,
+   "m": 6,
+   "text": "MoonFall drones fly on Firefly's Elytra. Both Lunar Terrain Vehicles are delivered. SpaceX flies a cislunar communications demonstration on Starship.",
+   "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "Late 2028",
+   "y": 2028,
+   "m": 11,
+   "text": "PROMISE nuclear rover launches on a Blue Moon Mark 1 for an 18-month mission. Four more CLPS landings.",
+   "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/",
+   "cat": "robotic",
+   "who": "NASA"
+  },
+  {
+   "when": "2029 to 2032",
+   "y": 2029,
+   "m": 1,
+   "text": "Phase Two, build and expand: semi-habitable quarters, early power, JAXA's pressurized rover.",
+   "url": "https://www.nasa.gov/reference/moonbase-about/",
+   "cat": "program",
+   "who": "NASA"
+  },
+  {
+   "when": "About 2029",
+   "y": 2029,
+   "m": 1,
+   "text": "Chang'e-8 is due to test building with lunar regolith at the south pole.",
+   "url": "https://space.com/china-moon-base-south-pole-2035",
+   "cat": "rival",
+   "who": "China"
+  },
+  {
+   "when": "By 2030",
+   "y": 2030,
+   "m": 12,
+   "text": "China's stated goal for its first crewed lunar landing.",
+   "url": "https://space.com/china-moon-base-south-pole-2035",
+   "cat": "rival",
+   "who": "China"
+  },
+  {
+   "when": "2032 onward",
+   "y": 2032,
+   "m": 1,
+   "text": "Phase Three, live and work: larger permanent habitats, nuclear and solar power, heavy vehicles, with equipment from Italy and Canada.",
+   "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493",
+   "cat": "program",
+   "who": "NASA"
+  },
+  {
+   "when": "2035",
+   "y": 2035,
+   "m": 12,
+   "text": "China's published date for the basic version of its lunar research station at the south pole.",
+   "url": "https://space.com/china-moon-base-south-pole-2035",
+   "cat": "rival",
+   "who": "China"
+  }
+ ],
+ "facts": [
+  [
+   "Program cost",
+   "About $20 billion over seven years, an average of about $2.9 billion a year",
+   "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+  ],
+  [
+   "Phase One scale",
+   "25 launches, 21 landings, about 4 tonnes of cargo to the surface",
+   "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"
+  ],
+  [
+   "CLPS 2",
+   "Eight companies, ten years, up to $10 billion: Blue Origin, Firefly, Intuitive Machines, ispace-U.S., Lockheed Martin, Northrop Grumman, SpaceX, Voyager Technologies",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "CLPS 1.0",
+   "Ceiling raised to $4.2 billion, deliveries through November 2033",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "Launch task orders",
+   "Six orders, about $1.3 billion, to Arrow Science and Technology, Blue Origin and Impulse Space",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "Lunar Terrain Vehicles",
+   "Astrolab CLV-1 $219 million (about 2,000 lb, over 6 mph). Lunar Outpost Pegasus $220 million (over 9 mph, operates up to a year). Two suited crew each.",
+   "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"
+  ],
+  [
+   "Rover delivery",
+   "Blue Origin: $188 million base for the Lunar Terrain Vehicles, plus $94 million base and a $140 million option for PROMISE",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "PROMISE rover",
+   "Six wheels, nuclear powered, built by JPL from Curiosity and Perseverance spares, drill to about 1 m, 18-month mission",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "MoonFall",
+   "Four JPL hopper drones that survey landing sites over one lunar day",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "Pressurized rover",
+   "Supplied by JAXA: 28-day missions, resupply every 14 days",
+   "https://www.nasa.gov/moonbase-phases/"
+  ],
+  [
+   "miniCAST power kit",
+   "Honeybee Robotics storage, Redwire generation, Yank Technologies wireless power",
+   "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"
+  ],
+  [
+   "Partners",
+   "JAXA (pressurized rover, semi-habitable areas), Italy and Canada (larger habitats and vehicles), ESA and Korea's KASI (science payloads)",
+   "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"
+  ],
+  [
+   "Crew landers",
+   "Each must complete an uncrewed landing before it carries crew",
+   "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"
+  ],
+  [
+   "South pole temperatures",
+   "Above 130 °F in sunlight, down to -334 °F in shadowed craters",
+   "https://www.nasa.gov/reference/moonbase-about/"
+  ],
+  [
+   "Shackleton crater",
+   "More than twice as deep as the Grand Canyon and believed to hold ice",
+   "https://www.nasa.gov/reference/moonbase-about/"
+  ]
+ ],
+ "budgetM": 20000,
+ "night": {
+  "pct": 20,
+  "tags": [
+   "nuclear",
+   "power",
+   "reactor"
+  ],
+  "text": "Lunar night: with no nuclear or stored power on the surface, your robots sleep through the dark periods."
+ },
+ "whatifs": [
+  {
+   "id": "starship",
+   "label": "Starship cargo slips two years",
+   "desc": "Orbital refuelling takes longer than planned. Starship cargo flights are not ready until 2034.",
+   "carrierReady": {
+    "starship": {
+     "y": 2034,
+     "m": 1
+    },
+    "both": {
+     "y": 2034,
+     "m": 1
+    }
+   }
+  },
+  {
+   "id": "clps",
+   "label": "CLPS 2 is cancelled",
+   "desc": "No new small-lander awards. Every delivery takes 25% longer and the budget loses the $10 billion framework's slack.",
+   "monthsPct": 25,
+   "budgetDeltaM": -3000
+  },
+  {
+   "id": "budget",
+   "label": "Congress funds $15 billion, not $20 billion",
+   "desc": "A quarter of the budget is gone before you start.",
+   "budgetDeltaM": -5000
+  },
+  {
+   "id": "china",
+   "label": "China finishes two years early",
+   "desc": "The rival station is declared complete at the end of 2033.",
+   "deadlineShift": -24
+  },
+  {
+   "id": "risk",
+   "label": "Rough decade for landers",
+   "desc": "Every landing and operation is 10 points more likely to go wrong.",
+   "riskAdd": 0.1
+  }
+ ],
+ "rival": {
+  "name": "China",
+  "milestones": [
+   {
+    "y": 2026,
+    "m": 8,
+    "label": "Chang'e-7 surveys the south pole"
+   },
+   {
+    "y": 2029,
+    "m": 1,
+    "label": "Chang'e-8 tests building with regolith"
+   },
+   {
+    "y": 2030,
+    "m": 12,
+    "label": "First Chinese crew lands"
+   },
+   {
+    "y": 2035,
+    "m": 12,
+    "label": "Research station complete"
+   }
+  ]
+ },
+ "budgetYears": 7,
+ "budgetSource": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+}

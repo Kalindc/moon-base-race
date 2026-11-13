@@ -1,0 +1,608 @@
+<title>Moon Base Race</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: mission-control console. Sticky mission clock on top, one cutscene screen, decisions beneath it. Single dark look by choice. */
+:root{
+  color-scheme:dark;
+  --void:#0b0d12; --panel:#141821; --panel2:#1c212c; --line:#2c3341;
+  --dust:#c9c4b8; --dim:#8b8f99; --sun:#f2b84b; --go:#6fd08c; --halt:#ff5a4d; --ice:#7fc8e8;
+  --display:"Chakra Petch","Trebuchet MS",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{background:var(--void)}
+body{color:var(--dust);font-family:var(--body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--void)}
+.wrap{max-width:1060px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--void);border-bottom:1px solid var(--line)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding-block:10px}
+h1{font-family:var(--display);font-size:18px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#fff}
+.clock{font-family:var(--mono);font-size:13px;display:flex;gap:16px;flex-wrap:wrap;margin-left:auto}
+.clock b{color:var(--sun);font-weight:600}.clock .cn b{color:var(--halt)}
+
+.tl .track{position:absolute;left:0;right:0;top:5px;height:4px;background:var(--panel2);border-radius:2px}
+.tl .fill{position:absolute;left:0;top:5px;height:4px;background:var(--sun);border-radius:2px;transition:width .6s}
+.tl .mk{position:absolute;top:0;width:2px;height:14px;background:var(--dim)}
+.tl .mk.cn{background:var(--halt);width:3px}
+.tl .mk span{position:absolute;top:14px;left:0;font:11px var(--mono);color:var(--dim);white-space:nowrap}
+.tl .mk.cn span{left:auto;right:0;display:block;color:var(--halt)}
+nav{display:flex;gap:4px;padding-bottom:8px}
+nav button{font:600 13px var(--display);letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid transparent;color:var(--dim);padding:6px 12px;border-radius:4px;cursor:pointer}
+nav button[aria-selected=true]{color:#fff;border-color:var(--line);background:var(--panel)}
+main{padding-block:18px 60px;display:flex;flex-direction:column;gap:18px}
+.screen{position:relative;aspect-ratio:16/9;max-width:100%;background:#000;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.screen canvas,.screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.screen .tag{position:absolute;left:10px;top:10px;font:11px var(--mono);background:rgba(0,0,0,.6);color:var(--dim);padding:3px 7px;border-radius:3px;max-width:calc(100% - 20px)}
+.screen .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 12px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-family:var(--display);font-size:clamp(16px,3vw,26px);color:#fff;text-wrap:balance}
+.step{font:12px var(--mono);color:var(--sun);letter-spacing:.08em;text-transform:uppercase}
+h2{font-family:var(--display);font-size:22px;margin:2px 0 6px;color:#fff;text-wrap:balance}
+h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:14px 0 8px}
+p{margin:0 0 8px;max-width:68ch}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:20px}
+@media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}.tl .mk span{display:none}}td.n{white-space:normal;min-width:9ch}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:10px 12px;color:inherit;font:inherit;cursor:pointer;min-width:0}
+.opt:hover{border-color:var(--dim)}
+.opt[aria-pressed=true]{border-color:var(--sun);background:var(--panel2)}
+.opt[disabled]{opacity:.45;cursor:not-allowed}
+.opt .box{flex:none;width:16px;height:16px;border:2px solid var(--dim);border-radius:3px;margin-top:3px}
+.opt.radio .box{border-radius:50%}
+.opt[aria-pressed=true] .box{background:var(--sun);border-color:var(--sun)}
+.opt strong{display:block;color:#fff;font-weight:600}
+.opt small{display:block;color:var(--dim);font-size:13px}
+.opt .m{font:12px var(--mono);color:var(--ice)}
+.meter{height:8px;background:var(--panel2);border-radius:4px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--go)}
+.meter.over i{background:var(--halt)}
+.mono{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:12px var(--mono);border:1px solid var(--line);border-radius:20px;padding:2px 10px;color:var(--dim)}
+.chip.on{border-color:var(--go);color:var(--go)}
+.btn{font:700 14px var(--display);letter-spacing:.08em;text-transform:uppercase;background:var(--sun);color:#1a1405;border:0;border-radius:4px;padding:10px 20px;cursor:pointer}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:none;color:var(--dust);border:1px solid var(--line)}
+.btn.small{font-size:12px;padding:6px 12px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;align-self:start}
+aside ul{list-style:none;margin:0;padding:0;font-size:13px;display:flex;flex-direction:column;gap:4px}
+aside{min-width:0}aside li{display:flex;justify-content:space-between;gap:8px}aside li span:first-child{min-width:0;overflow-wrap:anywhere}
+aside li span:last-child{font-family:var(--mono);color:var(--dim);white-space:nowrap}
+.res{border-left:3px solid var(--go);padding-left:12px}.res.bad{border-color:var(--halt)}
+.res .big{font-family:var(--display);font-size:20px;color:var(--go)}.res.bad .big{color:var(--halt)}
+textarea,input[type=text],select{width:100%;background:var(--panel);color:var(--dust);border:1px solid var(--line);border-radius:4px;padding:8px 10px;font:13px var(--mono)}
+textarea{min-height:120px;resize:vertical}
+textarea.json{min-height:320px;white-space:pre;overflow:auto}
+label{display:block;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:12px 0 4px}
+.note{font-size:13px;color:var(--dim)}
+.msg{font:13px var(--mono);color:var(--ice);min-height:1.4em}
+.msg.err{color:var(--halt)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--ice)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.props{display:flex;flex-direction:column;gap:8px}
+.race{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;align-items:center;margin-bottom:4px;font:11px var(--mono);color:var(--dim)}
+.race .rb{position:relative;height:14px}
+.race .track{position:absolute;left:0;right:0;top:5px;height:4px;background:var(--panel2);border-radius:2px}
+.race .fill{position:absolute;left:0;top:5px;height:4px;background:var(--sun);border-radius:2px;transition:width .6s}
+.race .cn .fill{background:var(--halt)}
+.race .mk{position:absolute;top:0;width:2px;height:14px;background:var(--dim)}
+.race .cn .mk{background:var(--line);width:3px}.race .cn .mk.hit{background:var(--halt)}
+.race .mk.end{background:var(--halt);width:3px}
+.racenote{font:11px var(--mono);color:var(--dim);margin-bottom:8px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.racenote b{color:var(--halt);font-weight:400}
+nav{align-items:center;flex-wrap:wrap}
+nav .sp{flex:1}
+nav button.tog{font-size:11px;padding:4px 10px;border-color:var(--line)}
+nav button.tog[aria-pressed=true]{color:var(--go);border-color:var(--go)}
+.map{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:#17181c}
+.insight{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ice);border-radius:4px;padding:10px 14px;max-width:68ch;margin-top:12px}
+.insight h3{margin:0 0 4px;color:var(--ice)}
+.notes{margin:0 0 8px;padding-left:18px;color:var(--sun);font-size:14px;max-width:68ch}
+.stat{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.res.soft{border-color:var(--sun)}.res.soft .big{color:var(--sun)}
+.opt .r{font:12px var(--mono);color:var(--sun)}
+aside li span.c{color:var(--ice)}
+aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--dust)}
+.mani{display:flex;gap:14px;align-items:center;margin:8px 0 4px}
+.mani .pic{flex:none;width:84px}.mani svg{display:block;width:100%;height:auto}
+.bay{display:flex;height:12px;background:var(--panel2);border-radius:3px;overflow:hidden;margin:6px 0 4px;border:1px solid var(--line)}
+.bay.over{border-color:var(--halt)}.bay i{display:block;height:100%}
+.load{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px}
+.load .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+</style>
+<header><div class="wrap">
+  <div class="bar"><h1>Moon Base Race</h1>
+    <div class="clock"><span>Mission date <b id="cDate"></b></span><span>Elapsed <b id="cEl"></b></span><span>Funds <b id="cBud"></b></span><span class="cn">Deadline <b id="cCn"></b></span></div></div>
+  <div class="race" id="tl"></div><div class="racenote" id="tln"></div>
+  <nav><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button><span class="sp"></span><button class="tog" id="tSound" aria-pressed="false">Sound</button><button class="tog" id="tVoice" aria-pressed="false" hidden>Mission control voice</button></nav>
+</div></header>
+<div class="wrap"><main id="main"></main></div>
+<script id="scn" type="application/json">{"version": 4, "title": "Moon Base: Race to the South Pole", "start": {"y": 2026, "m": 11}, "deadline": {"y": 2035, "m": 12, "label": "China's published date for its lunar research station"}, "markers": [{"y": 2028, "m": 1, "label": "Artemis IV"}, {"y": 2029, "m": 1, "label": "Phase 2"}, {"y": 2032, "m": 1, "label": "Phase 3"}], "stages": [{"id": "scout", "type": "loadout", "scene": "lander", "title": "Scout the South Pole", "narration": "NASA Moon Base Phase One runs to 2029: 25 launches and 21 robotic landings to scout the south pole. Pick one lander and fill it, within its mass limit, with payloads that give you mobility, mapping, prospecting and geotechnical data. Miss any of the four and the base team cannot choose a site. Some hardware is not ready yet, and the delivery waits for the latest item on board.", "videoPrompt": "Photorealistic commercial lunar lander descending to the Moon's south pole, long shadows, low sun on the horizon, dust plume, cinematic 35mm", "successText": "The lander is down and the instruments are returning data. You have a resource map, terrain models and soil strength numbers.", "failMonths": 8, "needs": [{"tag": "mobility", "label": "Mobility"}, {"tag": "mapping", "label": "Mapping and surveying"}, {"tag": "prospecting", "label": "Prospecting"}, {"tag": "geotech", "label": "Geotechnical properties"}], "carriers": [{"id": "novac", "label": "Intuitive Machines Nova-C Trinity", "capKg": 130, "months": 8, "desc": "Moon Base III lander. Small, flies soon, carries little.", "costM": 120, "risk": 0.25}, {"id": "blueghost", "label": "Firefly Blue Ghost", "capKg": 240, "months": 9, "desc": "Mid-size CLPS lander with a proven landing.", "costM": 130, "risk": 0.1}, {"id": "griffin", "label": "Astrobotic Griffin", "capKg": 500, "months": 10, "desc": "Moon Base II lander. NASA lists more than 1,100 lb of cargo. Rover egress ramps.", "costM": 200, "risk": 0.2}, {"id": "mk1", "label": "Blue Origin Blue Moon Mark 1", "capKg": 3000, "months": 13, "desc": "Moon Base I flies the first one, Endurance, to Shackleton Connecting Ridge. A second carries VIPER.", "costM": 280, "risk": 0.12}], "items": [{"id": "viper", "label": "VIPER rover", "kg": 430, "tags": ["mobility", "prospecting", "mapping"], "desc": "1 m TRIDENT drill, neutron and infrared spectrometers and a mass spectrometer. Builds a resource map of water ice.", "availableAt": {"y": 2027, "m": 11}, "costM": 430}, {"id": "promise", "label": "PROMISE nuclear rover", "kg": 900, "tags": ["mobility", "prospecting", "mapping", "nuclear"], "availableAt": {"y": 2028, "m": 11}, "desc": "Six-wheeled JPL rover built from Curiosity and Perseverance spares. Nuclear power carries it through lunar nights and into shadowed craters. Drills to 1 m. Launches late 2028 for an 18-month mission.", "costM": 300}, {"id": "flip", "label": "Astrolab FLIP rover", "kg": 450, "tags": ["mobility"], "desc": "Flies on the Moon Base II Griffin lander. A mobile platform that carries other teams' instruments.", "costM": 80}, {"id": "mapp", "label": "Lunar Outpost MAPP rover", "kg": 10, "tags": ["mobility"], "desc": "Small autonomous rover that carries one or two instruments.", "costM": 15}, {"id": "cuberover", "label": "Astrobotic CubeRover", "kg": 6, "tags": ["mobility"], "desc": "Shoebox-class rover for short traverses near the lander.", "costM": 10}, {"id": "moonfall", "label": "MoonFall scout drones (4)", "kg": 200, "tags": ["mobility", "mapping"], "desc": "Four JPL propulsive hoppers that fly into shadowed terrain and survey landing sites over one lunar day. They fly in 2028.", "availableAt": {"y": 2028, "m": 6}, "costM": 150}, {"id": "lidar", "label": "Lunar LiDAR demonstration", "kg": 15, "tags": ["mapping"], "desc": "3D terrain mapping that works in darkness.", "costM": 20}, {"id": "gpr", "label": "Ground-penetrating radar", "kg": 5, "tags": ["mapping", "geotech"], "desc": "Maps buried rocks, layering and ice lenses under the surface.", "costM": 15}, {"id": "prime", "label": "TRIDENT drill and MSolo", "kg": 40, "tags": ["prospecting"], "desc": "Lander-mounted 1 m drill with a mass spectrometer that sniffs the cuttings for volatiles.", "costM": 40}, {"id": "nss", "label": "Neutron Spectrometer System", "kg": 2, "tags": ["prospecting"], "desc": "Detects hydrogen, a sign of water ice, in the top metre of soil.", "costM": 10}, {"id": "cone", "label": "Cone penetrometer and shear vane", "kg": 8, "tags": ["geotech"], "desc": "Measures bearing strength and cohesion of the regolith for pad and foundation design.", "costM": 10}, {"id": "scalpss", "label": "SCALPSS plume cameras", "kg": 5, "tags": ["geotech"], "desc": "Stereo cameras that record how the engine plume erodes the surface.", "costM": 8}, {"id": "lra", "label": "Laser Retroreflector Array", "kg": 1, "tags": ["nav"], "desc": "Passive marker that later landers range against for precision landing.", "costM": 2}, {"id": "vertex", "label": "Lunar Vertex magnetometer suite", "kg": 30, "tags": ["science"], "desc": "Studies magnetic swirls. Good science, no help choosing a base site.", "costM": 30}, {"id": "metal", "label": "METAL helium-3 sensor", "kg": 12, "tags": ["science"], "desc": "Measures helium-3 abundance in the soil.", "costM": 15}], "insight": {"text": "NASA's Phase One plans 25 launches and 21 landings to carry about 4 tonnes to the surface. VIPER and PROMISE both carry 1 m drills because the ice is expected below the surface, not on it.", "url": "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"}, "real": "2026 to 2028: Moon Base I, II and III, VIPER late 2027, PROMISE late 2028"}, {"id": "mobility", "type": "loadout", "scene": "rover", "title": "Land the mobility fleet", "narration": "The base needs vehicles that can haul cargo and carry tools. NASA awarded Lunar Terrain Vehicle contracts worth $439 million to Astrolab and Lunar Outpost, with Blue Origin delivering them in 2028. Choose a delivery and the vehicles to send. You need at least one crew-class vehicle or larger. What you land here decides which options you get when the habitats arrive.", "videoPrompt": "Photorealistic six-limbed wheeled robot and an open lunar rover driving off a cargo lander at the lunar south pole, harsh side lighting, dust trails", "successText": "The vehicles drive off the deck and start their checkout traverses.", "failMonths": 8, "needs": [{"tag": "haul", "label": "Crew-class vehicle or larger"}], "carriers": [{"id": "mk1x2", "label": "Two Blue Moon Mark 1 cargo flights", "capKg": 6000, "months": 14, "desc": "NASA's task orders deliver the Lunar Terrain Vehicles this way in 2028.", "costM": 188, "risk": 0.15}, {"id": "mk2c", "label": "Wait for Blue Moon Mark 2 cargo", "capKg": 30000, "months": 26, "desc": "Far more mass, but the lander is not ready for years.", "costM": 2500, "risk": 0.12}], "items": [{"id": "flex", "label": "Astrolab CLV-1 Lunar Terrain Vehicle", "kg": 900, "tags": ["haul", "ltv"], "desc": "NASA contract $219 million. About 2,000 lb, over 6 mph, two suited crew or modular cargo pallets.", "costM": 219}, {"id": "pegasus", "label": "Lunar Outpost Pegasus Lunar Terrain Vehicle", "kg": 1200, "tags": ["haul", "ltv"], "desc": "NASA contract $220 million. Over 9 mph, built to operate for up to a year, two suited crew.", "costM": 220}, {"id": "racer", "label": "Intuitive Machines Moon RACER", "kg": 1200, "tags": ["haul", "ltv"], "desc": "A third proposed Lunar Terrain Vehicle design, with a towing trailer. Not selected by NASA.", "costM": 220}, {"id": "athlete", "label": "JPL ATHLETE", "kg": 2500, "tags": ["haul", "athlete", "tools"], "desc": "The largest option. Six wheeled limbs walk or roll, lift a whole habitat off a lander, and swap end effectors: gripper, drill, scoop, cable reel.", "costM": 450}, {"id": "lunarcruiser", "label": "JAXA pressurized rover", "kg": 10000, "tags": ["haul", "pressurized"], "desc": "NASA expects it in Phase Two. A mobile habitat for 28-day missions with resupply every 14 days. Too heavy for Mark 1.", "availableAt": {"y": 2029, "m": 6}, "costM": 900}, {"id": "mapp2", "label": "MAPP rover swarm (3)", "kg": 30, "tags": ["scouts"], "desc": "Small scouts. They cannot haul cargo.", "costM": 40}], "insight": {"text": "NASA bought two different Lunar Terrain Vehicles, from Astrolab and Lunar Outpost, for $439 million, so that one design problem cannot ground every crew. JPL built ATHLETE prototypes to unload cargo from tall landers.", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"}, "real": "2028: both Lunar Terrain Vehicles delivered"}, {"id": "site", "type": "choice", "scene": "orbit", "title": "Choose the base site", "narration": "Use the scouting data to place the base. You want near-continuous sunlight, a line of sight to Earth, flat ground for pads, and a short drive to water ice in permanently shadowed regions.", "videoPrompt": "Photorealistic orbital view of the lunar south pole, Shackleton crater in deep shadow, sunlit ridges, Earth low on the horizon", "options": [{"id": "ridge", "label": "Shackleton Connecting Ridge", "months": 3, "outcome": "ok", "grants": ["site"], "desc": "Where Moon Base I lands. Sunlit most of the year, with Shackleton and de Gerlache shadowed craters a few kilometres away on either side.", "resultText": "Site confirmed. Power towers on the ridge see the Sun most of the year and the ice is a short drive downhill.", "costM": 60}, {"id": "nobile", "label": "Nobile Rim (Mons Mouton)", "months": 4, "outcome": "ok", "grants": ["site"], "desc": "Broad, flat mountain top near small shadowed craters. VIPER's planned landing area.", "resultText": "Site confirmed. Flat ground makes pad building easy, with small cold traps close by.", "costM": 60}, {"id": "malapert", "label": "Malapert Massif", "months": 6, "outcome": "ok", "grants": ["site"], "desc": "Always in view of Earth for communications, but a long drive to large ice deposits.", "resultText": "Site confirmed. Communications are excellent. Ice runs take longer, so planning adds time.", "costM": 80}, {"id": "floor", "label": "Floor of Shackleton crater", "months": 10, "outcome": "fail", "desc": "Sit directly on the ice.", "resultText": "The crater floor never sees the Sun or the Earth. At -334 °F the hardware freezes and you have no direct link home. The survey is redone.", "costM": 120}, {"id": "reiner", "label": "Reiner Gamma", "months": 10, "outcome": "fail", "desc": "A bright magnetic swirl on the near side, easy to reach. Moon Base III lands here for science.", "resultText": "It is an interesting place with no permanently shadowed regions and no water ice. The base cannot live off the land here. The survey is redone.", "costM": 120}, {"id": "tranq", "label": "Mare Tranquillitatis", "months": 10, "outcome": "fail", "desc": "Flat, well-mapped equatorial plain.", "resultText": "Fourteen-day nights and no polar volatiles. The site fails the resource review and the survey is redone.", "costM": 120}], "insight": {"text": "Moon Base I targets Shackleton Connecting Ridge. Sunlit ground there exceeds 130 °F while the crater floor beside it sits at -334 °F, and that cold is what has trapped the water ice.", "url": "https://www.nasa.gov/reference/moonbase-about/"}, "real": "Moon Base I targets Shackleton Connecting Ridge"}, {"id": "construct", "type": "loadout", "scene": "lander", "title": "Send construction and resource payloads", "narration": "Before heavy landers arrive you need machines on the surface to dig, to turn regolith into hard surfaces, and to power the work. Choose a delivery and payloads. You must cover excavation, surface construction and power. Resource processing is optional and risky.", "videoPrompt": "Photorealistic small robotic excavators with counter-rotating bucket drums unloading from a lunar cargo lander, solar tower deploying in the background", "successText": "The construction fleet is unloaded and the power tower is up.", "failMonths": 9, "needs": [{"tag": "excavate", "label": "Excavation"}, {"tag": "surface", "label": "Sintering or laser construction"}, {"tag": "power", "label": "Power"}], "carriers": [{"id": "mk1x2", "label": "Two Blue Moon Mark 1 cargo flights", "capKg": 6000, "months": 12, "desc": "Available now.", "costM": 400, "risk": 0.15}, {"id": "mk2c", "label": "Blue Moon Mark 2 cargo", "capKg": 30000, "months": 20, "desc": "Carries everything, later.", "costM": 2500, "risk": 0.12}], "items": [{"id": "rassor", "label": "RASSOR excavators (2)", "kg": 140, "tags": ["excavate"], "desc": "NASA Kennedy's bucket-drum diggers. Counter-rotating drums let a light robot dig in low gravity.", "costM": 60}, {"id": "ipex", "label": "ISRU Pilot Excavator (IPEx)", "kg": 30, "tags": ["excavate"], "desc": "Flight version of RASSOR sized for a pilot plant.", "costM": 30}, {"id": "microwave", "label": "Microwave sintering paver", "kg": 600, "tags": ["surface", "sinter"], "desc": "Heats regolith in place until the grains fuse into a hard slab.", "costM": 150}, {"id": "solarsinter", "label": "Solar concentrator sintering rig", "kg": 400, "tags": ["surface", "sinter"], "desc": "Focuses sunlight to fuse interlocking paving tiles.", "costM": 100}, {"id": "laser", "label": "Laser regolith 3D printer", "kg": 900, "tags": ["surface", "laser"], "desc": "High-power laser melts regolith layer by layer into pads, walls and berms.", "costM": 250}, {"id": "lasermfg", "label": "Laser powder-bed manufacturing cell", "kg": 500, "tags": ["spares"], "desc": "Prints metal and regolith-ceramic spare parts on site.", "costM": 150}, {"id": "minicast", "label": "miniCAST solar and comms tower", "kg": 800, "tags": ["power"], "desc": "NASA's kit of Redwire solar arrays, Honeybee Robotics batteries and Yank Technologies wireless power for rovers.", "costM": 200}, {"id": "lsms", "label": "LSMS crane", "kg": 300, "tags": ["crane"], "desc": "NASA Langley's Lightweight Surface Manipulation System. Lifts cargo off lander decks.", "costM": 80}, {"id": "carbothermal", "label": "Carbothermal oxygen reactor", "kg": 700, "tags": ["oxygen"], "desc": "Extracts oxygen from regolith with methane and concentrated heat.", "costM": 200}, {"id": "icemine", "label": "Ice mining thermal extractor", "kg": 500, "tags": ["water"], "desc": "Heated drill that drives water vapour out of shadowed-region soil and traps it.", "costM": 180}, {"id": "mre", "label": "Molten Regolith Electrolysis reactor", "kg": 900, "tags": ["oxygen", "metals"], "outcome": "fail", "failMonths": 12, "scene": "boom", "desc": "Melts regolith at 1,600 °C and splits it into oxygen and metals. Highest yield on paper.", "failText": "The molten pool eats through the electrode seal. The reactor ruptures and sprays slag across the lander and the payloads beside it. The delivery is lost.", "costM": 300}], "insight": {"text": "NASA's first power kit, miniCAST, is solar arrays, batteries and wireless power, and a larger integrated power system goes out for bids in early 2027. Power comes before construction in the real plan too.", "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"}, "real": "2027 onward: integrated power system solicitation"}, {"id": "build", "type": "choice", "scene": "build", "title": "Build pads, roads and foundations", "narration": "Your landers and robots now build the ground infrastructure. A 100-tonne lander's exhaust throws regolith at more than a kilometre per second, so what you build here protects everything that follows.", "videoPrompt": "Photorealistic robots sintering a circular landing pad on the Moon, glowing regolith under a laser, berms, a graded road leading to the horizon", "options": [{"id": "full", "label": "Landing pad with blast berm, then road, then habitat foundations", "months": 16, "outcome": "ok", "grants": ["pad", "road", "foundation"], "modifiers": [{"has": "athlete", "months": -3}, {"has": "laser", "months": -2}, {"has": "spares", "months": -1}], "desc": "The complete job. ATHLETE, a laser printer and on-site spares each shorten it.", "resultText": "A sintered pad with a blast berm, a graded road and level foundations are finished.", "costM": 1500, "risk": 0.1}, {"id": "twopads", "label": "Two pads, road and foundations", "months": 22, "outcome": "ok", "grants": ["pad", "road", "foundation"], "modifiers": [{"has": "athlete", "months": -4}, {"has": "laser", "months": -3}], "desc": "A second pad gives a backup, at a cost in time.", "resultText": "Two pads, a road and foundations are finished. Landings no longer depend on one surface.", "costM": 2200, "risk": 0.08}, {"id": "padonly", "label": "Pad only, skip the road and foundations", "months": 19, "outcome": "setback", "desc": "Get the heavy landers down sooner.", "resultText": "The pad works, but vehicles bog down in loose regolith and there is nowhere level to set a habitat. The team goes back and finishes the road and foundations, ten months later than a single campaign would have taken.", "costM": 1200, "grants": ["pad", "road", "foundation"]}, {"id": "nopad", "label": "Skip the pad and land on bare regolith", "months": 10, "outcome": "fail", "scene": "boom", "desc": "Apollo did it.", "resultText": "The heavy lander's plume digs a crater under itself and sandblasts the construction fleet. Repairs and a rebuilt site cost you most of a year.", "costM": 900}], "insight": {"text": "NASA flies SCALPSS plume cameras on Moon Base I to measure how engine exhaust erodes the surface. That data sizes the pads and berms that heavy landers will need.", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"}, "real": "Not yet dated by NASA"}, {"id": "cargo", "type": "loadout", "scene": "cargo", "title": "Land the heavy cargo", "narration": "The pads are ready for the big landers. NASA's Phase Three, from 2032, brings larger permanent habitats and nuclear power, with equipment from Italy and Canada. Choose Blue Origin's Blue Moon Mark 2, SpaceX's Starship, or both, and load them. The base needs a fission reactor, a habitat, the cabling to join them, and supplies.", "videoPrompt": "Photorealistic SpaceX Starship lunar lander touching down on a sintered landing pad at the lunar south pole, Blue Moon Mark 2 lander in the distance, dramatic low sun", "successText": "Touchdown on the pad. The blast berm does its job and the cargo is intact.", "failMonths": 9, "needs": [{"tag": "reactor", "label": "Fission reactor"}, {"tag": "habitat", "label": "Habitat"}, {"tag": "cable", "label": "Power cabling"}, {"tag": "supplies", "label": "Supplies"}], "carriers": [{"id": "mk2", "label": "Blue Moon Mark 2 cargo", "capKg": 30000, "months": 12, "desc": "About 30 tonnes one way.", "costM": 2500, "risk": 0.1}, {"id": "starship", "label": "SpaceX Starship cargo", "capKg": 100000, "months": 14, "desc": "About 100 tonnes, after orbital refuelling. Cargo comes down a 30 m elevator.", "costM": 3000, "risk": 0.12}, {"id": "both", "label": "Both landers", "capKg": 130000, "months": 16, "desc": "Two landings, the most mass, the longest campaign.", "costM": 5500, "risk": 0.18}], "items": [{"id": "fsp", "label": "Fission Surface Power reactor", "kg": 6000, "tags": ["reactor"], "desc": "100 kW-class reactor that runs through the dark with no sunlight.", "availableAt": {"y": 2032, "m": 1}, "costM": 3000}, {"id": "fsp2", "label": "Second fission reactor", "kg": 6000, "tags": ["reactor", "redundant"], "desc": "Backup power.", "availableAt": {"y": 2032, "m": 1}, "costM": 3000}, {"id": "inflatable", "label": "Inflatable surface habitat", "kg": 12000, "tags": ["habitat"], "desc": "A Phase Two semi-habitable module. Packs small, expands once set on its foundation.", "costM": 2500}, {"id": "rigid", "label": "Rigid multi-deck habitat", "kg": 25000, "tags": ["habitat"], "desc": "A Phase Three permanent habitat, outfitted on Earth with Italian and Canadian equipment. Heavy.", "availableAt": {"y": 2032, "m": 1}, "costM": 4500}, {"id": "cable", "label": "Power cable reels and radiators", "kg": 1500, "tags": ["cable"], "desc": "A kilometre of cable to keep the reactor at a safe distance.", "costM": 150}, {"id": "logistics", "label": "Logistics and supplies", "kg": 8000, "tags": ["supplies"], "desc": "Food, water, air, spares and suits for the first crew.", "costM": 400}, {"id": "airlock", "label": "Airlock and suitport module", "kg": 4000, "tags": ["airlock"], "desc": "Keeps dust out of the habitat.", "costM": 400}, {"id": "solarfarm", "label": "Solar array farm", "kg": 3000, "tags": ["power"], "desc": "Extra daytime power. Not a substitute for the reactor in the long polar shadows.", "costM": 300}, {"id": "prover", "label": "JAXA pressurized rover", "kg": 10000, "tags": ["pressurized", "haul"], "desc": "Mobile habitat for long traverses.", "availableAt": {"y": 2029, "m": 6}, "costM": 900}], "insight": {"text": "Both crew landers must complete an uncrewed landing before they carry astronauts. Larger habitats and nuclear power are Phase Three items, from 2032.", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"}, "real": "2032 onward: Phase Three habitats and nuclear power"}, {"id": "move", "type": "choice", "scene": "habitat", "title": "Move the habitat", "narration": "The habitat is sitting on top of a lander on the pad. It has to reach its foundation. Your options depend on the vehicles you landed.", "videoPrompt": "Photorealistic six-limbed ATHLETE robot carrying a cylindrical habitat along a sintered lunar road, tall lander behind it", "options": [{"id": "athlete", "label": "ATHLETE lifts and walks it over", "months": 3, "outcome": "ok", "requires": ["athlete"], "grants": ["placed"], "desc": "Two three-limbed halves dock under the habitat, lift it clear and carry it down the road.", "resultText": "ATHLETE sets the habitat on its foundation and levels it with its limbs.", "costM": 40, "risk": 0.05}, {"id": "ltvcrane", "label": "Crane it onto a Lunar Terrain Vehicle trailer", "months": 6, "outcome": "ok", "requires": ["ltv", "crane"], "grants": ["placed"], "desc": "The LSMS crane lowers the habitat to a trailer and the rover tows it along the road.", "resultText": "Slow and careful, but the habitat is on its foundation.", "costM": 60, "risk": 0.12}, {"id": "skid", "label": "Winch it on a skid", "months": 11, "outcome": "ok", "grants": ["placed"], "desc": "Works with any vehicle. Takes many short pulls and a lot of anchoring.", "resultText": "After months of short pulls the habitat reaches its foundation.", "costM": 80, "risk": 0.25}, {"id": "stay", "label": "Leave it on the lander", "months": 7, "outcome": "fail", "desc": "Use the lander as the base.", "resultText": "Tens of metres up, the habitat cannot be shielded and blocks the only pad. The plan is rejected and the move is redone.", "costM": 60}], "insight": {"text": "Starship's cargo comes down an elevator from tens of metres up, and Blue Moon Mark 2 keeps its payload low. How cargo gets off the lander shapes every vehicle NASA is buying.", "url": "https://www.nasa.gov/reference/human-landing-systems/"}, "real": "Not yet dated by NASA"}, {"id": "connect", "type": "choice", "scene": "reactor", "title": "Place the reactor and connect power", "narration": "The fission reactor has to power the habitat without irradiating the crew. Decide where it goes and how it is connected.", "videoPrompt": "Photorealistic lunar fission reactor with tall radiator panels behind a regolith berm, robot laying power cable toward a distant habitat", "options": [{"id": "far", "label": "One kilometre away behind a berm, with ATHLETE laying cable", "months": 3, "outcome": "ok", "requires": ["athlete"], "grants": ["powered"], "desc": "ATHLETE swaps to its cable-reel end effector.", "resultText": "The reactor goes critical behind its berm and the habitat lights up.", "costM": 80, "risk": 0.05}, {"id": "farltv", "label": "One kilometre away behind a berm, with a rover laying cable", "months": 5, "outcome": "ok", "requires": ["haul"], "grants": ["powered"], "desc": "A rover tows the cable reel while excavators trench.", "resultText": "The reactor goes critical behind its berm and the habitat lights up.", "costM": 100, "risk": 0.1}, {"id": "near", "label": "Next to the habitat to save cable", "months": 8, "outcome": "fail", "desc": "Shortest run, fastest job.", "resultText": "Radiation at the habitat wall is far over the crew limit. The reactor has to be shut down, cooled and moved.", "costM": 150}, {"id": "solar", "label": "Leave the reactor off and run on solar", "months": 11, "outcome": "setback", "desc": "Skip the nuclear work.", "resultText": "The first long shadow period drains the batteries and the habitat freezes. Systems are repaired and the reactor is installed after all, at a safe distance.", "costM": 120, "grants": ["powered"]}], "insight": {"text": "NASA's Fission Surface Power design runs for years with no sunlight, which is why it is the Phase Three answer to long polar shadows. Reactors sit far from habitats and behind terrain for shielding.", "url": "https://www.nasa.gov/tdm/fission-surface-power/"}, "real": "2032 onward: Phase Three"}, {"id": "shield", "type": "choice", "scene": "shield", "title": "Shield the habitat", "narration": "With no atmosphere or magnetic field, the crew needs mass overhead against solar storms and cosmic rays. Cover the habitat with regolith.", "videoPrompt": "Photorealistic small excavator robots piling regolith over a lunar habitat until only the airlock shows, time-lapse feel", "options": [{"id": "berm", "label": "Bury it under 2 to 3 metres of loose regolith", "months": 6, "outcome": "ok", "requires": ["excavate"], "grants": ["shielded"], "desc": "Excavators haul and dump regolith over a support shell.", "resultText": "Only the airlock shows. The crew dose inside is cut to a fraction of the surface rate.", "costM": 120, "risk": 0.08}, {"id": "arch", "label": "Build a sintered regolith vault over it", "months": 8, "outcome": "ok", "requires": ["surface"], "grants": ["shielded"], "desc": "Sintered or laser-printed blocks form an arch that is then covered. Stronger and easier to maintain.", "resultText": "A fused regolith vault stands over the habitat, covered with loose soil.", "costM": 200, "risk": 0.05}, {"id": "thin", "label": "A thin 30 cm layer", "months": 11, "outcome": "setback", "desc": "Quicker.", "resultText": "A thin layer makes secondary radiation worse, not better. The flight surgeons refuse to certify the base, so the excavators go back and pile on another two metres.", "costM": 100, "grants": ["shielded"]}, {"id": "none", "label": "No shielding", "months": 8, "outcome": "fail", "desc": "The habitat walls will do.", "resultText": "A solar particle event would be lethal over a long stay. The base is not certified for crew and the work is redone.", "costM": 100}], "insight": {"text": "NASA calls Moon Base a proving ground for Mars. Living under regolith shielding for months is one of the skills a Mars crew cannot learn anywhere else.", "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"}, "real": "Not yet dated by NASA"}, {"id": "crew", "type": "choice", "scene": "crew", "title": "Land the crew", "narration": "Artemis crews have landed for short stays every six months since 2028. This crew is the first to move in. The base is powered, shielded and stocked. Choose how they arrive.", "videoPrompt": "Photorealistic astronauts in white suits walking from a lunar lander on a sintered pad toward a regolith-covered habitat with a glowing airlock, Earth above the horizon", "options": [{"id": "starship", "label": "Starship lander to the pad", "months": 6, "outcome": "ok", "grants": ["crew"], "desc": "Four astronauts ride the elevator down to the pad.", "resultText": "The crew is down.", "costM": 2500, "risk": 0.06, "lander": "starship"}, {"id": "mk2", "label": "Blue Moon Mark 2 crew lander to the pad", "months": 6, "outcome": "ok", "grants": ["crew"], "desc": "Four astronauts step off close to the ground.", "resultText": "The crew is down.", "costM": 2500, "risk": 0.06, "lander": "mk2"}, {"id": "offpad", "label": "Land beside the habitat to shorten the walk", "months": 8, "outcome": "fail", "scene": "boom", "desc": "Skip the drive.", "resultText": "The plume strips the regolith cover off the habitat and peppers the radiators. The landing is waved off and the damage is repaired.", "costM": 1200, "lander": "starship"}], "insight": {"text": "NASA plans crewed landings every six months after Artemis V in late 2028, with at least two lander providers. Short visits come years before anyone moves in.", "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"}, "real": "2028: first landings. 2032 onward: living and working"}], "sources": [{"label": "NASA Moon Base overview", "url": "https://www.nasa.gov/moonbase/"}, {"label": "NASA: about Moon Base", "url": "https://www.nasa.gov/reference/moonbase-about/"}, {"label": "NASA Moon Base phases", "url": "https://www.nasa.gov/moonbase-phases/"}, {"label": "NASA release, 7 Nov 2026: transportation, technology and science awards", "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"}, {"label": "NASA release, 26 May 2026: rovers, landers and missions update", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"}, {"label": "CBS News: NASA's Moon Base plan", "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"}, {"label": "ABC News, Mar 2026: $20 billion Moon Base strategy", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"}, {"label": "ABC News, May 2026: new details of the plan", "url": "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"}, {"label": "NBC Right Now, Nov 2026: $15 billion in contracts and funding", "url": "https://www.nbcrightnow.com/yakima/news/syndicated/nasa-outlines-15-billion-for-moon-base-program/article_053f5607-6ab4-5d8e-b2bf-67d659ff680f.html"}, {"label": "Space.com: China plans a south pole Moon base by 2035", "url": "https://space.com/china-moon-base-south-pole-2035"}, {"label": "Starlust: NASA plan for a 100 kW reactor on the Moon by 2030", "url": "https://starlust.org/nasa-planning-to-build-a-100-kilowatt-nuclear-reactor-on-the-moon-by-2030/"}], "milestones": [{"when": "24 Mar 2026", "y": 2026, "m": 3, "text": "NASA announces Moon Base at its Ignition event: about $20 billion over seven years, dozens of missions. The Gateway station is paused and its hardware repurposed for the surface.", "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/", "cat": "program", "who": "NASA"}, {"when": "1 Apr 2026", "y": 2026, "m": 4, "text": "Artemis II launches, the first crewed lunar flyby in about 50 years.", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493", "cat": "crew", "who": "NASA"}, {"when": "2026", "y": 2026, "m": 8, "text": "Chang'e-7 is due to survey the lunar south pole for water ice with an orbiter, lander, rover and hopping probe.", "url": "https://space.com/china-moon-base-south-pole-2035", "cat": "rival", "who": "China"}, {"when": "Fall 2026 or later", "y": 2026, "m": 10, "text": "Moon Base I: Blue Moon Mark 1 Endurance lands on Shackleton Connecting Ridge with SCALPSS and a retroreflector.", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/", "cat": "robotic", "who": "NASA"}, {"when": "Late 2026", "y": 2026, "m": 11, "text": "Moon Base II: Griffin lander carries more than 1,100 lb of cargo, including Astrolab's FLIP rover.", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/", "cat": "robotic", "who": "NASA"}, {"when": "7 Nov 2026", "y": 2026, "m": 11, "text": "CLPS 2 awarded to eight companies, up to $10 billion over ten years. CLPS 1.0 ceiling raised from $2.6 billion to $4.2 billion. PROMISE rover and about $1.3 billion of launch task orders announced.", "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/", "cat": "program", "who": "NASA"}, {"when": "2026", "y": 2026, "m": 12, "text": "Moon Base III: Nova-C Trinity lands at Reiner Gamma with Lunar Vertex and payloads from ESA and Korea's KASI.", "url": "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/", "cat": "robotic", "who": "NASA"}, {"when": "2027", "y": 2027, "m": 6, "text": "Artemis III tests Orion and one or both landers in low Earth orbit. CAPSTONE 02 launches.", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493", "cat": "crew", "who": "NASA"}, {"when": "Late 2027", "y": 2027, "m": 11, "text": "VIPER arrives at the south pole on the second Blue Moon Mark 1.", "url": "https://www.nasa.gov/moonbase-phases/", "cat": "robotic", "who": "NASA"}, {"when": "2028", "y": 2028, "m": 6, "text": "Artemis IV, the first crewed landing since 1972, then Artemis V late in the year. After that, a crewed landing every six months on SpaceX and Blue Origin landers.", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493", "cat": "crew", "who": "NASA"}, {"when": "2028", "y": 2028, "m": 6, "text": "MoonFall drones fly on Firefly's Elytra. Both Lunar Terrain Vehicles are delivered. SpaceX flies a cislunar communications demonstration on Starship.", "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/", "cat": "robotic", "who": "NASA"}, {"when": "Late 2028", "y": 2028, "m": 11, "text": "PROMISE nuclear rover launches on a Blue Moon Mark 1 for an 18-month mission. Four more CLPS landings.", "url": "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/", "cat": "robotic", "who": "NASA"}, {"when": "2029 to 2032", "y": 2029, "m": 1, "text": "Phase Two, build and expand: semi-habitable quarters, early power, JAXA's pressurized rover.", "url": "https://www.nasa.gov/reference/moonbase-about/", "cat": "program", "who": "NASA"}, {"when": "About 2029", "y": 2029, "m": 1, "text": "Chang'e-8 is due to test building with lunar regolith at the south pole.", "url": "https://space.com/china-moon-base-south-pole-2035", "cat": "rival", "who": "China"}, {"when": "By 2030", "y": 2030, "m": 12, "text": "China's stated goal for its first crewed lunar landing.", "url": "https://space.com/china-moon-base-south-pole-2035", "cat": "rival", "who": "China"}, {"when": "2032 onward", "y": 2032, "m": 1, "text": "Phase Three, live and work: larger permanent habitats, nuclear and solar power, heavy vehicles, with equipment from Italy and Canada.", "url": "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493", "cat": "program", "who": "NASA"}, {"when": "2035", "y": 2035, "m": 12, "text": "China's published date for the basic version of its lunar research station at the south pole.", "url": "https://space.com/china-moon-base-south-pole-2035", "cat": "rival", "who": "China"}], "facts": [["Program cost", "About $20 billion over seven years, an average of about $2.9 billion a year", "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"], ["Phase One scale", "25 launches, 21 landings, about 4 tonnes of cargo to the surface", "https://abcnews.com/Technology/nasa-reveals-new-details-plan-build-base-moon/story?id=133325738"], ["CLPS 2", "Eight companies, ten years, up to $10 billion: Blue Origin, Firefly, Intuitive Machines, ispace-U.S., Lockheed Martin, Northrop Grumman, SpaceX, Voyager Technologies", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["CLPS 1.0", "Ceiling raised to $4.2 billion, deliveries through November 2033", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["Launch task orders", "Six orders, about $1.3 billion, to Arrow Science and Technology, Blue Origin and Impulse Space", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["Lunar Terrain Vehicles", "Astrolab CLV-1 $219 million (about 2,000 lb, over 6 mph). Lunar Outpost Pegasus $220 million (over 9 mph, operates up to a year). Two suited crew each.", "https://www.nasa.gov/news-release/nasa-provides-update-on-moon-base-rovers-landers-missions/"], ["Rover delivery", "Blue Origin: $188 million base for the Lunar Terrain Vehicles, plus $94 million base and a $140 million option for PROMISE", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["PROMISE rover", "Six wheels, nuclear powered, built by JPL from Curiosity and Perseverance spares, drill to about 1 m, 18-month mission", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["MoonFall", "Four JPL hopper drones that survey landing sites over one lunar day", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["Pressurized rover", "Supplied by JAXA: 28-day missions, resupply every 14 days", "https://www.nasa.gov/moonbase-phases/"], ["miniCAST power kit", "Honeybee Robotics storage, Redwire generation, Yank Technologies wireless power", "https://www.nasa.gov/news-release/nasa-awards-moon-base-transportation-technology-science-projects/"], ["Partners", "JAXA (pressurized rover, semi-habitable areas), Italy and Canada (larger habitats and vehicles), ESA and Korea's KASI (science payloads)", "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"], ["Crew landers", "Each must complete an uncrewed landing before it carries crew", "https://abcnews.com/Technology/nasa-unveils-ambitious-20-billion-moon-base-strategy/story?id=131361493"], ["South pole temperatures", "Above 130 °F in sunlight, down to -334 °F in shadowed craters", "https://www.nasa.gov/reference/moonbase-about/"], ["Shackleton crater", "More than twice as deep as the Grand Canyon and believed to hold ice", "https://www.nasa.gov/reference/moonbase-about/"]], "budgetM": 20000, "night": {"pct": 20, "tags": ["nuclear", "power", "reactor"], "text": "Lunar night: with no nuclear or stored power on the surface, your robots sleep through the dark periods."}, "whatifs": [{"id": "starship", "label": "Starship cargo slips two years", "desc": "Orbital refuelling takes longer than planned. Starship cargo flights are not ready until 2034.", "carrierReady": {"starship": {"y": 2034, "m": 1}, "both": {"y": 2034, "m": 1}}}, {"id": "clps", "label": "CLPS 2 is cancelled", "desc": "No new small-lander awards. Every delivery takes 25% longer and the budget loses the $10 billion framework's slack.", "monthsPct": 25, "budgetDeltaM": -3000}, {"id": "budget", "label": "Congress funds $15 billion, not $20 billion", "desc": "A quarter of the budget is gone before you start.", "budgetDeltaM": -5000}, {"id": "china", "label": "China finishes two years early", "desc": "The rival station is declared complete at the end of 2033.", "deadlineShift": -24}, {"id": "risk", "label": "Rough decade for landers", "desc": "Every landing and operation is 10 points more likely to go wrong.", "riskAdd": 0.1}], "rival": {"name": "China", "milestones": [{"y": 2026, "m": 8, "label": "Chang'e-7 surveys the south pole"}, {"y": 2029, "m": 1, "label": "Chang'e-8 tests building with regolith"}, {"y": 2030, "m": 12, "label": "First Chinese crew lands"}, {"y": 2035, "m": 12, "label": "Research station complete"}]}, "budgetYears": 7, "budgetSource": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"}</script>
+<script>
+"use strict";
+const DEFAULT=JSON.parse(document.getElementById("scn").textContent);
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const $=id=>document.getElementById(id);
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in attrs||{}){const v=attrs[k];if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(k==="text")e.textContent=v;else e.setAttribute(k,v===true?"":v)}for(const c of kids.flat()){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const clone=o=>JSON.parse(JSON.stringify(o));
+function validScenario(s){return s&&Array.isArray(s.stages)&&s.stages.length>0&&s.start&&s.deadline&&s.stages.every(validStage)}
+function validStage(s){return s&&typeof s.id==="string"&&typeof s.title==="string"&&((s.type==="choice"&&Array.isArray(s.options)&&s.options.some(o=>o.outcome==="ok"))||(s.type==="loadout"&&Array.isArray(s.carriers)&&s.carriers.length&&Array.isArray(s.items)))}
+
+let LIVE=clone(DEFAULT);          // scenario everyone plays
+let BASE=LIVE;                     // scenario a run is built from (live, or a draft under test)
+let SCN=LIVE;                      // BASE with the chosen what-ifs applied
+let testing=false;
+let G=null;
+function applyWhatifs(base,picks){
+  const s=clone(base);s.riskAdd=0;s.monthsPct=0;
+  for(const w of (base.whatifs||[]).filter(w=>picks.includes(w.id))){
+    if(w.deadlineShift){const t=s.deadline.y*12+s.deadline.m-1+w.deadlineShift;s.deadline.y=Math.floor(t/12);s.deadline.m=t%12+1;const rm=s.rival&&s.rival.milestones;if(rm&&rm.length){rm[rm.length-1].y=s.deadline.y;rm[rm.length-1].m=s.deadline.m}}
+    if(w.budgetDeltaM)s.budgetM=(s.budgetM||0)+w.budgetDeltaM;
+    if(w.monthsPct)s.monthsPct+=w.monthsPct;
+    if(w.riskAdd)s.riskAdd+=w.riskAdd;
+    if(w.carrierReady)for(const st of s.stages)for(const c of st.carriers||[])if(w.carrierReady[c.id])c.availableAt=w.carrierReady[c.id];
+  }
+  return s;
+}
+function newGame(picks,phase){picks=picks||[];SCN=applyWhatifs(BASE,picks);G={site:"",broke:false,i:0,months:0,spent:0,wear:0,tags:[],assets:[],log:[],dates:{},phase:phase||"brief",sel:{},result:null,rec:null,picks}}
+const toStart=()=>newGame([],"start");
+const totalMonths=()=>(SCN.deadline.y-SCN.start.y)*12+(SCN.deadline.m-SCN.start.m);
+const moOf=d=>(d.y-SCN.start.y)*12+(d.m-SCN.start.m);
+function dateAt(mo){const t=SCN.start.y*12+SCN.start.m-1+mo;return MONTHS[t%12]+" "+Math.floor(t/12)}
+function dur(mo){const y=Math.floor(mo/12),m=mo%12;return (y?y+" yr ":"")+m+" mo"}
+const fm=m=>Math.abs(m)>=1000?(m<0?"-":"")+"$"+(Math.abs(m)/1000).toFixed(1)+"B":"$"+m+"M";
+const has=t=>G.tags.includes(t);
+const availMo=o=>o&&o.availableAt?moOf(o.availableAt):0;
+const availTxt=o=>o&&o.availableAt?" Ready no earlier than "+MONTHS[o.availableAt.m-1]+" "+o.availableAt.y+".":"";
+const roll=()=>typeof window.__roll==="function"?window.__roll():Math.random();
+const yearly=()=>(SCN.budgetM||0)/(SCN.budgetYears||7);
+const released=m=>Math.min(SCN.budgetM||0,Math.round(yearly()*(Math.floor(m/12)+1)));
+const funds=()=>released(G.months)-G.spent;
+const moreComing=()=>released(G.months)<(SCN.budgetM||0);
+const nightSafe=()=>!SCN.night||SCN.night.tags.some(has);
+
+/* ---------- sound and voice ---------- */
+let soundOn=ls.get("mb-sound")==="1",voiceOn=false,tts=null,actx=null,spoken="";
+function tone(f,d,type,when){if(!soundOn)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+(when||0);o.type=type||"sine";o.frequency.value=f;g.gain.setValueAtTime(0.08,t);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+d)}catch(e){}}
+const sfx={go(){tone(2525,.25);tone(2475,.25,"sine",.3)},bad(){tone(110,.7,"sawtooth");tone(82,.9,"sawtooth",.15)},win(){[523,659,784,1047].forEach((f,i)=>tone(f,.6,"triangle",i*.18))}};
+function say(key,text){if(!voiceOn||!tts||spoken===key)return;spoken=key;try{tts.speak(text.slice(0,1900)).catch(()=>{})}catch(e){}}
+
+/* ---------- header ---------- */
+function drawClock(){
+  $("cDate").textContent=dateAt(G.months);$("cEl").textContent=dur(G.months);$("cCn").textContent=dateAt(totalMonths());
+  $("cBud").textContent=fm(funds())+" of "+fm(released(G.months))+" released";
+  const T=totalMonths(),pct=m=>Math.max(0,Math.min(100,m/T*100)),race=$("tl");race.textContent="";
+  const you=h("div",{class:"rb"},h("div",{class:"track"}),h("div",{class:"fill",style:"width:"+pct(G.months)+"%"}));
+  for(const m of SCN.markers||[]){const mo=moOf(m);if(mo>0&&mo<T)you.append(h("div",{class:"mk",style:"left:"+pct(mo)+"%",title:m.label}))}
+  const cn=h("div",{class:"rb cn"},h("div",{class:"track"}),h("div",{class:"fill",style:"width:"+pct(G.months)+"%"}));
+  const rms=(SCN.rival&&SCN.rival.milestones)||[];let next=null;
+  for(const m of rms){const mo=moOf(m);if(mo<0)continue;const hit=G.months>=mo;if(!hit&&!next)next=m;cn.append(h("div",{class:"mk"+(hit?" hit":""),style:"left:calc("+pct(mo)+"% - "+(mo>=T?3:0)+"px)",title:m.label}))}
+  race.append(h("span",{text:"You"}),you,h("span",{text:(SCN.rival&&SCN.rival.name)||"Rival"}),cn);
+  const nm=(SCN.markers||[]).find(m=>moOf(m)>G.months);
+  $("tln").textContent="";if(nm)$("tln").append(h("span",{text:"Next for NASA: "+nm.label+", "+nm.y}));if(next)$("tln").append(h("span",{},"Next for "+SCN.rival.name+": ",h("b",{text:next.label+", "+MONTHS[next.m-1]+" "+next.y})));
+}
+const EXPLORER="timeline.html";
+/* ---------- cutscene painter (placeholder until video clips are attached) ---------- */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let scene="lander",sceneT0=performance.now(),cv=null,raf=0;
+const STARS=Array.from({length:140},(_,i)=>[(i*97.13)%1,(i*57.77)%0.62,((i*31)%7)/7]);
+function setScene(s){scene=s;sceneT0=performance.now()}
+function paint(now){
+  raf=0;if(!cv||!cv.isConnected)return;
+  const w=cv.width,hh=cv.height,c=cv.getContext("2d"),t=reduce?3:(now-sceneT0)/1000,u=w/640;
+  c.fillStyle="#020308";c.fillRect(0,0,w,hh);
+  for(const s of STARS){c.fillStyle="rgba(255,255,255,"+(0.3+0.7*s[2])+")";c.fillRect(s[0]*w,s[1]*hh,u*(1+s[2]),u*(1+s[2]))}
+  if(scene==="orbit"||scene==="flag"){ // moon from orbit
+    const R=hh*0.62,cx=w/2,cy=hh*0.95;const g=c.createRadialGradient(cx-R*.4,cy-R*.6,R*.1,cx,cy,R);g.addColorStop(0,"#d8d4c8");g.addColorStop(.7,"#77746c");g.addColorStop(1,"#15151a");
+    c.fillStyle=g;c.beginPath();c.arc(cx,cy,R,0,7);c.fill();
+    for(let i=0;i<16;i++){const a=i*2.4,r=R*(0.15+((i*37)%50)/70),x=cx+Math.cos(a)*r,y=cy-Math.abs(Math.sin(a))*r*0.9;c.fillStyle="rgba(0,0,0,"+(0.25+(i%3)*0.15)+")";c.beginPath();c.ellipse(x,y,R*(0.03+(i%4)*0.02),R*(0.02+(i%4)*0.012),0,0,7);c.fill()}
+    if(scene==="orbit"){c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.setLineDash([6*u,6*u]);c.beginPath();c.arc(cx,cy-R*.72,R*.12,0,7);c.stroke();c.setLineDash([]);const a=t*0.6;c.fillStyle="#fff";c.fillRect(cx+Math.cos(a)*R*1.1-3*u,cy-R*.75+Math.sin(a)*R*.12,6*u,3*u)}
+    else{ // flag passes over the Moon
+      const fx=((t*0.11)%1.4-0.2)*w,fy=hh*0.2,fw=220*u,fh=140*u;c.save();c.translate(fx-fw/2,fy);
+      c.fillStyle="#de2910";c.beginPath();for(let x=0;x<=fw;x+=4){const y=Math.sin(x/28/u+t*3)*5*u;x?c.lineTo(x,y):c.moveTo(x,y)}for(let x=fw;x>=0;x-=4)c.lineTo(x,fh+Math.sin(x/28/u+t*3)*5*u);c.fill();
+      c.fillStyle="#ffde00";star(c,fw*.17,fh*.27,fh*.15);[[.33,.1],[.4,.2],[.4,.35],[.33,.45]].forEach(p=>star(c,fw*p[0],fh*p[1],fh*.05));c.restore();
+      c.fillStyle="rgba(0,0,0,.35)";c.beginPath();c.ellipse(fx,cy-R*.75,fw*.5,22*u,0,0,7);c.fill()}
+  }else{ // surface view
+    const ex=w*.8,ey=hh*.2;c.fillStyle="#3d7fd6";c.beginPath();c.arc(ex,ey,16*u,0,7);c.fill();c.fillStyle="rgba(255,255,255,.6)";c.beginPath();c.arc(ex-4*u,ey-3*u,7*u,0,7);c.fill();c.fillStyle="#020308";c.beginPath();c.arc(ex+9*u,ey,16*u,0,7);c.fill();
+    const hz=hh*.66;c.fillStyle="#2a2a2e";c.beginPath();c.moveTo(0,hz);for(let x=0;x<=w;x+=w/40)c.lineTo(x,hz-18*u*Math.abs(Math.sin(x/w*7+1))-10*u*Math.sin(x/w*23));c.lineTo(w,hh);c.lineTo(0,hh);c.fill();
+    const g=c.createLinearGradient(0,hz,0,hh);g.addColorStop(0,"#8f8b80");g.addColorStop(1,"#3a3833");c.fillStyle=g;c.fillRect(0,hz+6*u,w,hh);
+    for(let i=0;i<9;i++){c.fillStyle="rgba(0,0,0,.28)";c.beginPath();c.ellipse(((i*173)%600+20)*u,hz+(30+(i*41)%90)*u,(14+i*3)*u,(3+i*.7)*u,0,0,7);c.fill()}
+    const gy=hz+70*u;
+    const pad=()=>{c.fillStyle="#5c5a55";c.beginPath();c.ellipse(w*.5,gy+8*u,150*u,18*u,0,0,7);c.fill();c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.beginPath();c.ellipse(w*.5,gy+8*u,120*u,13*u,0,0,7);c.stroke()};
+    const lander=(x,y,s,tall)=>{c.fillStyle="#d9d9de";if(tall){c.beginPath();c.moveTo(x-14*s,y);c.lineTo(x-14*s,y-110*s);c.quadraticCurveTo(x,y-150*s,x+14*s,y-110*s);c.lineTo(x+14*s,y);c.fill();c.fillStyle="#222";c.fillRect(x-4*s,y-80*s,8*s,10*s)}else{c.fillRect(x-22*s,y-34*s,44*s,22*s);c.fillStyle="#b08a3a";c.fillRect(x-16*s,y-46*s,32*s,12*s)}c.strokeStyle="#999";c.lineWidth=3*s;c.beginPath();c.moveTo(x-18*s,y-12*s);c.lineTo(x-34*s,y+4*s);c.moveTo(x+18*s,y-12*s);c.lineTo(x+34*s,y+4*s);c.stroke()};
+    const flame=(x,y,s)=>{c.fillStyle="rgba(255,200,120,.8)";c.beginPath();c.moveTo(x-8*s,y);c.lineTo(x,y+(26+Math.sin(t*30)*6)*s);c.lineTo(x+8*s,y);c.fill()};
+    const rover=(x,y,s)=>{c.fillStyle="#cfcfd4";c.fillRect(x-22*s,y-20*s,44*s,10*s);c.fillRect(x-6*s,y-34*s,4*s,14*s);c.fillStyle="#f2b84b";c.fillRect(x-12*s,y-38*s,16*s,5*s);c.fillStyle="#333";for(const dx of[-18,0,18]){c.beginPath();c.arc(x+dx*s,y-5*s,7*s,0,7);c.fill()}};
+    const athlete=(x,y,s)=>{c.strokeStyle="#cfcfd4";c.lineWidth=4*s;for(const dx of[-30,-12,12,30]){const k=Math.sin(t*3+dx)*4*s;c.beginPath();c.moveTo(x+dx*.4*s,y-44*s);c.lineTo(x+dx*s,y-26*s+k);c.lineTo(x+dx*1.1*s,y-6*s);c.stroke();c.fillStyle="#333";c.beginPath();c.arc(x+dx*1.1*s,y-5*s,6*s,0,7);c.fill()}c.fillStyle="#b08a3a";c.beginPath();c.ellipse(x,y-46*s,22*s,7*s,0,0,7);c.fill()};
+    const hab=(x,y,s,cover)=>{c.fillStyle="#e4e4e8";c.beginPath();c.moveTo(x-50*s,y);c.lineTo(x-50*s,y-22*s);c.quadraticCurveTo(x,y-54*s,x+50*s,y-22*s);c.lineTo(x+50*s,y);c.fill();c.fillStyle="#ffd98a";c.fillRect(x-8*s,y-20*s,16*s,20*s);if(cover>0){c.fillStyle="#7d796f";c.beginPath();c.moveTo(x-90*s,y);c.quadraticCurveTo(x,y-(110*cover)*s,x+90*s,y);c.fill();c.fillStyle="#ffd98a";c.fillRect(x-8*s,y-14*s,16*s,14*s)}};
+    const reactor=(x,y,s)=>{c.fillStyle="#9aa";c.fillRect(x-8*s,y-30*s,16*s,30*s);c.fillStyle="#c9d2dc";c.fillRect(x-40*s,y-70*s,30*s,44*s);c.fillRect(x+10*s,y-70*s,30*s,44*s);c.fillStyle="rgba(127,200,232,"+(0.4+0.3*Math.sin(t*4))+")";c.beginPath();c.arc(x,y-34*s,5*s,0,7);c.fill()};
+    const person=(x,y,s)=>{c.fillStyle="#fff";c.fillRect(x-4*s,y-18*s,8*s,12*s);c.beginPath();c.arc(x,y-22*s,5*s,0,7);c.fill();c.fillRect(x-4*s,y-6*s,3*s,6*s+Math.sin(t*8+x)*2*s);c.fillRect(x+1*s,y-6*s,3*s,6*s-Math.sin(t*8+x)*2*s);c.fillStyle="#f2b84b";c.fillRect(x-3*s,y-24*s,6*s,3*s)};
+    const drop=Math.max(0,1-t/4);
+    if(scene==="lander"){const y=gy-drop*hh*.5;if(drop>0)flame(w*.5,y-10*u,u*1.4);lander(w*.5,y,u*1.6);if(drop===0)rover(w*.5+(Math.min(t-4,6)*14+50)*u,gy+14*u,u)}
+    else if(scene==="rover"){lander(w*.2,gy,u*1.4);rover(w*.2+((t*22)%380+60)*u,gy+20*u,u*1.3);athlete(w*.7,gy+10*u,u*1.5)}
+    else if(scene==="build"){pad();rover(w*.5+Math.sin(t*.7)*100*u,gy+10*u,u);c.strokeStyle="rgba(255,90,77,.9)";c.lineWidth=2*u;c.beginPath();c.moveTo(w*.5+Math.sin(t*.7)*100*u,gy-10*u);c.lineTo(w*.5+Math.sin(t*.7)*100*u+10*u,gy+8*u);c.stroke();c.fillStyle="#6d6a63";c.fillRect(w*.62,gy+2*u,w*.4,10*u);athlete(w*.86,gy+2*u,u)}
+    else if(scene==="cargo"){pad();const y=gy+6*u-drop*hh*.5;if(drop>0)flame(w*.5,y,u*1.6);lander(w*.5,y,u*1.5,true);lander(w*.14,gy-6*u,u*1.1)}
+    else if(scene==="habitat"){pad();lander(w*.5,gy+6*u,u*1.2,true);const x=w*.5+Math.min(t*18,170)*u;hab(x,gy-34*u,u*.8,0);athlete(x,gy+20*u,u*1.6)}
+    else if(scene==="reactor"){hab(w*.2,gy+16*u,u*1.1,0);reactor(w*.82,gy-4*u,u);c.fillStyle="#7d796f";c.beginPath();c.moveTo(w*.6,gy+4*u);c.quadraticCurveTo(w*.68,gy-40*u,w*.76,gy+4*u);c.fill();c.strokeStyle="#f2b84b";c.lineWidth=2*u;c.beginPath();c.moveTo(w*.3,gy+16*u);c.lineTo(w*.3+Math.min(t/5,1)*w*.5,gy+10*u);c.stroke()}
+    else if(scene==="shield"){hab(w*.5,gy+16*u,u*1.4,Math.min(t/6,1));rover(w*.5+Math.sin(t)*150*u,gy+30*u,u)}
+    else if(scene==="crew"||scene==="win"){pad();lander(w*.5,gy+6*u,u*1.2,true);hab(w*.86,gy+14*u,u*.9,1);reactor(w*.08,gy-10*u,u*.6);const n=4;for(let i=0;i<n;i++){const x=w*.52+Math.min(Math.max(t*26-i*22,0),190+0*i)*u;if(scene==="crew"||x<w*.52+188*u)person(x,gy+24*u,u*1.2)}if(scene==="win"){c.fillStyle="rgba(255,217,138,"+(0.25+0.2*Math.sin(t*2))+")";c.beginPath();c.arc(w*.86,gy+2*u,40*u,0,7);c.fill()}}
+    else if(scene==="boom"){lander(w*.5,gy,u*1.5);const k=Math.min(t/1.2,1);const gr=c.createRadialGradient(w*.5,gy-20*u,0,w*.5,gy-20*u,220*u*k+1);gr.addColorStop(0,"rgba(255,255,220,"+(1-k*.3)+")");gr.addColorStop(.4,"rgba(255,140,40,"+(0.9-k*.4)+")");gr.addColorStop(1,"rgba(255,60,20,0)");c.fillStyle=gr;c.fillRect(0,0,w,hh);for(let i=0;i<40;i++){const a=i*0.61,r=(t*90+i*4)%260*u;c.fillStyle="#ffb347";c.fillRect(w*.5+Math.cos(a)*r,gy-20*u-Math.abs(Math.sin(a))*r+t*t*4*u,3*u,3*u)}}
+    else{lander(w*.5,gy,u*1.5);rover(w*.72,gy+20*u,u);c.fillStyle="rgba(255,90,77,"+(0.12+0.08*Math.sin(t*5))+")";c.fillRect(0,0,w,hh)}
+  }
+  if(!reduce)raf=requestAnimationFrame(paint);
+}
+function star(c,x,y,r){c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.4:r;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}c.fill()}
+function screenEl(sc,caption,prompt,media){
+  setScene(sc);cv=h("canvas",{width:960,height:540,role:"img","aria-label":caption});
+  const s=h("div",{class:"screen"},cv);
+  if(media)s.append(h("video",{src:media,autoplay:true,muted:true,loop:true,playsinline:true}));
+  else if(prompt)s.append(h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}));
+  s.append(h("div",{class:"cap",text:caption}));
+  cancelAnimationFrame(raf);raf=requestAnimationFrame(paint);return s;
+}
+
+/* ---------- site map ---------- */
+function siteMap(){
+  const t=x=>has(x),p=[];
+  p.push('<rect width="240" height="170" fill="#4b4a46"/><path d="M95 62 Q150 70 205 104 L198 122 Q150 96 100 92Z" fill="#8f8b80"/>');
+  p.push('<circle cx="62" cy="92" r="44" fill="#07080b"/><circle cx="205" cy="150" r="30" fill="#07080b"/><circle cx="170" cy="28" r="16" fill="#0d0e12"/>');
+  p.push('<text x="62" y="94" text-anchor="middle" font-size="8" fill="#7fc8e8">Shackleton</text><text x="62" y="104" text-anchor="middle" font-size="6" fill="#7fc8e8">permanent shadow, ice</text><text x="205" y="153" text-anchor="middle" font-size="6" fill="#7fc8e8">de Gerlache</text>');
+  if(t("mobility")||t("mapping"))p.push('<rect x="112" y="60" width="7" height="7" fill="#d9d9de"/><path d="M116 67 Q104 80 96 88" stroke="#c9c4b8" stroke-dasharray="2 2" fill="none"/><text x="122" y="59" font-size="6" fill="#c9c4b8">scout</text>');
+  if(t("haul"))p.push('<path d="M120 70 Q140 78 150 92" stroke="#c9c4b8" stroke-dasharray="1 2" fill="none"/><rect x="128" y="72" width="6" height="4" fill="#f2b84b"/>');
+  if(t("site"))p.push('<path d="M150 86 l2 5 5 0 -4 3 2 5 -5 -3 -5 3 2 -5 -4 -3 5 0z" fill="none" stroke="#f2b84b"/>');
+  if(t("power"))p.push('<rect x="139" y="74" width="2" height="12" fill="#7fc8e8"/><rect x="136" y="72" width="8" height="5" fill="#7fc8e8"/>');
+  if(t("foundation"))p.push('<rect x="143" y="98" width="14" height="9" fill="none" stroke="#c9c4b8"/>');
+  if(t("road"))p.push('<path d="M157 103 L176 110" stroke="#2c2b29" stroke-width="4"/>');
+  if(t("pad"))p.push('<circle cx="184" cy="113" r="9" fill="#2c2b29" stroke="#f2b84b"/>');
+  if(t("reactor"))p.push('<circle cx="184" cy="113" r="4" fill="#fff"/>');
+  if(t("placed"))p.push('<rect x="144" y="99" width="12" height="7" rx="3" fill="#e4e4e8"/>');
+  if(t("powered"))p.push('<path d="M150 106 L128 128" stroke="#f2b84b"/><rect x="122" y="126" width="7" height="7" fill="#9ab"/><text x="118" y="141" font-size="6" fill="#c9c4b8">reactor</text>');
+  if(t("shielded"))p.push('<ellipse cx="150" cy="102" rx="11" ry="8" fill="#7d796f" stroke="#c9c4b8"/>');
+  if(t("crew"))p.push('<circle cx="160" cy="100" r="1.5" fill="#fff"/><circle cx="164" cy="102" r="1.5" fill="#fff"/><circle cx="168" cy="105" r="1.5" fill="#fff"/><circle cx="172" cy="107" r="1.5" fill="#fff"/>');
+  p.push('<text x="4" y="166" font-size="6" fill="#8b8f99">Schematic, not to scale</text>');
+  const d=h("div",{});d.innerHTML='<svg class="map" viewBox="0 0 240 170" role="img" aria-label="Map of the base site at the lunar south pole" font-family="IBM Plex Mono,monospace">'+p.join("")+"</svg>";return d;
+}
+
+/* ---------- play ---------- */
+const pl=n=>n+(n===1?" month":" months");
+function carried(){return G.sel.items||[]}
+function banner(main){if(testing)main.append(h("div",{class:"card note"},"You are playtesting your draft. ",h("button",{class:"btn ghost small",onclick:()=>{testing=false;BASE=LIVE;toStart();show("edit")}},"Back to editor")))}
+function startView(){
+  const main=$("main");main.textContent="";banner(main);
+  main.append(screenEl("orbit",SCN.title||"Moon Base Race"));
+  const picks=G.picks,box=h("div",{class:"opts"});
+  (BASE.whatifs||[]).forEach(w=>box.append(h("button",{class:"opt","aria-pressed":picks.includes(w.id)?"true":"false",onclick:()=>{const p=picks.includes(w.id)?picks.filter(x=>x!==w.id):picks.concat(w.id);newGame(p,"start");render()}},h("span",{class:"box"}),h("span",{},h("strong",{text:w.label}),h("small",{text:w.desc||""})))));
+  main.append(h("div",{},h("div",{class:"step",text:"Mission briefing"}),h("h2",{text:"Build the Moon Base before "+dateAt(totalMonths())}),
+    h("p",{text:"You run NASA's Moon Base program from "+dateAt(0)+". Each stage is a decision. Every decision costs time and money, and some carry a chance of a mishap. Land the first crew in a powered, shielded habitat before "+((SCN.rival&&SCN.rival.name)||"your rival")+" completes its station, and stay inside the budget. NASA announced "+fm(SCN.budgetM||0)+" over "+(SCN.budgetYears||7)+" years, so "+fm(Math.round(yearly()))+" is released each year and you can never spend more than has been released."}),
+    h("h3",{text:"As published, or what if?"}),h("p",{class:"note",text:"Leave these off to play NASA's plan as published. Turn any on to see the knock-on effect."}),box,
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{sfx.go();G.phase="brief";render()}},picks.length?"Start the what-if run":"Start as published"))));
+}
+function stageView(){
+  const st=SCN.stages[G.i],main=$("main");main.textContent="";banner(main);
+  const left=h("div",{});
+  main.append(screenEl(st.scene||"lander",st.title,st.videoPrompt,st.media));
+  say("b"+G.i+"-"+G.log.length,st.title+". "+(st.narration||""));
+  left.append(h("div",{class:"step",text:"Stage "+(G.i+1)+" of "+SCN.stages.length}),h("h2",{text:st.title}),h("p",{text:st.narration||""}));
+  if(G.i>0&&!nightSafe())left.append(h("p",{class:"note",style:"color:var(--sun)",text:SCN.night.text+" Work takes "+SCN.night.pct+"% longer until that changes."}));
+  const go=h("button",{class:"btn",disabled:true,onclick:commit},"Commit decision");let need=0;
+  const rk=o=>{const r=(o.risk||0)+(o.risk?SCN.riskAdd||0:0);return r?h("small",{class:"r",text:Math.round(r*100)+"% chance of a mishap"}):null};
+  if(st.type==="choice"){
+    const box=h("div",{class:"opts"});
+    st.options.forEach(o=>{const miss=(o.requires||[]).filter(t=>!has(t));
+      box.append(h("button",{class:"opt radio","aria-pressed":G.sel.opt===o.id?"true":"false",disabled:miss.length>0,onclick:()=>{G.sel.opt=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),o.costM?h("small",{class:"m",text:fm(o.costM)}):null,miss.length?h("small",{class:"m",text:"Needs a landed asset: "+miss.join(", ")}):null)))});
+    const co=st.options.find(o=>o.id===G.sel.opt);need=co?co.costM||0:0;
+    if(co&&co.lander)left.append(manifest({id:co.lander,label:co.label,shape:co.lander},[],"Crew of four"));
+    left.append(h("h3",{text:"Choose one"}),box);go.disabled=!G.sel.opt;
+  }else{
+    const cb=h("div",{class:"opts"});
+    st.carriers.forEach(o=>cb.append(h("button",{class:"opt radio","aria-pressed":G.sel.car===o.id?"true":"false",onclick:()=>{G.sel.car=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),h("small",{class:"m",text:o.capKg.toLocaleString()+" kg payload, "+o.months+" months, "+fm(o.costM||0)+"."+availTxt(o)}),rk(o)))));
+    const car=st.carriers.find(c=>c.id===G.sel.car),sel=carried(),its=st.items.filter(i=>sel.includes(i.id)),kg=its.reduce((a,i)=>a+i.kg,0),cost=(car?car.costM||0:0)+its.reduce((a,i)=>a+(i.costM||0),0);
+    const ib=h("div",{class:"opts"});
+    st.items.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),h("small",{class:"m",text:o.kg.toLocaleString()+" kg, "+fm(o.costM||0)+"."+availTxt(o)})))));
+    const over=car&&kg>car.capKg,got=new Set(its.flatMap(i=>i.tags||[]));
+    need=cost;
+    left.append(h("h3",{text:"Delivery"}),cb,manifest(car,its),h("h3",{text:"Payloads"}),
+      h("div",{class:"mono",text:"Loaded "+kg.toLocaleString()+" kg"+(car?" of "+car.capKg.toLocaleString()+" kg":"")+(over?" (over the limit)":"")+". This delivery costs "+fm(cost)+"."}),
+      h("div",{class:"meter"+(over?" over":"")},h("i",{style:"width:"+(car?Math.min(100,kg/car.capKg*100):0)+"%"})),
+      (st.needs||[]).length?h("div",{class:"chips"},st.needs.map(n=>h("span",{class:"chip"+(got.has(n.tag)?" on":""),text:n.label}))):null,
+      h("div",{style:"height:8px"}),ib);
+    go.disabled=!car||over||!sel.length;
+  }
+  const short=need>funds();if(short)go.disabled=true;
+  left.append(h("div",{class:"row"},go,short?fundsHelp(need):null));
+  main.append(h("div",{class:"cols"},left,sidebar()));
+}
+function fundsHelp(need){
+  const w=12-(G.months%12);
+  return h("span",{class:"row",style:"margin-top:0"},h("span",{class:"note",style:"color:var(--halt)",text:"This costs "+fm(need)+" and only "+fm(funds())+" has been released."}),
+    moreComing()?h("button",{class:"btn ghost small",onclick:()=>{G.months+=w;G.log.push(["Waited for the next yearly funding","+"+w+" mo","$0M"]);if(G.months>=totalMonths())G.phase="lost";render()}},"Wait "+pl(w)+" for the next "+fm(Math.round(yearly()))):
+    h("button",{class:"btn ghost small",onclick:()=>{G.broke=true;G.phase="lost";render()}},"The budget is spent: end the program"));
+}
+function landerSvg(shape){
+  const leg='stroke="#999" stroke-width="3" fill="none"';
+  if(shape==="starship")return '<path d="M38 132 L38 40 Q50 4 62 40 L62 132Z" fill="#d9d9de"/><rect x="46" y="62" width="8" height="10" fill="#222"/><rect x="62" y="96" width="5" height="36" fill="#999"/><path d="M38 124 L26 140 M62 124 L74 140" '+leg+'/>';
+  if(shape==="mk2")return '<circle cx="50" cy="52" r="20" fill="#d9d9de"/><rect x="32" y="70" width="36" height="48" fill="#c9d2dc"/><rect x="42" y="98" width="16" height="20" fill="#222"/><path d="M32 112 L16 140 M68 112 L84 140" '+leg+'/>';
+  if(shape==="both")return '<g transform="translate(-20 0)">'+landerSvg("starship")+'</g><g transform="translate(34 30) scale(.75)">'+landerSvg("mk2")+'</g>';
+  if(shape==="mk1")return '<rect x="26" y="70" width="48" height="50" rx="4" fill="#d9d9de"/><rect x="22" y="62" width="56" height="8" fill="#b08a3a"/><path d="M28 114 L12 140 M72 114 L88 140" '+leg+'/>';
+  if(shape==="mk1x2")return '<g transform="translate(-16 14) scale(.8)">'+landerSvg("mk1")+'</g><g transform="translate(34 14) scale(.8)">'+landerSvg("mk1")+'</g>';
+  return '<rect x="30" y="92" width="40" height="24" fill="#b08a3a"/><rect x="24" y="86" width="52" height="6" fill="#2c3e66"/><path d="M32 112 L18 140 M68 112 L82 140" '+leg+'/>';
+}
+function manifest(car,its,extra){
+  const box=h("div",{class:"card mani"});
+  if(!car){box.append(h("p",{class:"note",style:"margin:0",text:"Choose a lander below to start loading it."}));return box}
+  const shape=car.shape||(/both/.test(car.id)?"both":/starship/.test(car.id)?"starship":/mk2/.test(car.id)?"mk2":/mk1x2/.test(car.id)?"mk1x2":/mk1/.test(car.id)?"mk1":"small");
+  const kg=its.reduce((a,i)=>a+i.kg,0),cap=car.capKg||0,cols=["#f2b84b","#7fc8e8","#6fd08c","#c9a0e8","#e88f7f","#9ab"];
+  const pic=h("div",{class:"pic"});pic.innerHTML='<svg viewBox="0 0 100 146" role="img" aria-label="'+shape+' lander"><ellipse cx="50" cy="141" rx="46" ry="4" fill="#2c2b29"/>'+landerSvg(shape)+"</svg>";
+  const bar=h("div",{class:"bay"+(cap&&kg>cap?" over":"")});
+  its.forEach((i,n)=>bar.append(h("i",{style:"width:"+(cap?Math.min(100,i.kg/Math.max(cap,kg)*100):0)+"%;background:"+cols[n%cols.length],title:i.label})));
+  box.append(pic,h("div",{style:"min-width:0;flex:1"},h("div",{class:"step",text:"Now loading"}),h("strong",{style:"color:#fff",text:car.label}),
+    h("div",{class:"note",text:"Destination: "+(G.site||"lunar south pole, base site not chosen yet")}),
+    cap?bar:null,cap?h("div",{class:"mono",text:kg.toLocaleString()+" of "+cap.toLocaleString()+" kg, "+(cap-kg>=0?(cap-kg).toLocaleString()+" kg free":(kg-cap).toLocaleString()+" kg over")}):null,
+    its.length?h("ul",{class:"load"},its.map((i,n)=>h("li",{},h("span",{class:"sw",style:"background:"+cols[n%cols.length]}),i.label+", "+i.kg.toLocaleString()+" kg"))):h("div",{class:"note",text:extra||"Nothing loaded yet."})));
+  return box;
+}
+function sidebar(){
+  const left=funds();
+  return h("aside",{},h("h3",{style:"margin-top:0",text:"Site map"}),siteMap(),
+    h("h3",{text:"Status"}),h("div",{class:"stat"},h("span",{class:"chip on",text:fm(left)+" on hand"}),h("span",{class:"chip",text:fm(G.spent)+" spent of "+fm(SCN.budgetM||0)}),SCN.night?h("span",{class:"chip"+(nightSafe()?" on":""),text:nightSafe()?"Powered through the night":"Dormant at night"}):null,G.wear?h("span",{class:"chip",text:"Improvised repairs: +"+G.wear+" mo per stage"}):null),
+    h("h3",{text:"Landed assets"}),G.assets.length?h("ul",{},G.assets.map(a=>h("li",{},h("span",{text:a})))):h("p",{class:"note",text:"Nothing on the surface yet."}),
+    h("h3",{text:"Mission log"}),G.log.length?h("ul",{},G.log.map(l=>h("li",{},h("span",{text:l[0]}),h("span",{text:l[1]+(l[2]?" · "+l[2]:"")})))):h("p",{class:"note",text:"Each decision adds its lead time and cost."}));
+}
+function commit(){
+  const st=SCN.stages[G.i];let ok=true,soft=false,months=0,cost=0,text="",sc=null,grants=[],assets=[],risk=0;const notes=[];
+  if(st.type==="choice"){
+    const o=st.options.find(x=>x.id===G.sel.opt);ok=o.outcome!=="fail";soft=o.outcome==="setback";months=o.months||0;
+    for(const m of o.modifiers||[])if(has(m.has))months+=m.months;months=Math.max(1,months);
+    text=o.resultText||(ok?"Done.":"That did not work.");sc=o.scene;grants=ok?o.grants||[]:[];if(ok&&grants.includes("site"))G.site=o.label;cost=o.costM||0;risk=o.risk||0;
+  }else{
+    const car=st.carriers.find(c=>c.id===G.sel.car),its=st.items.filter(i=>carried().includes(i.id));
+    const bad=its.find(i=>i.outcome==="fail"),tags=new Set(its.flatMap(i=>i.tags||[])),miss=(st.needs||[]).filter(n=>!tags.has(n.tag));
+    cost=(car.costM||0)+its.reduce((a,i)=>a+(i.costM||0),0);risk=car.risk||0;
+    if(bad){ok=false;months=bad.failMonths||st.failMonths||8;text=bad.failText||"The payload failed.";sc=bad.scene}
+    else if(miss.length){ok=false;months=st.failMonths||8;text="The delivery lands but the mission falls short. Nothing on board covers: "+miss.map(n=>n.label.toLowerCase()).join(", ")+". A second delivery has to be prepared."}
+    else{const ready=Math.max(availMo(car),...its.map(availMo));months=Math.max(car.months,ready-G.months);text=(st.successText||"Delivered.");if(months>car.months)notes.push("The delivery waited for hardware that was not ready until "+dateAt(G.months+months)+".");grants=[...tags].concat(car.grants||[]);assets=its.map(i=>i.label)}
+  }
+  if(SCN.monthsPct)months=Math.ceil(months*(1+SCN.monthsPct/100));
+  if(SCN.night&&G.i>0&&!nightSafe()){const e=Math.ceil(months*SCN.night.pct/100);months+=e;notes.push("Lunar night dormancy: +"+pl(e)+". Nuclear or stored power on the surface removes this.")}
+  if(G.wear){months+=G.wear;notes.push("Improvised repairs slow the work: +"+pl(G.wear)+".")}
+  const mishap=ok&&!soft&&risk>0&&roll()<risk+(SCN.riskAdd||0);
+  G.months+=months;G.spent+=cost;G.log.push([st.title+(ok?(soft?" (setback)":""):" (failed)"),"+"+months+" mo",fm(cost)]);
+  if(ok){for(const t of grants)if(!has(t))G.tags.push(t);G.assets.push(...assets);G.dates[st.id]=G.months}
+  G.result={ok,soft,months,cost,text,notes,scene:sc||(ok&&!soft&&!mishap?st.scene:"fail")};
+  if(G.months>=totalMonths()){G.phase="lost";sfx.bad()}
+  else if(mishap){G.rec={months,cost,kind:st.type};G.phase="recover";sfx.bad()}
+  else{G.phase="result";ok&&!soft?sfx.go():sfx.bad()}
+  render();
+}
+function recoverView(){
+  const st=SCN.stages[G.i],r=G.rec,main=$("main");main.textContent="";banner(main);
+  main.append(screenEl("fail","Mishap"));
+  const A={label:"Fly a replacement",m:Math.ceil(r.months*0.6),c:Math.round(r.cost*0.6),desc:"Rebuild what was lost and send it again. Slow and expensive, and the base ends up as planned."},
+        B={label:"Improvise on site",m:Math.ceil(r.months*0.25)+1,c:Math.round(r.cost*0.1),wear:1,desc:"Repair and work around the damage with what is already on the surface. Faster and cheaper now, but every later stage takes 1 month longer."};
+  const txt=r.kind==="loadout"?"The lander comes down hard and part of the cargo is damaged.":"The operation goes wrong partway through and hardware is damaged.";
+  say("m"+G.log.length,"Mishap. "+txt);
+  const pick=o=>{G.months+=o.m;G.spent+=o.c;if(o.wear)G.wear+=o.wear;G.log.push(["Recovery: "+o.label.toLowerCase(),"+"+o.m+" mo",fm(o.c)]);G.result.months+=o.m;G.result.cost+=o.c;G.result.notes.push("Mishap recovered by choosing to "+o.label.toLowerCase()+": +"+pl(o.m)+", "+fm(o.c)+".");G.dates[st.id]=G.months;G.rec=null;G.result.scene=st.scene;G.phase=G.months>=totalMonths()?"lost":"result";sfx.go();render()};
+  main.append(h("div",{class:"cols"},h("div",{class:"res soft"},h("div",{class:"big",text:"Mishap"}),h("h2",{text:st.title}),h("p",{text:txt+" Choose how to recover."}),
+    h("div",{class:"opts"},[A,B].map(o=>h("button",{class:"opt radio",disabled:o.c>funds(),onclick:()=>pick(o)},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc}),h("small",{class:"m",text:"+"+pl(o.m)+", "+fm(o.c)}))))),B.c>funds()?h("div",{class:"row"},fundsHelp(B.c)):null),sidebar()));
+}
+function resultView(){
+  const st=SCN.stages[G.i],r=G.result,main=$("main");main.textContent="";banner(main);
+  const last=G.i===SCN.stages.length-1,good=r.ok;
+  main.append(screenEl(r.scene,r.ok?(r.soft?"Setback":"Success"):"Failure"));
+  say("r"+G.log.length,(r.ok?(r.soft?"Setback. ":"Stage complete. "):"Stage failed. ")+r.text);
+  const left=h("div",{class:"res"+(r.ok?(r.soft?" soft":""):" bad")},h("div",{class:"big",text:r.ok?(r.soft?"Setback, then complete":"Stage complete"):"Stage failed"}),h("h2",{text:st.title}),h("p",{text:r.text}),
+    r.notes.length?h("ul",{class:"notes"},r.notes.map(n=>h("li",{text:n}))):null,
+    h("p",{class:"mono",text:"Time added: "+pl(r.months)+". Cost: "+fm(r.cost)+". Mission date is now "+dateAt(G.months)+". "+(totalMonths()-G.months)+" months remain before the deadline."}),
+    good&&st.insight?h("div",{class:"insight"},h("h3",{text:"What NASA is actually doing"}),h("p",{style:"margin:0",text:st.insight.text+" "},st.insight.url?h("a",{href:st.insight.url,target:"_blank",rel:"noopener",text:"Source"}):null)):null,
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{G.sel={};G.result=null;if(good){if(last){G.phase="won";sfx.win()}else{G.i++;G.phase="brief"}}else G.phase="brief";render()}},good?(last?"Enter the base":"Next stage"):"Try this stage again")));
+  main.append(h("div",{class:"cols"},left,sidebar()));
+}
+function summaryText(won){
+  const w=(BASE.whatifs||[]).filter(x=>G.picks.includes(x.id)).map(x=>x.label);
+  return "Moon Base Race: "+(won?"crew moved in "+dateAt(G.months)+", "+(totalMonths()-G.months)+" months ahead of "+SCN.rival.name:"lost the race, "+SCN.rival.name+" finished first in "+dateAt(totalMonths()))+". Spent "+fm(G.spent)+" of "+fm(SCN.budgetM||0)+". "+(w.length?"What-ifs: "+w.join("; ")+". ":"Played as published. ")+"Stages: "+SCN.stages.map(s=>s.title+" "+(G.dates[s.id]!=null?dateAt(G.dates[s.id]):"not reached")).join(", ")+".";
+}
+function resultCard(won){
+  const c=document.createElement("canvas");c.width=1200;c.height=630;const x=c.getContext("2d");
+  x.fillStyle="#0b0d12";x.fillRect(0,0,1200,630);x.fillStyle=won?"#6fd08c":"#ff5a4d";x.fillRect(0,0,12,630);
+  x.fillStyle="#f2b84b";x.font="600 22px monospace";x.fillText("MOON BASE RACE",50,60);
+  x.fillStyle="#fff";x.font="700 50px sans-serif";x.fillText(won?"Crew moved in "+dateAt(G.months):"Lost the race in "+dateAt(totalMonths()),50,125);
+  x.fillStyle="#c9c4b8";x.font="24px sans-serif";x.fillText((won?(totalMonths()-G.months)+" months ahead of "+SCN.rival.name+".  ":"")+"Spent "+fm(G.spent)+" of "+fm(SCN.budgetM||0)+".  "+(G.picks.length?G.picks.length+" what-if"+(G.picks.length>1?"s":"")+" on.":"As published."),50,170);
+  x.font="20px monospace";SCN.stages.forEach((s,i)=>{const y=225+i*36;x.fillStyle="#8b8f99";x.fillText(String(i+1).padStart(2,"0"),50,y);x.fillStyle="#c9c4b8";x.font="18px monospace";x.fillText(s.title,95,y);x.font="20px monospace";x.fillStyle=G.dates[s.id]!=null?"#f2b84b":"#ff5a4d";x.fillText(G.dates[s.id]!=null?dateAt(G.dates[s.id]):"not reached",540,y);x.fillStyle="#7fc8e8";x.font="14px monospace";const rl=s.real||"";x.fillText(rl.length>56?rl.slice(0,55)+"…":rl,690,y);x.font="20px monospace"});
+  x.fillStyle="#8b8f99";x.font="15px monospace";x.fillText("your date",540,198);x.fillText("NASA's published plan",690,198);
+  return c;
+}
+function endView(won){
+  const main=$("main");main.textContent="";banner(main);
+  main.append(screenEl(won?"win":"flag",won?"The first crew enters the Moon Base":dateAt(totalMonths())+": "+SCN.rival.name+"'s station is declared complete"));
+  say("e"+G.log.length,won?"The first crew enters the Moon Base. You win.":SCN.rival.name+"'s station is complete. You lose.");
+  const msg=h("div",{class:"msg"}),sum=summaryText(won);
+  const copy=h("button",{class:"btn ghost",onclick:async()=>{try{await navigator.clipboard.writeText(sum);msg.textContent="Summary copied."}catch(e){msg.textContent="";msg.append(h("textarea",{readonly:true,style:"min-height:90px"},sum))}}},"Copy summary");
+  const save=h("button",{class:"btn ghost",hidden:!downloads,onclick:()=>{resultCard(won).toBlob(async b=>{try{await downloads.save({filename:"moon-base-race-result.png",data:b});msg.textContent="Result card saved."}catch(e){msg.textContent=e&&e.code==="declined"?"Save cancelled.":"The image could not be saved here. Use Copy summary instead."}},"image/png")}},"Save result card");
+  main.append(h("div",{class:"res"+(won?"":" bad")},h("div",{class:"big",text:won?"You win":"You lose"}),
+    h("p",{text:won?"Four astronauts walk from the pad down the sintered road, cycle the airlock and step into a powered, shielded, stocked habitat in "+dateAt(G.months)+", "+(totalMonths()-G.months)+" months ahead of "+SCN.rival.name+"'s published date. You spent "+fm(G.spent)+" of "+fm(SCN.budgetM||0)+".":(G.broke?"The program ran out of money before the base was ready for crew. ":"The clock reached "+dateAt(totalMonths())+" before your base was ready for crew. ")+"A Chinese flag passes over the lunar south pole. You had spent "+fm(G.spent)+"."}),
+    h("h3",{text:"Debrief: your run against the real plan"}),
+    h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},["Stage","Your date","NASA's published plan"].map(t=>h("th",{text:t})))),h("tbody",{},SCN.stages.map(s=>h("tr",{},h("td",{text:s.title}),h("td",{class:"n",text:G.dates[s.id]!=null?dateAt(G.dates[s.id]):"Not reached"}),h("td",{text:s.real||""})))))),
+    h("p",{class:"note",style:"margin-top:8px",text:"NASA's Phase Three, living and working on the Moon, starts in 2032. "+(won?(G.months<=moOf({y:2032,m:1})?"You beat that date.":"You moved in "+dur(G.months-moOf({y:2032,m:1}))+" after it opens."):"")}),
+    h("h3",{text:"Mission log"}),h("div",{class:"card",style:"max-width:560px"},h("ul",{style:"list-style:none;margin:0;padding:0"},G.log.map(l=>h("li",{style:"display:flex;justify-content:space-between;gap:10px"},h("span",{text:l[0]}),h("span",{class:"mono",style:"white-space:nowrap",text:l[1]+" · "+l[2]}))))),
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{toStart();render()}},"Play again"),copy,save),msg));
+}
+/* ---------- data and sources ---------- */
+function dataView(){
+  const main=$("main");main.textContent="";const S=LIVE;
+  main.append(h("div",{},h("h2",{text:"Data and sources"}),h("p",{text:"Every number the game uses, as it stands in the live version. The timeline, contract values and mission details come from NASA's Moon Base pages and releases and from CBS, ABC and NBC coverage, linked below. Most payload masses, costs, mishap chances and lead times are working estimates, because NASA has not published them. Each one can be corrected in the scene editor."}),
+    EXPLORER?h("p",{},h("a",{href:EXPLORER,target:"_blank",rel:"noopener",text:"Open the timeline explorer"})," to filter and search the published timeline on its own page."):null));
+  const lk=u=>u?h("a",{href:u,target:"_blank",rel:"noopener",text:"source"}):"";
+  const tbl=(heads,rows)=>h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},heads.map(x=>h("th",{text:x})))),h("tbody",{},rows.map(r=>h("tr",{},r.map((x,i)=>h("td",{class:i===0?"n":""},x&&x.nodeType?x:String(x==null?"":x))))))));
+  if((S.milestones||[]).length)main.append(h("div",{},h("h3",{text:"Published timeline"}),tbl(["When","Who","Milestone","Source"],S.milestones.map(m=>[m.when,m.who||"",m.text,lk(m.url)]))));
+  if((S.facts||[]).length)main.append(h("div",{},h("h3",{text:"Program facts"}),tbl(["Item","Published figure","Source"],S.facts.map(f=>[f[0],f[1],lk(f[2])]))));
+  const rules=[["Budget cap",fm(S.budgetM||0)+" over "+(S.budgetYears||7)+" years, as NASA announced. The game releases "+fm(Math.round((S.budgetM||0)/(S.budgetYears||7)))+" each year, and unspent money carries over. You cannot commit a decision that costs more than the released funds on hand. You can wait for the next yearly release."]];
+  if(S.night)rules.push(["Lunar night","Work takes "+S.night.pct+"% longer until the base holds one of: "+S.night.tags.join(", ")+"."]);
+  rules.push(["Mishaps","A risky choice that goes wrong offers two recoveries: fly a replacement (60% more time and cost) or improvise (about 25% more time, 10% more cost, and 1 extra month on every later stage)."]);
+  for(const w of S.whatifs||[])rules.push(["What if: "+w.label,w.desc||""]);
+  main.append(h("div",{},h("h3",{text:"Game rules"}),tbl(["Rule","How it works"],rules)));
+  const pc=r=>r?Math.round(r*100)+"%":"";
+  S.stages.forEach((st,n)=>{
+    const rows=[];
+    if(st.type==="loadout"){st.carriers.forEach(c=>rows.push(["Delivery",c.label,c.capKg.toLocaleString()+" kg",c.months+" mo",fm(c.costM||0),pc(c.risk),availTxt(c).trim()]));st.items.forEach(i=>rows.push([i.outcome==="fail"?"Payload (always fails)":"Payload",i.label,i.kg.toLocaleString()+" kg","",fm(i.costM||0),"",(i.tags||[]).join(", ")+(i.availableAt?". "+availTxt(i).trim():"")]))}
+    else st.options.forEach(o=>rows.push([o.outcome==="ok"?"Works":o.outcome==="setback"?"Setback":"Fails",o.label,"",(o.months||0)+" mo",fm(o.costM||0),pc(o.risk),(o.requires?"needs "+o.requires.join(", "):"")]));
+    main.append(h("div",{},h("h3",{text:"Stage "+(n+1)+": "+st.title}),tbl(["Kind","Name","Mass","Time","Cost","Mishap","Provides or needs"],rows),st.insight?h("p",{class:"note",style:"margin-top:6px"},st.insight.text+" ",lk(st.insight.url)):null));
+  });
+  main.append(h("div",{},h("h3",{text:"Sources"}),h("ul",{},(S.sources||[]).map(s=>h("li",{},h("a",{href:s.url,target:"_blank",rel:"noopener",text:s.label}))))));
+}
+/* ---------- scene editor ---------- */
+const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','markers','milestones','facts','sources'];
+let db=null,user=null,sample=null,canPublish=false,myId=null,proposals=[],draft=null,edSel=0,edMsg=["",false];
+function loadDraft(){if(draft)return;try{const d=JSON.parse(ls.get("mb-draft")||"null");draft=validScenario(d)?d:clone(LIVE)}catch(e){draft=clone(LIVE)}}
+function saveDraft(){ls.set("mb-draft",JSON.stringify(draft))}
+const SCHEMA='A stage is a JSON object. Common fields: id (short unique string), type ("choice" or "loadout"), title, narration, scene (one of lander, rover, orbit, build, cargo, habitat, reactor, shield, crew, boom), videoPrompt (a text-to-video brief for the cutscene). '+
+'A "choice" stage has options: [{id,label,desc,months (time the choice costs),outcome ("ok" or "fail"),resultText,requires (asset tags the player must already have),grants (asset tags gained),modifiers ([{has:tag,months:delta}]),scene}]. At least one option must have outcome "ok". A failed choice adds its months and the player retries. '+
+'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be "setback": it costs its months, then the stage completes with its grants. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. '+
+'A "loadout" stage has carriers: [{id,label,capKg,months,desc}], items: [{id,label,kg,tags,desc, and optionally outcome:"fail",failText,failMonths,scene:"boom" for a payload that always fails}], needs: [{tag,label}] (tags the chosen items must cover), successText, failMonths.';
+function editView(){
+  loadDraft();const main=$("main");main.textContent="";
+  if(edSel>=draft.stages.length)edSel=0;
+  const isSet=edSel<0,st=isSet?Object.fromEntries(SETKEYS.filter(k=>k in draft).map(k=>[k,draft[k]])):draft.stages[edSel];
+  const ta=h("textarea",{class:"json",id:"edJson",spellcheck:"false"});ta.value=JSON.stringify(st,null,1);
+  const pr=h("textarea",{id:"edPrompt",placeholder:"Example: add a fourth payload called Lunar Flashlight scout, 14 kg, that provides mapping. Or: make the microwave paver always fail with a cracked magnetron."});
+  const msg=h("div",{class:"msg"+(edMsg[1]?" err":""),id:"edMsg",text:edMsg[0]});edMsg=["",false];
+  const say=(t,err)=>{msg.textContent=t;msg.className="msg"+(err?" err":"")};
+  const readJson=()=>{let o;try{o=JSON.parse(ta.value)}catch(e){say("That is not valid JSON: "+e.message,true);return null}if(isSet?!(o&&typeof o==="object"&&!Array.isArray(o)):!validStage(o)){say(isSet?"Settings must be one JSON object.":"A stage needs an id, a title, a type, and either options with one that works or carriers and items.",true);return null}return o};
+  const apply=()=>{const o=readJson();if(!o)return false;if(isSet){const t=Object.assign(clone(draft),o);if(!validScenario(t)){say("Settings need a start date and a deadline.",true);return false}draft=t}else draft.stages[edSel]=o;saveDraft();return true};
+  const sel=h("select",{id:"edStage",onchange:e=>{edSel=+e.target.value;editView()}},[h("option",{value:-1,selected:isSet,text:"Game settings: budget, lunar night, what-ifs, rival, timeline, facts"})].concat(draft.stages.map((s,i)=>{const o=h("option",{value:i,text:(i+1)+". "+s.title});if(i===edSel)o.selected=true;return o})));
+  const askBtn=h("button",{class:"btn",disabled:!sample,onclick:async()=>{
+    const want=pr.value.trim();if(!want){say("Describe the change first.",true);return}
+    askBtn.disabled=true;say("Claude is rewriting this stage...");
+    try{const out=await sample.json((isSet?"You edit the global settings object of a data-driven game about building NASA's lunar base. It holds budgetM (total program budget in millions of dollars), budgetYears (the budget is released in equal yearly parts over this many years and spending can never exceed what has been released), night {pct,tags,text}, whatifs [{id,label,desc,deadlineShift,budgetDeltaM,monthsPct,riskAdd,carrierReady}], rival {name,milestones:[{y,m,label}]}, markers, milestones [{when,y,m,text,url,cat,who}], facts [[item,figure,url]] and sources. ":"You edit one stage of a data-driven game about building NASA's lunar base. "+SCHEMA)+"\n\nAsset tags already used elsewhere in the game: "+[...new Set(draft.stages.flatMap(s=>(s.items||[]).flatMap(i=>i.tags||[]).concat((s.options||[]).flatMap(o=>(o.grants||[]).concat(o.requires||[])))))].join(", ")+"\n\nCurrent "+(isSet?"settings":"stage")+":\n"+JSON.stringify(st)+"\n\nRequested change:\n"+want+"\n\nReply with only the complete updated object as one JSON object. Keep every field you were not asked to change. Use plain factual wording and realistic masses and durations.",{cache:false});
+      if(isSet?!(out&&typeof out==="object"&&!Array.isArray(out)):!validStage(out)){say("Claude's answer was not usable. Try wording the change differently.",true)}else{ta.value=JSON.stringify(out,null,1);say("Rewritten below. Review it, then save it to your draft.")}}
+    catch(e){say(e&&e.code==="rate_limited"?"Too many requests. Wait a minute and try again.":"Claude could not rewrite the stage"+(e&&e.code?" ("+e.code+")":"")+". You can still edit the JSON by hand.",true)}
+    askBtn.disabled=false}},"Rewrite with Claude");
+  const left=h("div",{},
+    h("h2",{text:"Scene editor"}),h("p",{text:"Change any cutscene, the actions it offers, their cost and risk, and what each action leads to. Game settings holds the budget, lunar night rule, what-ifs and timeline. Describe the change in plain language, or edit the stage data directly. Your draft stays in this browser until you publish or propose it."}),
+    h("label",{for:"edStage",text:"Stage"}),sel,
+    h("div",{class:"row",style:"margin-top:8px"},
+      h("button",{class:"btn ghost small",onclick:()=>{const id="stage"+Date.now().toString(36);draft.stages.splice(Math.max(0,edSel)+1,0,{id,type:"choice",title:"New stage",scene:"lander",narration:"Describe the situation.",videoPrompt:"",options:[{id:"a",label:"The right call",desc:"",months:3,outcome:"ok",resultText:"It works."},{id:"b",label:"The wrong call",desc:"",months:6,outcome:"fail",resultText:"It fails."}]});edSel=Math.max(0,edSel)+1;saveDraft();editView()}},"Add a stage after this one"),
+      h("button",{class:"btn ghost small",disabled:edSel<=0,onclick:()=>{const s=draft.stages.splice(edSel,1)[0];draft.stages.splice(--edSel,0,s);saveDraft();editView()}},"Move earlier"),
+      h("button",{class:"btn ghost small",disabled:isSet||edSel===draft.stages.length-1,onclick:()=>{const s=draft.stages.splice(edSel,1)[0];draft.stages.splice(++edSel,0,s);saveDraft();editView()}},"Move later"),
+      h("button",{class:"btn ghost small",disabled:isSet||draft.stages.length<2,onclick:()=>{draft.stages.splice(edSel,1);edSel=0;saveDraft();editView()}},"Delete stage")),
+    h("label",{for:"edPrompt",text:"Describe a change"}),pr,
+    h("div",{class:"row",style:"margin-top:8px"},askBtn,sample?null:h("span",{class:"note",text:"Rewriting with Claude works only in the claude.ai version (see the panel on the right). Edit the data below instead."})),
+    h("label",{for:"edJson",text:isSet?"Settings data":"Stage data"}),ta,msg,
+    h("div",{class:"row"},
+      h("button",{class:"btn",onclick:()=>{if(apply()){edMsg=["Saved to your draft.",false];editView()}}},"Save to draft"),
+      h("button",{class:"btn ghost",onclick:()=>{if(!apply())return;testing=true;BASE=clone(draft);newGame([]);G.i=Math.max(0,edSel);G.tags=[...new Set(draft.stages.slice(0,Math.max(0,edSel)).flatMap(s=>(s.items||[]).filter(i=>i.outcome!=="fail").flatMap(i=>i.tags||[]).concat((s.options||[]).flatMap(o=>o.grants||[]))))];show("play")}},"Playtest from this stage"),
+      h("button",{class:"btn ghost",onclick:()=>{draft=clone(LIVE);saveDraft();edMsg=["Draft reset to the live version.",false];editView()}},"Discard draft")));
+  const side=h("aside",{},h("h3",{style:"margin-top:0",text:"Share your changes"}));
+  if(!db)hostedShare(side,readJson,isSet,say);
+  else{
+    if(canPublish)side.append(h("p",{class:"note",text:"You can publish. The live version is what everyone plays."}),h("button",{class:"btn small",onclick:async()=>{if(!apply())return;try{await db.doc("game/live").set({json:JSON.stringify(draft),at:Date.now(),by:myId||""});edMsg=["Published. Everyone now plays this version.",false]}catch(e){edMsg=["Publishing failed ("+(e.code||"error")+").",true]}editView()}},"Publish draft as live"),
+      h("div",{style:"height:8px"}),h("button",{class:"btn ghost small",onclick:async()=>{try{await db.doc("game/live").delete();edMsg=["Live version restored to the built-in game.",false]}catch(e){edMsg=["Could not restore ("+(e.code||"error")+").",true]}editView()}},"Restore built-in game"));
+    const note=h("input",{type:"text",id:"edNote",placeholder:"What did you change and why?"});
+    side.append(h("h3",{text:"Propose this stage"}),h("p",{class:"note",text:"Sends the stage above to the owner for approval."}),note,h("div",{style:"height:8px"}),
+      h("button",{class:"btn ghost small",onclick:async()=>{if(isSet){say("Proposals carry one stage. Pick a stage first.",true);return}const o=readJson();if(!o)return;try{await db.collection("proposals").add({stage:JSON.stringify(o),note:note.value.slice(0,300),by:myId||"",at:Date.now()});edMsg=["Proposal sent.",false]}catch(e){edMsg=["Could not send the proposal ("+(e.code||"error")+"). Contributors need at least Contributor access.",true]}editView()}},"Send proposal"));
+    side.append(h("h3",{text:"Open proposals"}));
+    if(!proposals.length)side.append(h("p",{class:"note",text:"None yet. Proposed stages appear here for the owner to approve."}));
+    else side.append(h("div",{class:"props"},proposals.map(p=>{let s=null;try{s=JSON.parse(p.stage)}catch(e){}
+      return h("div",{class:"card"},h("strong",{text:s?s.title:"Unreadable proposal"}),h("div",{class:"note",text:(names[p.by]||"Someone")+": "+(p.note||"no note")}),
+        h("div",{class:"row",style:"margin-top:6px"},
+          s?h("button",{class:"btn ghost small",onclick:()=>{const i=draft.stages.findIndex(x=>x.id===s.id);if(i>=0){draft.stages[i]=s;edSel=i}else{draft.stages.push(s);edSel=draft.stages.length-1}saveDraft();edMsg=["Loaded into your draft. Playtest it, then publish to approve.",false];editView()}},"Load into draft"):null,
+          canPublish||p.by===myId?h("button",{class:"btn ghost small",onclick:async()=>{try{await db.doc("proposals/"+p.id).delete()}catch(e){}}},"Dismiss"):null))})));
+  }
+  main.append(h("div",{class:"cols"},left,side));
+}
+
+/* ---------- shell ---------- */
+let tab="play",downloads=null;
+function show(t){tab=t;render();scrollTo(0,0)}
+function render(){
+  for(const b of document.querySelectorAll("nav button[data-tab]"))b.setAttribute("aria-selected",b.dataset.tab===tab?"true":"false");
+  $("tSound").setAttribute("aria-pressed",soundOn?"true":"false");$("tVoice").setAttribute("aria-pressed",voiceOn?"true":"false");$("tVoice").hidden=!tts;
+  if(tab!=="play"){cancelAnimationFrame(raf);cv=null}
+  drawClock();
+  if(tab==="edit")return editView();
+  if(tab==="data")return dataView();
+  const p=G.phase;
+  if(p==="start")startView();else if(p==="brief")stageView();else if(p==="recover")recoverView();else if(p==="result")resultView();else endView(p==="won");
+}
+document.querySelector("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b){if(testing&&b.dataset.tab!=="play"){testing=false;BASE=LIVE;toStart()}show(b.dataset.tab)}});
+$("tSound").addEventListener("click",()=>{soundOn=!soundOn;ls.set("mb-sound",soundOn?"1":"0");if(soundOn)sfx.go();render()});
+$("tVoice").addEventListener("click",()=>{voiceOn=!voiceOn;spoken="";if(!voiceOn&&tts){try{tts.stop().catch(()=>{})}catch(e){}}render()});
+
+let names={};
+function start(saved){
+  toStart();
+  if(saved&&saved.G&&!saved.testing&&saved.G.i<LIVE.stages.length&&saved.G.dates){SCN=applyWhatifs(BASE,saved.G.picks||[]);G=saved.G}
+  render();
+  connect();
+}
+async function connect(){
+  const C=window.claude;if(!C||!C.use)return;
+  C.use("sample").then(s=>{sample=s;if(tab==="edit")render()});
+  C.use("tts").then(t=>{tts=t;$("tVoice").hidden=!t});
+  C.use("downloads").then(d=>{downloads=d;if(tab==="play"&&(G.phase==="won"||G.phase==="lost"))render()});
+  user=await C.use("user");
+  if(user){try{canPublish=await user.canEdit();myId=await user.id()}catch(e){}}
+  db=await C.use("db");if(!db){if(tab==="edit")render();return}
+  db.doc("game/live").onSnapshot(snap=>{
+    let s=null;if(snap.exists){try{s=JSON.parse(snap.data().json)}catch(e){}}
+    LIVE=validScenario(s)?s:clone(DEFAULT);
+    if(!testing){BASE=LIVE;if(G.phase==="start"||(G.months===0&&G.i===0)||G.i>=LIVE.stages.length)toStart();else SCN=applyWhatifs(BASE,G.picks)}
+    if(!ls.get("mb-draft"))draft=null;
+    if(!(tab==="edit"&&/TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName)))render();
+  },()=>{});
+  db.collection("proposals").orderBy("at","desc").limit(30).onSnapshot(async q=>{
+    proposals=q.docs.map(d=>Object.assign({id:d.id},d.data()));
+    if(user&&user.profiles){try{const ps=await user.profiles([...new Set(proposals.map(p=>p.by).filter(Boolean))]);names={};for(const id in ps)names[id]=ps[id].name||""}catch(e){}}
+    if(tab==="edit"&&!/TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName))render();
+  },()=>{});
+  if(tab==="edit")render();
+}
+const hot=window.claude&&window.claude.hot;
+if(hot&&hot.snapshot)hot.snapshot(()=>({G,testing}));
+if(hot&&hot.ready)hot.ready(start);else start((hot&&hot.data)||{});
+
+/* ---------- hosted page (GitHub Pages) ----------
+   The claude.ai version gets voice, file saving, Claude rewriting and a shared
+   database from window.claude. On a plain web page none of that exists, so
+   this file swaps in browser equivalents where there are any. */
+const REPO="https://github.com/Kalindc/moon-base-race";
+const CLAUDE_VERSION="https://claude.ai/artifact/T3U7q59bmcxbcfezXhHe6i";
+if(!(window.claude&&window.claude.use)){
+  // Mission control voice: the browser's own speech synthesis.
+  if(window.speechSynthesis&&window.SpeechSynthesisUtterance){
+    tts={speak(t){return new Promise(res=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=1.05;u.onend=u.onerror=()=>res();speechSynthesis.speak(u)}catch(e){res()}})},
+         stop(){try{speechSynthesis.cancel()}catch(e){}return Promise.resolve()}};
+  }
+  // Result card: a normal browser download.
+  downloads={save({filename,data}){const a=document.createElement("a"),url=URL.createObjectURL(data);a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);return Promise.resolve()}};
+  render();
+}
+function hostedShare(side,readJson,isSet,say){
+  const dl=(name,obj)=>downloads.save({filename:name,data:new Blob([JSON.stringify(obj,null,1)+"\n"],{type:"application/json"})});
+  const note=h("input",{type:"text",id:"edNote",placeholder:"What did you change, and your source?"});
+  side.append(
+    h("p",{class:"note",text:"This copy of the game lives on GitHub. Your draft stays in this browser. To get a change into the game everyone plays, propose it on GitHub, where the maintainer reviews it."}),
+    h("h3",{text:"Propose this stage"}),note,h("div",{style:"height:8px"}),
+    h("button",{class:"btn small",onclick:async()=>{
+      if(isSet){say("Proposals carry one stage. Pick a stage first, or download the whole draft below.",true);return}
+      const o=readJson();if(!o)return;
+      const json=JSON.stringify(o,null,1),title="Scene proposal: "+o.title;
+      let url=REPO+"/issues/new?template=scene-proposal.yml&title="+encodeURIComponent(title)+"&summary="+encodeURIComponent(note.value.slice(0,500));
+      if(encodeURIComponent(json).length<6000){url+="&stage="+encodeURIComponent(json);say("Opening GitHub with your stage filled in. Sign in to GitHub and press Create.")}
+      else{try{await navigator.clipboard.writeText(json);say("This stage is too long to send in a link, so it is copied. Paste it into the Stage data box on the GitHub page.")}catch(e){say("This stage is too long to send in a link. Use Download draft below and attach the file on GitHub.",true)}}
+      window.open(url,"_blank","noopener")}},"Propose on GitHub"),
+    h("h3",{text:"Whole draft"}),
+    h("p",{class:"note",text:"Download your full draft as scenario.json to attach to a proposal or to open a pull request, or load one someone sent you."}),
+    h("div",{class:"row"},
+      h("button",{class:"btn ghost small",onclick:()=>{if(readJson())dl("scenario.json",draft)}},"Download draft"),
+      h("label",{class:"btn ghost small",style:"margin:0;cursor:pointer"},"Load a scenario file",h("input",{type:"file",accept:".json,application/json",hidden:true,onchange:async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!validScenario(d))throw 0;draft=d;saveDraft();edSel=0;edMsg=["Loaded "+f.name+" into your draft.",false]}catch(x){edMsg=["That file is not a valid game scenario.",true]}editView()}}))),
+    h("h3",{text:"Rewrite with Claude"}),
+    h("p",{class:"note"},"Plain-language rewriting needs Claude, so it only works in ",h("a",{href:CLAUDE_VERSION,target:"_blank",rel:"noopener",text:"the claude.ai version of the game"}),". Here, edit the stage data by hand."));
+}
+</script>

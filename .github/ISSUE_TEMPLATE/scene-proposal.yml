@@ -1,0 +1,21 @@
+name: Scene proposal
+description: Propose a new or changed stage, choice, payload or outcome (the in-game editor fills this in for you)
+title: "Scene proposal: "
+labels: ["scene proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: The game's Scene editor can fill this in. Press "Propose on GitHub" there, or paste a stage from it below.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What did you change, and why?
+      description: Include source links for any real-world numbers.
+    validations:
+      required: true
+  - type: textarea
+    id: stage
+    attributes:
+      label: Stage data
+      description: The stage as JSON, from the Scene editor. For changes across several stages, attach your downloaded scenario.json instead.
+      render: json

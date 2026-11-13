@@ -1,0 +1,29 @@
+name: Data fix
+description: Correct a mass, cost, date, duration, risk or source in the game
+title: "Data fix: "
+labels: ["data fix"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where in the game?
+      description: The stage and item, for example "Land the mobility fleet, ATHLETE mass".
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: What the game says now
+  - type: input
+    id: better
+    attributes:
+      label: What it should say
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: A link to where the better figure is published.
+    validations:
+      required: true

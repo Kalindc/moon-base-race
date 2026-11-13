@@ -1,0 +1,63 @@
+<title>Moon Base Timeline</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a year rail across the top, filters under it, then one column of dated entries grouped by year. Single dark look by choice, matching the game. */
+:root{color-scheme:dark;--void:#0b0d12;--panel:#141821;--panel2:#1c212c;--line:#2c3341;--dust:#c9c4b8;--dim:#8b8f99;--sun:#f2b84b;--halt:#ff5a4d;--ice:#7fc8e8;--go:#6fd08c;
+ --display:"Chakra Petch","Trebuchet MS",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}html,body{background:var(--void)}
+body{color:var(--dust);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+h1{font-family:var(--display);font-size:26px;letter-spacing:.04em;text-transform:uppercase;margin:0;color:#fff;text-wrap:balance}
+h2{font-family:var(--display);font-size:22px;color:var(--sun);margin:18px 0 6px}
+h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:20px 0 8px}
+p{margin:0;max-width:68ch}a{color:var(--ice)}
+.rail{display:flex;gap:4px;flex-wrap:wrap}
+.rail button,.chips button{font:12px var(--mono);background:var(--panel);color:var(--dust);border:1px solid var(--line);border-radius:4px;padding:5px 9px;cursor:pointer}
+.rail button b{color:var(--sun);font-weight:600}.rail button.cn b{color:var(--halt)}
+.rail button[disabled]{opacity:.35;cursor:default}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chips button{border-radius:20px}.chips button[aria-pressed=true]{border-color:var(--sun);color:var(--sun)}
+input{flex:1;min-width:160px;background:var(--panel);color:var(--dust);border:1px solid var(--line);border-radius:4px;padding:7px 10px;font:14px var(--body)}
+:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+.ev{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 14px;padding:10px 0;border-top:1px solid var(--line)}
+.ev .w{font:13px var(--mono);color:var(--dim)}.ev .who{font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--sun)}
+.ev.cn .who{color:var(--halt)}.ev.cn{border-left:3px solid var(--halt);padding-left:10px}
+@media(max-width:520px){.ev{grid-template-columns:minmax(0,1fr)}}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.note{font-size:13px;color:var(--dim)}
+</style>
+<div class="wrap">
+  <div><h1>Moon Base Timeline</h1><p>NASA's published plan for a base at the lunar south pole, beside China's stated dates. Every entry links to its source. <a href="__GAME__" target="_blank" rel="noopener">Play the race</a>.</p></div>
+  <div class="rail" id="rail" aria-label="Jump to a year"></div>
+  <div class="chips"><input id="q" type="text" placeholder="Search, for example rover or Artemis" aria-label="Search the timeline"><span id="filters" class="chips"></span></div>
+  <div id="count" class="note"></div>
+  <div id="list"></div>
+  <div><h3>Program facts</h3><div class="tw"><table><thead><tr><th>Item</th><th>Published figure</th><th>Source</th></tr></thead><tbody id="facts"></tbody></table></div></div>
+  <div><h3>Sources</h3><ul id="src"></ul></div>
+</div>
+<script id="d" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const D=JSON.parse(document.getElementById("d").textContent),$=id=>document.getElementById(id);
+function h(tag,attrs,...kids){const e=document.createElement(tag);for(const k in attrs||{}){const v=attrs[k];if(v==null||v===false)continue;if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(k==="text")e.textContent=v;else e.setAttribute(k,v===true?"":v)}for(const c of kids.flat()){if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+const CATS=[["all","Everything"],["NASA","NASA"],["China","China"],["crew","Crewed"],["robotic","Robotic"],["program","Program"]];
+let f="all";
+function match(m){const q=$("q").value.trim().toLowerCase();if(q&&!(m.text+" "+m.when+" "+m.who).toLowerCase().includes(q))return false;return f==="all"||m.who===f||m.cat===f}
+function draw(){
+  $("filters").textContent="";CATS.forEach(c=>$("filters").append(h("button",{"aria-pressed":f===c[0]?"true":"false",onclick:()=>{f=c[0];draw()}},c[1])));
+  const ms=D.milestones.filter(match),list=$("list");list.textContent="";
+  $("count").textContent=ms.length+" of "+D.milestones.length+" entries";
+  const years=[...new Set(D.milestones.map(m=>m.y))].sort();
+  $("rail").textContent="";years.forEach(y=>{const n=ms.filter(m=>m.y===y),cn=n.some(m=>m.who==="China");$("rail").append(h("button",{class:cn?"cn":"",disabled:!n.length,onclick:()=>{const e=document.getElementById("y"+y);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})}},h("b",{text:y})," "+n.length))});
+  let cur=null;
+  for(const m of ms){if(m.y!==cur){cur=m.y;list.append(h("h2",{id:"y"+m.y,text:m.y}))}
+    list.append(h("div",{class:"ev"+(m.who==="China"?" cn":"")},h("div",{},h("div",{class:"who",text:m.who}),h("div",{class:"w",text:m.when})),h("div",{},h("p",{text:m.text+" "},m.url?h("a",{href:m.url,target:"_blank",rel:"noopener",text:"Source"}):null))))}
+  if(!ms.length)list.append(h("p",{class:"note",text:"Nothing matches. Clear the search or pick Everything."}));
+}
+$("q").addEventListener("input",draw);
+(D.facts||[]).forEach(r=>$("facts").append(h("tr",{},h("td",{text:r[0]}),h("td",{text:r[1]}),h("td",{},r[2]?h("a",{href:r[2],target:"_blank",rel:"noopener",text:"source"}):""))));
+(D.sources||[]).forEach(s=>$("src").append(h("li",{},h("a",{href:s.url,target:"_blank",rel:"noopener",text:s.label}))));
+draw();
+</script>
