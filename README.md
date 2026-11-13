@@ -19,7 +19,8 @@ Every lander, rover, payload and choice lists what it can do and why it helps, a
 | `scenario.json` | **All the game content.** Every stage, choice, payload, mass, cost, duration, risk, outcome and source lives here. |
 | `src/` | The game engine (JavaScript, CSS and HTML template). |
 | `build.py` | Combines `scenario.json` and `src/` into `index.html` and `timeline.html`, and checks `scenario.json` for mistakes. |
-| `references/` | Links to public domain NASA reference images of the real hardware and places, for the future video cutscenes. Browse them at https://kalindc.github.io/moon-base-race/references/ |
+| `art/` | The AI-generated cutscene videos and card pictures. |
+| `references/` | Links to public domain NASA reference images of the real hardware and places, used as references for the game's art. Browse them at https://kalindc.github.io/moon-base-race/references/ |
 
 ## How accurate is it?
 
@@ -46,6 +47,7 @@ The game was first built as a claude.ai page, where it gets a few extra features
 | Feature | On this site | On the [claude.ai version](https://claude.ai/artifact/T3U7q59bmcxbcfezXhHe6i) |
 | --- | --- | --- |
 | Playing the game, sound, what-if modes, site map, quality score, NIAC concepts, debrief | Yes | Yes |
+| Video cutscenes and vehicle pictures | Yes, from the `art/` folder; any file not there yet shows the drawn placeholder scene instead | No, claude.ai pages can't load outside media, so placeholder scenes show |
 | Mission control voice | Yes, using your browser's built-in voice | Yes |
 | Save result card (image) | Yes, as a normal download | Yes |
 | Scene editor, drafts and playtesting | Yes, the draft stays in your browser | Yes |
@@ -58,4 +60,8 @@ Download the repository and open `index.html` in a browser. To rebuild after edi
 
 ## Credits
 
-Game data comes from NASA (nasa.gov/moonbase and related pages) and the news coverage listed in the game's sources. Reference images are NASA's; NASA does not endorse this project. Cutscenes are placeholder drawings for now; photorealistic video is planned.
+Game data comes from NASA (nasa.gov/moonbase and related pages) and the news coverage listed in the game's sources. Reference images are NASA's; NASA does not endorse this project. The cutscene videos and the pictures on the cards are AI-generated with Higgsfield. They are artist's impressions of hardware that mostly doesn't exist yet, not photographs, and they may get details wrong. Where they can't load, the game falls back to simple drawn scenes.
+
+## License
+
+MIT. See [LICENSE](LICENSE). The license covers this repository's own code, data and art; the NASA images listed in `references/` are NASA's, and the sources linked in the game belong to their publishers.

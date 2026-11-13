@@ -9,8 +9,8 @@ head=old[:old.index('<style>')]
 painter=old[old.index('/* ---------- cutscene painter'):old.index('/* ---------- play ---------- */')]
 editor=old[old.index('/* ---------- scene editor ---------- */'):old.index('/* ---------- shell ---------- */')]
 rep=[
-("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
-("'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]","'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be \"setback\": it costs its months, then the stage completes with its grants. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. Options, carriers and items may carry caps (a list of short capability phrases) and benefit (one sentence). Items and options may carry quality (points added to the base quality score); items may carry fx: {monthsPct, risk} (changes every later stage: negative monthsPct is faster, negative risk is safer), class (a short label), devCostM and devMonths (development cost and time charged once), risk (added to the mishap chance of that delivery) and niac: {pi,year,url}. '+\n'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]"),
+("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','art','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
+("'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]","'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be \"setback\": it costs its months, then the stage completes with its grants. A stage may carry still (a picture link) and media (a video link) for its cutscene. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. Options, carriers and items may carry caps (a list of short capability phrases) and benefit (one sentence). Items and options may carry quality (points added to the base quality score); items may carry fx: {monthsPct, risk} (changes every later stage: negative monthsPct is faster, negative risk is safer), class (a short label), image (a picture link), devCostM and devMonths (development cost and time charged once), risk (added to the mishap chance of that delivery) and niac: {pi,year,url}. '+\n'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]"),
 ("if(edSel>=draft.stages.length)edSel=0;\n  const st=draft.stages[edSel];","if(edSel>=draft.stages.length)edSel=0;\n  const isSet=edSel<0,st=isSet?Object.fromEntries(SETKEYS.filter(k=>k in draft).map(k=>[k,draft[k]])):draft.stages[edSel];"),
 ("if(!validStage(o)){say(\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};","if(isSet?!(o&&typeof o===\"object\"&&!Array.isArray(o)):!validStage(o)){say(isSet?\"Settings must be one JSON object.\":\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};"),
 ("const apply=()=>{const o=readJson();if(!o)return false;draft.stages[edSel]=o;saveDraft();return true};","const apply=()=>{const o=readJson();if(!o)return false;if(isSet){const t=Object.assign(clone(draft),o);if(!validScenario(t)){say(\"Settings need a start date and a deadline.\",true);return false}draft=t}else draft.stages[edSel]=o;saveDraft();return true};"),
@@ -34,6 +34,16 @@ rep=[
 ]
 for a,b in rep:
     assert a in editor,a[:60]; editor=editor.replace(a,b)
+_old='''  if(media)s.append(h("video",{src:media,autoplay:true,muted:true,loop:true,playsinline:true}));
+  else if(prompt)s.append(h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}));'''
+_new='''  const key=[sc,caption,media,still,artUrl(media),artUrl(still)].join("|");
+  if(lastScr&&lastScr.key===key){cv=lastScr.cv;cancelAnimationFrame(raf);raf=requestAnimationFrame(paint);const v=lastScr.el.querySelector("video");if(v)setTimeout(()=>{try{v.play().catch(()=>{})}catch(e){}},0);return lastScr.el}
+  const tag=prompt?h("div",{class:"tag",text:"Placeholder scene. Video brief: "+prompt}):null,gone=()=>{if(tag)tag.remove()};
+  const im=artEl("img",still,{class:"art",alt:""},gone);if(im)s.append(im);
+  const vd=artEl("video",media,{class:"art",autoplay:true,muted:true,loop:true,playsinline:true,preload:"auto"},gone);if(vd){vd.muted=true;s.append(vd)}
+  if(tag)s.append(tag);lastScr={key,el:s,cv};'''
+assert _old in painter; painter=painter.replace(_old,_new).replace("function screenEl(sc,caption,prompt,media){","let lastScr=null;\nfunction screenEl(sc,caption,prompt,media,still){")
+assert "media,still)" in painter
 body='''<header><div class="wrap">
   <div class="bar"><h1>Moon Base Race</h1>
     <div class="clock"><span>Mission date <b id="cDate"></b></span><span>Elapsed <b id="cEl"></b></span><span>Funds <b id="cBud"></b></span><span class="cn">Deadline <b id="cCn"></b></span></div></div>

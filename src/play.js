@@ -37,7 +37,7 @@ function startView(){
 function stageView(){
   const st=SCN.stages[G.i],main=$("main");main.textContent="";banner(main);
   const left=h("div",{});
-  main.append(screenEl(st.scene||"lander",st.title,st.videoPrompt,st.media));
+  main.append(screenEl(st.scene||"lander",st.title,st.videoPrompt,st.media,st.still));
   say("b"+G.i+"-"+G.log.length,st.title+". "+(st.narration||""));
   left.append(h("div",{class:"step",text:"Stage "+(G.i+1)+" of "+SCN.stages.length}),h("h2",{text:st.title}),h("p",{text:st.narration||""}));
   if(G.i>0&&!nightSafe())left.append(h("p",{class:"note",style:"color:var(--sun)",text:SCN.night.text+" Work takes "+SCN.night.pct+"% longer until that changes."}));
@@ -46,16 +46,16 @@ function stageView(){
   if(st.type==="choice"){
     const box=h("div",{class:"opts"});
     st.options.forEach(o=>{const miss=(o.requires||[]).filter(t=>!has(t));
-      box.append(h("button",{class:"opt radio","aria-pressed":G.sel.opt===o.id?"true":"false",disabled:miss.length>0,onclick:()=>{G.sel.opt=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),capKids(o),o.costM?h("small",{class:"m",text:fm(o.costM)+", "+pl(o.months||0)+"."}):null,rk(o),miss.length?h("small",{class:"m",text:"Needs a landed asset: "+miss.join(", ")}):null)))});
+      box.append(h("button",{class:"opt radio","aria-pressed":G.sel.opt===o.id?"true":"false",disabled:miss.length>0,onclick:()=>{G.sel.opt=o.id;stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{text:o.label}),h("small",{text:o.desc||""}),capKids(o),o.costM?h("small",{class:"m",text:fm(o.costM)+", "+pl(o.months||0)+"."}):null,rk(o),miss.length?h("small",{class:"m",text:"Needs a landed asset: "+miss.join(", ")}):null)))});
     const co=st.options.find(o=>o.id===G.sel.opt);need=co?co.costM||0:0;
     if(co&&co.lander)left.append(manifest({id:co.lander,label:co.label,shape:co.lander},[],"Crew of four"));
     left.append(h("h3",{text:"Choose one"}),box);go.disabled=!G.sel.opt;
   }else{
     const cb=h("div",{class:"opts"});
-    st.carriers.forEach(o=>cb.append(h("button",{class:"opt radio","aria-pressed":G.sel.car===o.id?"true":"false",onclick:()=>{G.sel.car=o.id;stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.capKg.toLocaleString()+" kg payload, "+o.months+" months, "+fm(o.costM||0)+"."+availTxt(o)}),rk(o)))));
+    st.carriers.forEach(o=>cb.append(h("button",{class:"opt radio","aria-pressed":G.sel.car===o.id?"true":"false",onclick:()=>{G.sel.car=o.id;stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{text:o.label}),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.capKg.toLocaleString()+" kg payload, "+o.months+" months, "+fm(o.costM||0)+"."+availTxt(o)}),rk(o)))));
     const car=st.carriers.find(c=>c.id===G.sel.car),sel=carried(),its=st.items.filter(i=>sel.includes(i.id)),kg=its.reduce((a,i)=>a+i.kg,0),dev=its.filter(devDue).reduce((a,i)=>a+(i.devCostM||0),0),devMo=Math.max(0,...its.filter(devDue).map(i=>(i.devMonths||0)-G.months)),cost=(car?car.costM||0:0)+its.reduce((a,i)=>a+(i.costM||0),0)+dev,lr=car?effRisk((car.risk||0)+its.reduce((a,i)=>a+(i.risk||0),0)):0;
     const ib=h("div",{class:"opts"});
-    st.items.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},h("strong",{},o.label,o.class?h("span",{class:"cls",text:o.class}):null,o.niac?h("span",{class:"cls niac",text:"NIAC"}):null),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.kg.toLocaleString()+" kg, "+fm(o.costM||0)+"."+availTxt(o)})))));
+    st.items.forEach(o=>ib.append(h("button",{class:"opt","aria-pressed":sel.includes(o.id)?"true":"false",onclick:()=>{G.sel.items=sel.includes(o.id)?sel.filter(x=>x!==o.id):sel.concat(o.id);stageView()}},h("span",{class:"box"}),h("span",{},thumb(o),h("strong",{},o.label,o.class?h("span",{class:"cls",text:o.class}):null,o.niac?h("span",{class:"cls niac",text:"NIAC"}):null),h("small",{text:o.desc||""}),capKids(o),h("small",{class:"m",text:o.kg.toLocaleString()+" kg, "+fm(o.costM||0)+"."+availTxt(o)})))));
     const over=car&&kg>car.capKg,got=new Set(its.flatMap(i=>i.tags||[]));
     need=cost;
     left.append(h("h3",{text:"Delivery"}),cb,manifest(car,its),h("h3",{text:"Payloads"}),
@@ -106,16 +106,16 @@ function sidebar(){
     h("h3",{text:"Mission log"}),G.log.length?h("ul",{},G.log.map(l=>h("li",{},h("span",{text:l[0]}),h("span",{text:l[1]+(l[2]?" · "+l[2]:"")})))):h("p",{class:"note",text:"Each decision adds its lead time and cost."}));
 }
 function commit(){
-  const st=SCN.stages[G.i];let ok=true,soft=false,months=0,cost=0,text="",sc=null,grants=[],assets=[],risk=0,dev=0,gain=[];const notes=[];
+  const st=SCN.stages[G.i];let ok=true,soft=false,months=0,cost=0,text="",sc=null,grants=[],assets=[],risk=0,dev=0,gain=[],art=null;const notes=[];
   if(st.type==="choice"){
     const o=st.options.find(x=>x.id===G.sel.opt);ok=o.outcome!=="fail";soft=o.outcome==="setback";months=o.months||0;
     for(const m of o.modifiers||[])if(has(m.has))months+=m.months;months=Math.max(1,months);
-    text=o.resultText||(ok?"Done.":"That did not work.");sc=o.scene;grants=ok?o.grants||[]:[];if(ok&&grants.includes("site"))G.site=o.label;cost=o.costM||0;risk=o.risk||0;if(ok)gain=[o];
+    text=o.resultText||(ok?"Done.":"That did not work.");sc=o.scene;art=o.art;grants=ok?o.grants||[]:[];if(ok&&grants.includes("site"))G.site=o.label;cost=o.costM||0;risk=o.risk||0;if(ok)gain=[o];
   }else{
     const car=st.carriers.find(c=>c.id===G.sel.car),its=st.items.filter(i=>carried().includes(i.id));
     const bad=its.find(i=>i.outcome==="fail"),tags=new Set(its.flatMap(i=>i.tags||[])),miss=(st.needs||[]).filter(n=>!tags.has(n.tag));
     const dv=its.filter(devDue),devMo=Math.max(0,...dv.map(i=>(i.devMonths||0)-G.months));dev=dv.reduce((a,i)=>a+(i.devCostM||0),0);cost=(car.costM||0)+its.reduce((a,i)=>a+(i.costM||0),0)+dev;risk=(car.risk||0)+its.reduce((a,i)=>a+(i.risk||0),0);if(dv.length){G.dev.push(...dv.map(i=>i.id));notes.push("Development paid for "+dv.map(i=>i.label).join(", ")+": "+fm(dev)+".")}
-    if(bad){ok=false;months=bad.failMonths||st.failMonths||8;text=bad.failText||"The payload failed.";sc=bad.scene}
+    if(bad){ok=false;months=bad.failMonths||st.failMonths||8;text=bad.failText||"The payload failed.";sc=bad.scene;art=bad.art}
     else if(miss.length){ok=false;months=st.failMonths||8;text="The delivery lands but the mission falls short. Nothing on board covers: "+miss.map(n=>n.label.toLowerCase()).join(", ")+". A second delivery has to be prepared."}
     else{const ready=Math.max(availMo(car),...its.map(availMo));months=Math.max(car.months,ready-G.months,devMo);text=(st.successText||"Delivered.");if(months>car.months)notes.push(devMo===months?"The delivery waited until "+dateAt(G.months+devMo)+" for a technology to finish development.":"The delivery waited for hardware that was not ready until "+dateAt(G.months+months)+".");gain=its;grants=[...tags].concat(car.grants||[]);assets=its.map(i=>i.label)}
   }
@@ -126,7 +126,7 @@ function commit(){
   const mishap=ok&&!soft&&risk>0&&roll()<effRisk(risk);
   G.months+=months;G.spent+=cost;G.log.push([st.title+(ok?(soft?" (setback)":""):" (failed)"),"+"+months+" mo",fm(cost)]);
   if(ok){for(const g of gain){if(g.fx){G.speed+=g.fx.monthsPct||0;G.rel+=g.fx.risk||0}G.quality+=g.quality||0}const fxn=gain.flatMap(g=>fxList(g).map(t=>g.label+": "+t.toLowerCase()+"."));notes.push(...fxn);for(const t of grants)if(!has(t))G.tags.push(t);G.assets.push(...assets);G.dates[st.id]=G.months}
-  G.result={ok,soft,months,cost,text,notes,scene:sc||(ok&&!soft&&!mishap?st.scene:"fail")};
+  G.result={ok,soft,months,cost,text,notes,art:art||(ok&&!soft?{still:st.still,media:st.media}:(SCN.art&&SCN.art.fail)||null),scene:sc||(ok&&!soft&&!mishap?st.scene:"fail")};
   if(G.months>=totalMonths()){G.phase="lost";sfx.bad()}
   else if(mishap){G.rec={months,cost:cost-dev,kind:st.type};G.phase="recover";sfx.bad()}
   else{G.phase="result";ok&&!soft?sfx.go():sfx.bad()}
@@ -134,19 +134,19 @@ function commit(){
 }
 function recoverView(){
   const st=SCN.stages[G.i],r=G.rec,main=$("main");main.textContent="";banner(main);
-  main.append(screenEl("fail","Mishap"));
+  {const a=(SCN.art&&SCN.art.fail)||{};main.append(screenEl("fail","Mishap",null,a.media,a.still))}
   const A={label:"Fly a replacement",m:Math.ceil(r.months*0.6),c:Math.round(r.cost*0.6),desc:"Rebuild what was lost and send it again. Slow and expensive, and the base ends up as planned."},
         B={label:"Improvise on site",m:Math.ceil(r.months*0.25)+1,c:Math.round(r.cost*0.1),wear:1,desc:"Repair and work around the damage with what is already on the surface. Faster and cheaper now, but every later stage takes 1 month longer."};
   const txt=r.kind==="loadout"?"The lander comes down hard and part of the cargo is damaged.":"The operation goes wrong partway through and hardware is damaged.";
   say("m"+G.log.length,"Mishap. "+txt);
-  const pick=o=>{G.months+=o.m;G.spent+=o.c;if(o.wear)G.wear+=o.wear;G.log.push(["Recovery: "+o.label.toLowerCase(),"+"+o.m+" mo",fm(o.c)]);G.result.months+=o.m;G.result.cost+=o.c;G.result.notes.push("Mishap recovered by choosing to "+o.label.toLowerCase()+": +"+pl(o.m)+", "+fm(o.c)+".");G.dates[st.id]=G.months;G.rec=null;G.result.scene=st.scene;G.phase=G.months>=totalMonths()?"lost":"result";sfx.go();render()};
+  const pick=o=>{G.months+=o.m;G.spent+=o.c;if(o.wear)G.wear+=o.wear;G.log.push(["Recovery: "+o.label.toLowerCase(),"+"+o.m+" mo",fm(o.c)]);G.result.months+=o.m;G.result.cost+=o.c;G.result.notes.push("Mishap recovered by choosing to "+o.label.toLowerCase()+": +"+pl(o.m)+", "+fm(o.c)+".");G.dates[st.id]=G.months;G.rec=null;G.result.scene=st.scene;G.result.art={still:st.still,media:st.media};G.phase=G.months>=totalMonths()?"lost":"result";sfx.go();render()};
   main.append(h("div",{class:"cols"},h("div",{class:"res soft"},h("div",{class:"big",text:"Mishap"}),h("h2",{text:st.title}),h("p",{text:txt+" Choose how to recover."}),
     h("div",{class:"opts"},[A,B].map(o=>h("button",{class:"opt radio",disabled:o.c>funds(),onclick:()=>pick(o)},h("span",{class:"box"}),h("span",{},h("strong",{text:o.label}),h("small",{text:o.desc}),h("small",{class:"m",text:"+"+pl(o.m)+", "+fm(o.c)}))))),B.c>funds()?h("div",{class:"row"},fundsHelp(B.c)):null),sidebar()));
 }
 function resultView(){
   const st=SCN.stages[G.i],r=G.result,main=$("main");main.textContent="";banner(main);
   const last=G.i===SCN.stages.length-1,good=r.ok;
-  main.append(screenEl(r.scene,r.ok?(r.soft?"Setback":"Success"):"Failure"));
+  main.append(screenEl(r.scene,r.ok?(r.soft?"Setback":"Success"):"Failure",null,r.art&&r.art.media,r.art&&r.art.still));
   say("r"+G.log.length,(r.ok?(r.soft?"Setback. ":"Stage complete. "):"Stage failed. ")+r.text);
   const left=h("div",{class:"res"+(r.ok?(r.soft?" soft":""):" bad")},h("div",{class:"big",text:r.ok?(r.soft?"Setback, then complete":"Stage complete"):"Stage failed"}),h("h2",{text:st.title}),h("p",{text:r.text}),
     r.notes.length?h("ul",{class:"notes"},r.notes.map(n=>h("li",{text:n}))):null,
@@ -171,7 +171,7 @@ function resultCard(won){
 }
 function endView(won){
   const main=$("main");main.textContent="";banner(main);
-  main.append(screenEl(won?"win":"flag",won?"The first crew enters the Moon Base":dateAt(totalMonths())+": "+SCN.rival.name+"'s station is declared complete"));
+  main.append(screenEl(won?"win":"flag",won?"The first crew enters the Moon Base":dateAt(totalMonths())+": "+SCN.rival.name+"'s station is declared complete",null,((SCN.art||{})[won?"win":"loss"]||{}).media,((SCN.art||{})[won?"win":"loss"]||{}).still));
   say("e"+G.log.length,won?"The first crew enters the Moon Base. You win.":SCN.rival.name+"'s station is complete. You lose.");
   const msg=h("div",{class:"msg"}),sum=summaryText(won);
   const copy=h("button",{class:"btn ghost",onclick:async()=>{try{await navigator.clipboard.writeText(sum);msg.textContent="Summary copied."}catch(e){msg.textContent="";msg.append(h("textarea",{readonly:true,style:"min-height:90px"},sum))}}},"Copy summary");

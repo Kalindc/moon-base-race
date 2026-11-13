@@ -26,7 +26,8 @@ function hostedShare(side,readJson,isSet,say){
       const o=readJson();if(!o)return;
       const json=JSON.stringify(o,null,1),title="Scene proposal: "+o.title;
       let url=REPO+"/issues/new?template=scene-proposal.yml&title="+encodeURIComponent(title)+"&summary="+encodeURIComponent(note.value.slice(0,500));
-      if(encodeURIComponent(json).length<6000){url+="&stage="+encodeURIComponent(json);say("Opening GitHub with your stage filled in. Sign in to GitHub and press Create.")}
+      const fit=[json,JSON.stringify(o)].find(j=>encodeURIComponent(j).length<6500);
+      if(fit){url+="&stage="+encodeURIComponent(fit);say("Opening GitHub with your stage filled in. Sign in to GitHub and press Create.")}
       else{try{await navigator.clipboard.writeText(json);say("This stage is too long to send in a link, so it is copied. Paste it into the Stage data box on the GitHub page.")}catch(e){say("This stage is too long to send in a link. Use Download draft below and attach the file on GitHub.",true)}}
       window.open(url,"_blank","noopener")}},"Propose on GitHub"),
     h("h3",{text:"Whole draft"}),

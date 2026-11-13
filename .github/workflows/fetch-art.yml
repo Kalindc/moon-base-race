@@ -1,0 +1,50 @@
+name: Fetch game art
+
+# Copies the game's cutscene videos and card pictures into art/.
+# The download links live in the ART_MANIFEST repository secret (a JSON object
+# of file name -> link) so they never appear in the public repository or logs.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download art
+        env:
+          ART_MANIFEST: ${{ secrets.ART_MANIFEST }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, sys, urllib.request
+          raw = os.environ.get("ART_MANIFEST", "").strip()
+          if not raw:
+              sys.exit("The ART_MANIFEST secret is not set. See art/README.md.")
+          m = json.loads(raw)
+          ok = bad = 0
+          for name, url in sorted(m.items()):
+              if not re.fullmatch(r"[a-z0-9_]+\.(png|mp4)", name):
+                  print("Skipping odd name", name); bad += 1; continue
+              try:
+                  with urllib.request.urlopen(url, timeout=120) as r:
+                      data = r.read()
+                  sig = data[:8] == b"\x89PNG\r\n\x1a\n" if name.endswith(".png") else data[4:8] == b"ftyp"
+                  if not sig:
+                      raise ValueError("unexpected file type")
+                  open("art/" + name, "wb").write(data)
+                  print("ok", name, len(data) // 1024, "KB"); ok += 1
+              except Exception as e:
+                  print("FAILED", name, type(e).__name__); bad += 1
+          print(ok, "downloaded,", bad, "failed")
+          if not ok:
+              sys.exit(1)
+          PY
+      - name: Commit art
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add art
+          if git diff --cached --quiet; then echo "No new art."; else git commit -m "Add game art" && git push; fi

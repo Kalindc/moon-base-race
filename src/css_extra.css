@@ -34,3 +34,9 @@ aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--
 .opt .dev{font:12px var(--mono);color:var(--ice)}
 .cls{display:inline-block;margin-left:8px;padding:0 6px;border:1px solid var(--line);border-radius:3px;font:10px var(--mono);color:var(--dim);vertical-align:middle;text-transform:uppercase;letter-spacing:.04em}
 .cls.niac{color:var(--ice);border-color:var(--ice)}
+
+.screen .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.screen .art.ok{opacity:1}
+.ths{display:flex;gap:4px;margin-bottom:6px}
+.th{display:none;flex:1;min-width:0;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:#000}
+.th.ok{display:block}

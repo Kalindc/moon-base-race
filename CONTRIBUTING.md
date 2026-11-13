@@ -30,7 +30,7 @@ The maintainer reviews each proposal, playtests it, and adds it to the game.
 
 Each entry in `stages` is one cutscene and decision.
 
-- Common fields: `id` (short unique name), `type` (`"choice"` or `"loadout"`), `title`, `narration` (what the player reads), `scene` (which placeholder drawing to show: lander, rover, orbit, build, cargo, habitat, reactor, shield, crew or boom), `videoPrompt` (a description for the future video cutscene).
+- Common fields: `id` (short unique name), `type` (`"choice"` or `"loadout"`), `title`, `narration` (what the player reads), `scene` (which placeholder drawing to show: lander, rover, orbit, build, cargo, habitat, reactor, shield, crew or boom), `videoPrompt` (the description the cutscene video was made from), and optionally `still` (a picture link) and `media` (a video link) for the cutscene. Cards can carry `image` (a picture link). If a picture or video can't load, the placeholder drawing shows instead.
 - A **choice** stage has `options`, each with `label`, `desc`, `months` (time it costs), `costM` (millions of dollars), `risk` (0 to 1 chance of a mishap), `outcome` (`"ok"`, `"fail"` or `"setback"`), `resultText`, and optionally `requires` and `grants` (tags for things the player has, such as `"mapping"` or `"pads"`). At least one option must be `"ok"`.
 - A **loadout** stage has `carriers` (landers or rockets with `capKg`, `months`, `costM`) and `items` (payloads with `kg`, `tags`, `costM`), plus `needs` (the tags the chosen payloads must cover). A payload can always fail with `"outcome": "fail"`.
 - Anything can carry `availableAt: {"y": 2028, "m": 6}` for a "ready no earlier than" date, and a stage can carry `insight: {"text": ..., "url": ...}` for a sourced fact shown after the decision.

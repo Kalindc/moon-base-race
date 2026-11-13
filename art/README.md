@@ -1,0 +1,106 @@
+# Game art
+
+The cutscene videos (`.mp4`) and pictures (`.png`) the game shows. They are AI-generated with Higgsfield: artist's impressions, not photographs. `scenario.json` points at these files by name, and if a file is missing the game shows its drawn placeholder scene instead.
+
+## How the files get here
+
+The maintainer stores the private download links in a repository secret named `ART_MANIFEST` (Settings, then Secrets and variables, then Actions), then runs the **Fetch game art** workflow from the Actions tab. It downloads every file into this folder. Contributors can also add a file here directly, named exactly as listed below.
+
+Expected files:
+
+- `airlock.png`
+- `athlete.png`
+- `blueghost.png`
+- `build.mp4`
+- `build.png`
+- `cable.png`
+- `cadre.png`
+- `carbothermal.png`
+- `cargo.mp4`
+- `cargo.png`
+- `cone.png`
+- `connect.mp4`
+- `connect.png`
+- `construct.mp4`
+- `construct.png`
+- `crew.mp4`
+- `crew.png`
+- `cryo.png`
+- `cuberover.png`
+- `eds.png`
+- `flex.png`
+- `flip.png`
+- `float.png`
+- `floor.png`
+- `fsp.png`
+- `fsp2.png`
+- `gpr.png`
+- `griffin.png`
+- `icemine.png`
+- `inflatable.png`
+- `ipex.png`
+- `laser.png`
+- `lasermfg.png`
+- `lidar.png`
+- `lightbender.png`
+- `logistics.png`
+- `lra.png`
+- `lsms.png`
+- `lspop.png`
+- `lunarcruiser.png`
+- `malapert.png`
+- `mapp.png`
+- `mapp2.png`
+- `metal.png`
+- `microwave.png`
+- `minicast.png`
+- `mk1.png`
+- `mk1x2.png`
+- `mk2.png`
+- `mk2c.png`
+- `mobility.mp4`
+- `mobility.png`
+- `moonfall.png`
+- `move.mp4`
+- `move.png`
+- `mre.png`
+- `myco.png`
+- `nde.png`
+- `ndl.png`
+- `nobile.png`
+- `novac.png`
+- `nss.png`
+- `out_fail.mp4`
+- `out_fail.png`
+- `out_loss.mp4`
+- `out_loss.png`
+- `out_mre.mp4`
+- `out_mre.png`
+- `out_nopad.mp4`
+- `out_nopad.png`
+- `out_win.mp4`
+- `out_win.png`
+- `pegasus.png`
+- `prime.png`
+- `promise.png`
+- `racer.png`
+- `rassor.png`
+- `reiner.png`
+- `relay.png`
+- `ridge.png`
+- `rigid.png`
+- `scalpss.png`
+- `scout.mp4`
+- `scout.png`
+- `shield.mp4`
+- `shield.png`
+- `site.mp4`
+- `site.png`
+- `skylight.png`
+- `solarfarm.png`
+- `solarsinter.png`
+- `starship.png`
+- `thermalmine.png`
+- `tranq.png`
+- `vertex.png`
+- `viper.png`
