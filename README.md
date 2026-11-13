@@ -47,7 +47,7 @@ The game was first built as a claude.ai page, where it gets a few extra features
 
 | Feature | On this site | On the [claude.ai version](https://claude.ai/artifact/T3U7q59bmcxbcfezXhHe6i) |
 | --- | --- | --- |
-| Playing the game, sound, what-if modes, site map, quality score, NIAC concepts, debrief | Yes | Yes |
+| Playing the game, "Play as awarded only" mode, sound, what-if modes, site map, quality score, NIAC concepts, debrief | Yes | Yes |
 | Video cutscenes and vehicle pictures | Yes, from the `art/` folder; any file not there yet shows the drawn placeholder scene instead | No, claude.ai pages can't load outside media, so placeholder scenes show |
 | Mission control voice | Yes, using your browser's built-in voice | Yes |
 | Save result card (image) | Yes, as a normal download | Yes |

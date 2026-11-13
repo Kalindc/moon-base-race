@@ -1,5 +1,5 @@
 {
- "version": 8,
+ "version": 9,
  "title": "Moon Base: Race to the South Pole",
  "start": {
   "y": 2026,
@@ -1901,10 +1901,14 @@
      ],
      "desc": "Four astronauts ride the elevator down to the pad.",
      "resultText": "The crew is down.",
-     "costM": 1800,
+     "costM": 4100,
      "risk": 0.06,
      "lander": "starship",
-     "image": "art/starship.jpg"
+     "image": "art/starship.jpg",
+     "src": {
+      "text": "$4.1 billion per Artemis launch for rocket, capsule and ground systems, from NASA's Inspector General (2021, first four flights).",
+      "url": "https://spacepolicyonline.com/news/first-four-artemis-flights-will-cost-4-1-billion-each-nasa-ig-tells-congress/"
+     }
     },
     {
      "id": "mk2",
@@ -1916,10 +1920,14 @@
      ],
      "desc": "Four astronauts step off close to the ground.",
      "resultText": "The crew is down.",
-     "costM": 1800,
+     "costM": 4100,
      "risk": 0.06,
      "lander": "mk2",
-     "image": "art/mk2.jpg"
+     "image": "art/mk2.jpg",
+     "src": {
+      "text": "$4.1 billion per Artemis launch for rocket, capsule and ground systems, from NASA's Inspector General (2021, first four flights).",
+      "url": "https://spacepolicyonline.com/news/first-four-artemis-flights-will-cost-4-1-billion-each-nasa-ig-tells-congress/"
+     }
     },
     {
      "id": "offpad",
@@ -2330,7 +2338,7 @@
   ],
   [
    "Crew launch cost",
-   "NASA's Inspector General put each of the first four Artemis launches at $4.1 billion for rocket, capsule and ground systems. The game does not charge this to the Moon Base budget",
+   "NASA's Inspector General put each of the first four Artemis launches at $4.1 billion for rocket, capsule and ground systems. The game charges this for the crew flight",
    "https://spacepolicyonline.com/news/first-four-artemis-flights-will-cost-4-1-billion-each-nasa-ig-tells-congress/"
   ],
   [
@@ -2474,5 +2482,234 @@
   },
   "note": "Images and clips generated with Higgsfield. Each option, carrier and item may carry image; each stage may carry still and media; a failing choice may carry art {still, media}."
  },
- "shareUrl": "https://kalindc.github.io/moon-base-race/"
+ "shareUrl": "https://kalindc.github.io/moon-base-race/",
+ "awarded": {
+  "label": "Play as awarded only",
+  "desc": "No choices. Watch only the missions NASA has already put under contract fly, at their awarded prices and dates, and see how far that gets the base.",
+  "note": "Each entry is a contract NASA has awarded, at the awarded value and the latest published date. Where a source gives only a year, the mission is placed mid-year. Far-side and science-only deliveries are left out. Crew flights add the Inspector General's $4.1 billion per launch.",
+  "missions": [
+   {
+    "y": 2026,
+    "m": 12,
+    "when": "Launch no earlier than November 2026",
+    "name": "Moon Base II: Griffin Mission One",
+    "who": "Astrobotic",
+    "costM": 200,
+    "what": "$199.5 million task order for lander and launch",
+    "caps": [
+     "Lands the 500 kg Astrolab FLIP rover",
+     "Carries a CubeRover"
+    ],
+    "covers": "scout",
+    "url": "https://en.wikipedia.org/wiki/Commercial_Lunar_Payload_Services"
+   },
+   {
+    "y": 2027,
+    "m": 3,
+    "when": "Early 2027",
+    "name": "Moon Base I: Blue Moon Mark 1 pathfinder",
+    "who": "Blue Origin",
+    "costM": 6,
+    "what": "$6.1 million award for a NASA camera payload; Blue Origin pays for the lander",
+    "caps": [
+     "First landing of the 3,000 kg class Mark 1",
+     "Targets the Shackleton ridge",
+     "Films the engine plume on the surface"
+    ],
+    "covers": "site",
+    "url": "https://en.wikipedia.org/wiki/Blue_Moon_(spacecraft)"
+   },
+   {
+    "y": 2027,
+    "m": 6,
+    "when": "2027",
+    "name": "Moon Base III: Nova-C Trinity",
+    "who": "Intuitive Machines",
+    "costM": 78,
+    "what": "$77.5 million task order",
+    "caps": [
+     "About 100 kg of payload",
+     "Lunar Vertex instruments",
+     "Science payloads from ESA and Korea"
+    ],
+    "covers": "scout",
+    "url": "https://jatan.space/nasa-clps-moon-missions.md"
+   },
+   {
+    "y": 2027,
+    "m": 6,
+    "when": "2027",
+    "name": "Fourth Intuitive Machines delivery",
+    "who": "Intuitive Machines",
+    "costM": 117,
+    "what": "$116.9 million task order",
+    "caps": [
+     "About 100 kg of payload to the south pole"
+    ],
+    "covers": "scout",
+    "url": "https://jatan.space/nasa-clps-moon-missions.md"
+   },
+   {
+    "y": 2027,
+    "m": 11,
+    "when": "Late 2027",
+    "name": "VIPER on the second Blue Moon Mark 1",
+    "who": "Blue Origin, NASA Ames",
+    "costM": 190,
+    "what": "Up to $190 million for delivery. The rover itself cost about $450 million, already spent",
+    "caps": [
+     "430 kg rover",
+     "Drills 1 m",
+     "Maps water ice over about 100 days"
+    ],
+    "covers": "scout",
+    "url": "https://www.nasa.gov/news-release/nasa-selects-blue-origin-to-deliver-viper-rover-to-moons-south-pole/"
+   },
+   {
+    "y": 2028,
+    "m": 2,
+    "when": "Early 2028",
+    "name": "Artemis IV: first crew landing",
+    "who": "SpaceX, NASA",
+    "costM": 8140,
+    "what": "$4.1 billion launch plus the $2.89 billion and $1.15 billion Starship lander contracts",
+    "caps": [
+     "Lands a crew for a short stay",
+     "No habitat to move into"
+    ],
+    "covers": "crew",
+    "url": "https://en.wikipedia.org/wiki/Starship_HLS"
+   },
+   {
+    "y": 2028,
+    "m": 6,
+    "when": "2028",
+    "name": "Two Lunar Terrain Vehicles",
+    "who": "Astrolab, Lunar Outpost, Blue Origin",
+    "costM": 627,
+    "what": "$219 million and $220 million for the rovers, $188 million for delivery",
+    "caps": [
+     "Two unpressurized rovers",
+     "Two suited crew each",
+     "Driven remotely between crews"
+    ],
+    "covers": "mobility",
+    "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+   },
+   {
+    "y": 2028,
+    "m": 6,
+    "when": "2028",
+    "name": "MoonFall hopper drones",
+    "who": "Firefly, JPL",
+    "costM": 75,
+    "what": "$75 million subcontract, launch not included",
+    "caps": [
+     "Four drones survey landing sites over one lunar day"
+    ],
+    "covers": "scout",
+    "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+   },
+   {
+    "y": 2028,
+    "m": 6,
+    "when": "2028",
+    "name": "Blue Ghost delivery",
+    "who": "Firefly",
+    "costM": 179,
+    "what": "$179 million task order",
+    "caps": [
+     "About 150 kg of payload"
+    ],
+    "covers": "scout",
+    "url": "https://jatan.space/nasa-clps-moon-missions.md"
+   },
+   {
+    "y": 2028,
+    "m": 11,
+    "when": "Late 2028",
+    "name": "PROMISE nuclear rover",
+    "who": "JPL, Blue Origin",
+    "costM": 234,
+    "what": "$94 million delivery award plus a $140 million option",
+    "caps": [
+     "Nuclear powered, works through the lunar night",
+     "Drills to about 1 m",
+     "18-month mission"
+    ],
+    "covers": "scout",
+    "url": "https://spacepolicyonline.com/news/nasa-awards-initial-moon-base-rover-and-lander-contracts/"
+   },
+   {
+    "y": 2028,
+    "m": 11,
+    "when": "Late 2028",
+    "name": "Four small landers",
+    "who": "Astrobotic (two), Firefly, Intuitive Machines",
+    "costM": 590,
+    "what": "$297 million, $144.2 million and $148.3 million",
+    "caps": [
+     "Each carries a retroreflector, a radiation sensor and plume cameras",
+     "Marks and measures future landing sites"
+    ],
+    "covers": "scout",
+    "url": "https://starlust.org/nasa-announces-four-new-lunar-lander-missions-worth-nearly-600-million-to-advance-moon-base-science/"
+   },
+   {
+    "y": 2028,
+    "m": 12,
+    "when": "Late 2028",
+    "name": "Artemis V: second crew landing",
+    "who": "Blue Origin, NASA",
+    "costM": 7500,
+    "what": "$4.1 billion launch plus the $3.4 billion Blue Moon Mark 2 contract",
+    "caps": [
+     "Lands four crew for up to 30 days",
+     "No habitat to move into"
+    ],
+    "covers": "crew",
+    "url": "https://spaceflightnow.com/2023/05/19/nasa-awards-blue-origin-3-4-billion-artemis-moon-lander-contract/"
+   },
+   {
+    "y": 2029,
+    "m": 6,
+    "when": "2029",
+    "name": "Blue Ghost delivery",
+    "who": "Firefly",
+    "costM": 177,
+    "what": "$176.7 million task order",
+    "caps": [
+     "About 150 kg of payload"
+    ],
+    "covers": "scout",
+    "url": "https://jatan.space/nasa-clps-moon-missions.md"
+   }
+  ],
+  "gaps": [
+   {
+    "stage": "construct",
+    "text": "No flight contract. ICON ($57.2 million) and Blue Origin's regolith electrolysis ($34.7 million) are development awards on Earth."
+   },
+   {
+    "stage": "build",
+    "text": "No contract to build pads, roads or foundations on the Moon."
+   },
+   {
+    "stage": "cargo",
+    "text": "No contract to deliver a habitat, a reactor or base supplies. No flight award for the fission reactor has been published."
+   },
+   {
+    "stage": "move",
+    "text": "Nothing to move: no habitat is under contract."
+   },
+   {
+    "stage": "connect",
+    "text": "Nothing to connect: no reactor is under contract."
+   },
+   {
+    "stage": "shield",
+    "text": "Nothing to shield: no habitat is under contract."
+   }
+  ]
+ }
 }

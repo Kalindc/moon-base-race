@@ -9,7 +9,7 @@ function render(){
   if(tab==="edit"){editView();artPanel();return}
   if(tab==="data")return dataView();
   const p=G.phase;
-  if(p==="start")startView();else if(p==="brief")stageView();else if(p==="recover")recoverView();else if(p==="result")resultView();else endView(p==="won");
+  if(p==="start")startView();else if(p==="brief")stageView();else if(p==="recover")recoverView();else if(p==="result")resultView();else if(p==="awd"&&SCN.awarded)awardedView();else endView(p==="won");
 }
 document.querySelector("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b){if(testing&&b.dataset.tab!=="play"){testing=false;BASE=LIVE;toStart()}show(b.dataset.tab)}});
 $("tSound").addEventListener("click",()=>{soundOn=!soundOn;ls.set("mb-sound",soundOn?"1":"0");if(soundOn)sfx.go();render()});

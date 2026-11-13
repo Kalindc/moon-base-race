@@ -35,7 +35,7 @@ function startView(){
   main.append(h("div",{},h("div",{class:"step",text:"Mission briefing"}),h("h2",{text:"Build the Moon Base before "+dateAt(totalMonths())}),
     h("p",{text:"You run NASA's Moon Base program from "+dateAt(0)+". Each stage is a decision. Every decision costs time and money, and some carry a chance of a mishap. Land the first crew in a powered, shielded habitat before "+((SCN.rival&&SCN.rival.name)||"your rival")+" completes its station, and stay inside the budget. NASA announced "+fm(SCN.budgetM||0)+" over "+(SCN.budgetYears||7)+" years, so "+fm(Math.round(yearly()))+" is released each year and you can never spend more than has been released."}),
     h("h3",{text:"As published, or what if?"}),h("p",{class:"note",text:"Leave these off to play NASA's plan as published. Turn any on to see the knock-on effect."}),box,
-    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{sfx.go();G.phase="brief";render()}},picks.length?"Start the what-if run":"Start as published"))));
+    h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{sfx.go();G.phase="brief";render()}},picks.length?"Start the what-if run":"Start as published"),BASE.awarded?h("button",{class:"btn ghost",onclick:()=>{newGame([],"awd");G.ai=-1;sfx.go();render()}},BASE.awarded.label||"Play as awarded only"):null),BASE.awarded?h("p",{class:"note",style:"margin-top:8px",text:BASE.awarded.desc||""}):null));
 }
 function stageView(){
   const st=SCN.stages[G.i],main=$("main");main.textContent="";banner(main);
@@ -156,6 +156,29 @@ function resultView(){
     h("p",{class:"mono",text:"Time added: "+pl(r.months)+". Cost: "+fm(r.cost)+". Mission date is now "+dateAt(G.months)+". "+(totalMonths()-G.months)+" months remain before the deadline."}),
     good&&st.insight?h("div",{class:"insight"},h("h3",{text:"What NASA is actually doing"}),h("p",{style:"margin:0",text:st.insight.text+" "},st.insight.url?h("a",{href:st.insight.url,target:"_blank",rel:"noopener",text:"Source"}):null)):null,
     h("div",{class:"row"},h("button",{class:"btn",onclick:()=>{G.sel={};G.result=null;if(good){if(last){G.phase="won";sfx.win()}else{G.i++;G.phase="brief"}}else G.phase="brief";render()}},good?(last?"Enter the base":"Next stage"):"Try this stage again")));
+  main.append(h("div",{class:"cols"},left,sidebar()));
+}
+/* ---------- as awarded only: a fixed run of the missions already under contract ---------- */
+function awardedView(){
+  const A=SCN.awarded,Ms=A.missions,main=$("main");main.textContent="";banner(main);
+  const done=G.ai>=Ms.length,cur=!done&&G.ai>=0?Ms[G.ai]:null,flown=Ms.slice(0,Math.max(0,Math.min(Ms.length,G.ai+1)));
+  const stOf=id=>SCN.stages.find(s=>s.id===id)||{},cst=cur?stOf(cur.covers):stOf(done?"crew":"scout");
+  main.append(screenEl(cst.scene||"lander",done?"What the awarded contracts build":cur?cur.name:"As awarded only",null,cur?cst.media:null,cst.still));
+  const tbl=(heads,rows)=>h("div",{class:"tw"},h("table",{},h("thead",{},h("tr",{},heads.map(x=>h("th",{text:x})))),h("tbody",{},rows.map(r=>h("tr",{},r.map((x,i)=>h("td",{class:i===0?"n":""},x&&x.nodeType?x:String(x==null?"":x))))))));
+  const left=h("div",{});
+  if(G.ai<0){left.append(h("div",{class:"step",text:"As awarded only"}),h("h2",{text:"Fly only what is already under contract"}),h("p",{text:A.desc||""}),h("p",{class:"note",text:A.note||""}))}
+  else if(cur){say("a"+G.ai,cur.name+". "+cur.what);
+    left.append(h("div",{class:"step",text:"Awarded mission "+(G.ai+1)+" of "+Ms.length+" · "+cur.when}),h("h2",{text:cur.name}),h("p",{},h("strong",{style:"color:#fff",text:cur.who})," · "+fm(cur.costM)+". "+cur.what+". ",cur.url?h("a",{href:cur.url,target:"_blank",rel:"noopener",text:"Source"}):null),
+      h("ul",{class:"notes",style:"color:var(--dust)"},(cur.caps||[]).map(c=>h("li",{text:c}))),h("p",{class:"note",text:"Counts toward: "+(stOf(cur.covers).title||cur.covers)+"."}))}
+  if(done){const T=totalMonths(),cov=new Set(Ms.map(m=>m.covers)),gap=Object.fromEntries((A.gaps||[]).map(g=>[g.stage,g.text]));
+    say("ad","The awarded contracts end in "+dateAt(G.months)+". The base is not built.");
+    left.append(h("div",{class:"res bad",style:"margin-bottom:12px"},h("div",{class:"big",text:"The awarded contracts do not build the base"}),
+      h("p",{text:"Every mission under contract has flown by "+dateAt(G.months)+", for "+fm(G.spent)+". Crews visit the south pole in 2028, but nothing is under contract to build pads, deliver a habitat or power it. Unless more is awarded, "+dateAt(T)+" arrives "+dur(T-G.months)+" later with no base for a crew to move into, and "+SCN.rival.name+"'s station is complete."}),
+      (G.spent>released(G.months)?h("p",{class:"note",text:"These contracts already cost more than the "+fm(released(G.months))+" the "+fm(SCN.budgetM)+" plan would have released by then. Most of that is the two crew flights."}):null)),
+      h("h3",{text:"Stage by stage"}),tbl(["Stage","Under contract?","What exists"],SCN.stages.map(s=>{const ms=Ms.filter(m=>m.covers===s.id);return [s.title,gap[s.id]?"No":cov.has(s.id)?(s.id==="crew"?"Visits only":"Yes"):"No",gap[s.id]||(ms.length?ms.map(m=>m.name).join("; "):"Nothing awarded")]})))}
+  if(flown.length)left.append(h("h3",{text:done?"Every awarded mission":"Flown so far"}),tbl(["When","Mission","Cost","Delivers"],flown.map(m=>[m.when,m.name,fm(m.costM),(m.caps||[])[0]||""])));
+  left.append(h("div",{class:"row"},done?null:h("button",{class:"btn",onclick:()=>{G.ai++;if(G.ai<Ms.length){const m=Ms[G.ai];G.months=Math.max(G.months,moOf(m));G.spent+=m.costM;G.log.push([m.name,dateAt(G.months),fm(m.costM)]);if(!G.assets.includes(m.name))G.assets.push(m.name);for(const t of ({scout:["mobility","mapping"],mobility:["haul"],site:["site"],crew:["crew"]})[m.covers]||[])if(!has(t))G.tags.push(t)}sfx.go();render();scrollTo(0,0)}},G.ai<0?"Fly the first mission":G.ai===Ms.length-1?"See where that leaves the base":"Next awarded mission"),
+    h("button",{class:"btn ghost",onclick:()=>{toStart();render()}},done?"Back to the start":"Leave this mode")));
   main.append(h("div",{class:"cols"},left,sidebar()));
 }
 function summaryText(won){
