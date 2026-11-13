@@ -28,7 +28,7 @@ The game follows NASA's published Moon Base plan and timeline (its three phases,
 - how long each step takes, and the chance of a mishap,
 - what happens when a choice goes wrong.
 
-Two things are deliberate game design rather than predictions: Molten Regolith Electrolysis always explodes in the game, and the "what if" modes are hypothetical scenarios. Treat the game as an informed simulation, not an official NASA projection. NASA has not reviewed or endorsed it.
+Deliberate game design rather than predictions: The "what if" modes are hypothetical scenarios. Treat the game as an informed simulation, not an official NASA projection. NASA has not reviewed or endorsed it.
 
 If you know a better number and have a source, please [suggest a data fix](CONTRIBUTING.md). That is one of the most useful contributions.
 
