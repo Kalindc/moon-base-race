@@ -1,0 +1,1191 @@
+{
+ "generated": "2026-11-14",
+ "games": 1000,
+ "deadline": "Dec 2035",
+ "baseline": {
+  "sensible": 16.9,
+  "expert": 97.2,
+  "clean": 100,
+  "cleanMonths": 86,
+  "deadline": 109,
+  "play": "usually lost",
+  "best": "possible"
+ },
+ "sensitivity": [
+  {
+   "name": "Every estimate at once",
+   "lo": "all kind",
+   "hi": "all harsh",
+   "low": {
+    "sensible": 73.7,
+    "expert": 100,
+    "clean": 100,
+    "cleanMonths": 77,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 0,
+    "expert": 0,
+    "clean": 0,
+    "cleanMonths": 0,
+    "deadline": 109
+   },
+   "swing": 73.7,
+   "flips": [
+    "all kind: a sensible player's run becomes a coin flip",
+    "all harsh: the base becomes impossible even with perfect play"
+   ]
+  },
+  {
+   "name": "Total budget ($20B spoken figure)",
+   "lo": "$15B",
+   "hi": "$30B",
+   "low": {
+    "sensible": 0.1,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 36.5,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 36.4,
+   "flips": [
+    "$30B: a sensible player's run becomes a coin flip"
+   ]
+  },
+  {
+   "name": "Crew flight cost (2021 Inspector General, $4.1B)",
+   "lo": "$2.0B",
+   "hi": "$6.0B",
+   "low": {
+    "sensible": 33.8,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 3.9,
+    "expert": 97.1,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 29.9,
+   "flips": [
+    "$2.0B: a sensible player's run becomes a coin flip"
+   ]
+  },
+  {
+   "name": "China's date (assumption)",
+   "lo": "Dec 2030",
+   "hi": "Dec 2040",
+   "low": {
+    "sensible": 0,
+    "expert": 0,
+    "clean": 0,
+    "cleanMonths": 0,
+    "deadline": 49
+   },
+   "high": {
+    "sensible": 23.2,
+    "expert": 100,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 169
+   },
+   "swing": 23.2,
+   "flips": [
+    "Dec 2030: the base becomes impossible even with perfect play"
+   ]
+  },
+  {
+   "name": "Build pads, roads and foundations: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 26,
+    "expert": 98.6,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 4.1,
+    "expert": 71.8,
+    "clean": 100,
+    "cleanMonths": 96,
+    "deadline": 109
+   },
+   "swing": 21.9,
+   "flips": [
+    "half: a sensible player's run becomes a coin flip"
+   ]
+  },
+  {
+   "name": "Development cost and time of new technologies",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 21.6,
+    "expert": 96,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 4.1,
+    "expert": 96.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 17.5,
+   "flips": []
+  },
+  {
+   "name": "Ready dates of reactor, habitats and rovers (published)",
+   "lo": "1 yr earlier",
+   "hi": "1 yr later",
+   "low": {
+    "sensible": 22,
+    "expert": 96.2,
+    "clean": 100,
+    "cleanMonths": 83,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 5.5,
+    "expert": 82.7,
+    "clean": 100,
+    "cleanMonths": 98,
+    "deadline": 109
+   },
+   "swing": 16.5,
+   "flips": []
+  },
+  {
+   "name": "Build pads, roads and foundations: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 21.7,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 9.7,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 12,
+   "flips": []
+  },
+  {
+   "name": "Land the heavy cargo: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 21.7,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 9.8,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 11.9,
+   "flips": []
+  },
+  {
+   "name": "Send construction and resource payloads: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 21.7,
+    "expert": 98.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 10.3,
+    "expert": 88.3,
+    "clean": 100,
+    "cleanMonths": 89,
+    "deadline": 109
+   },
+   "swing": 11.4,
+   "flips": []
+  },
+  {
+   "name": "Choose the base site: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 20.6,
+    "expert": 97.5,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 9.5,
+    "expert": 94.2,
+    "clean": 100,
+    "cleanMonths": 87,
+    "deadline": 109
+   },
+   "swing": 11.1,
+   "flips": []
+  },
+  {
+   "name": "Send construction and resource payloads: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 19,
+    "expert": 96.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 9.8,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 9.2,
+   "flips": []
+  },
+  {
+   "name": "Lunar night slowdown (20%)",
+   "lo": "0%",
+   "hi": "40%",
+   "low": {
+    "sensible": 20.7,
+    "expert": 99.4,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 12.2,
+    "expert": 89.1,
+    "clean": 100,
+    "cleanMonths": 89,
+    "deadline": 109
+   },
+   "swing": 8.5,
+   "flips": []
+  },
+  {
+   "name": "Shield the habitat: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 18.6,
+    "expert": 98.3,
+    "clean": 100,
+    "cleanMonths": 83,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 10.2,
+    "expert": 90,
+    "clean": 100,
+    "cleanMonths": 92,
+    "deadline": 109
+   },
+   "swing": 8.4,
+   "flips": []
+  },
+  {
+   "name": "Move the habitat: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 17.4,
+    "expert": 98.8,
+    "clean": 100,
+    "cleanMonths": 82,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 11,
+    "expert": 83.4,
+    "clean": 100,
+    "cleanMonths": 94,
+    "deadline": 109
+   },
+   "swing": 6.4,
+   "flips": []
+  },
+  {
+   "name": "Place the reactor and connect power: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 17.3,
+    "expert": 98,
+    "clean": 100,
+    "cleanMonths": 84,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 12.3,
+    "expert": 91.2,
+    "clean": 100,
+    "cleanMonths": 91,
+    "deadline": 109
+   },
+   "swing": 5,
+   "flips": []
+  },
+  {
+   "name": "Land the mobility fleet: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 18.1,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 13.7,
+    "expert": 96,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 4.4,
+   "flips": []
+  },
+  {
+   "name": "Scout the South Pole: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 18.1,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14.5,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 3.6,
+   "flips": []
+  },
+  {
+   "name": "Place the reactor and connect power: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 17.5,
+    "expert": 96.7,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 3.5,
+   "flips": []
+  },
+  {
+   "name": "Land the heavy cargo: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 16.4,
+    "expert": 91.1,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 13.2,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 3.2,
+   "flips": []
+  },
+  {
+   "name": "Send construction and resource payloads: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 17.8,
+    "expert": 98.4,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14.8,
+    "expert": 95.5,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 3,
+   "flips": []
+  },
+  {
+   "name": "Land the heavy cargo: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 17.8,
+    "expert": 96,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14.9,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 2.9,
+   "flips": []
+  },
+  {
+   "name": "Move the habitat: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 16.9,
+    "expert": 98.1,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 15,
+    "expert": 95.7,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1.9,
+   "flips": []
+  },
+  {
+   "name": "Shield the habitat: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 15.9,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14.4,
+    "expert": 96.7,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1.5,
+   "flips": []
+  },
+  {
+   "name": "Budget release in equal yearly parts (assumption)",
+   "lo": "all at once",
+   "hi": "over 10 yrs",
+   "low": {
+    "sensible": 10.4,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 8.9,
+    "expert": 96.1,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1.5,
+   "flips": []
+  },
+  {
+   "name": "Build pads, roads and foundations: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 17,
+    "expert": 97.4,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 15.6,
+    "expert": 94.4,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1.4,
+   "flips": []
+  },
+  {
+   "name": "Shield the habitat: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 17,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 15.8,
+    "expert": 96.8,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1.2,
+   "flips": []
+  },
+  {
+   "name": "Scout the South Pole: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 15.4,
+    "expert": 96,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 16.4,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 1,
+   "flips": []
+  },
+  {
+   "name": "Place the reactor and connect power: estimated mishap chances",
+   "lo": "none",
+   "hi": "double",
+   "low": {
+    "sensible": 15.1,
+    "expert": 97.5,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 14.2,
+    "expert": 96.6,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0.9,
+   "flips": []
+  },
+  {
+   "name": "Choose the base site: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 17,
+    "expert": 96.1,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 17.8,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0.8,
+   "flips": []
+  },
+  {
+   "name": "Move the habitat: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 15.4,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 15.7,
+    "expert": 97.3,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0.3,
+   "flips": []
+  },
+  {
+   "name": "Land the crew: estimated costs",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0,
+   "flips": []
+  },
+  {
+   "name": "Land the crew: estimated times",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0,
+   "flips": []
+  },
+  {
+   "name": "Delays after a failed attempt (all stages)",
+   "lo": "half",
+   "hi": "double",
+   "low": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "high": {
+    "sensible": 16.9,
+    "expert": 97.2,
+    "clean": 100,
+    "cleanMonths": 86,
+    "deadline": 109
+   },
+   "swing": 0,
+   "flips": []
+  }
+ ],
+ "adversary": {
+  "start": {
+   "date": "Jun 2028",
+   "spent": 2473
+  },
+  "plans": 18004,
+  "additions": 14,
+  "path": [
+   {
+    "stage": "Send construction and resource payloads",
+    "id": "construct",
+    "label": "Two Blue Moon Mark 1 cargo flights with ISRU Pilot Excavator (IPEx), Solar concentrator sintering rig, miniCAST solar and comms tower",
+    "sel": {
+     "car": "mk1x2",
+     "items": [
+      "ipex",
+      "solarsinter",
+      "minicast"
+     ]
+    },
+    "date": "May 2029",
+    "cost": 3203
+   },
+   {
+    "stage": "Build pads, roads and foundations",
+    "id": "build",
+    "label": "Landing pad with blast berm, then road, then habitat foundations",
+    "sel": {
+     "opt": "full"
+    },
+    "date": "Jun 2030",
+    "cost": 4403
+   },
+   {
+    "stage": "Land the heavy cargo",
+    "id": "cargo",
+    "label": "SpaceX Starship cargo with Fission Surface Power reactor, Inflatable surface habitat, Power cable reels and radiators, Logistics and supplies",
+    "sel": {
+     "car": "starship",
+     "items": [
+      "fsp",
+      "inflatable",
+      "cable",
+      "logistics"
+     ]
+    },
+    "date": "Jan 2032",
+    "cost": 10953
+   },
+   {
+    "stage": "Move the habitat",
+    "id": "move",
+    "label": "Winch it on a skid",
+    "sel": {
+     "opt": "skid"
+    },
+    "date": "Sep 2032",
+    "cost": 11033
+   },
+   {
+    "stage": "Place the reactor and connect power",
+    "id": "connect",
+    "label": "One kilometre away behind a berm, with a rover laying cable",
+    "sel": {
+     "opt": "farltv"
+    },
+    "date": "Feb 2033",
+    "cost": 11133
+   },
+   {
+    "stage": "Shield the habitat",
+    "id": "shield",
+    "label": "Bury it under 2 to 3 metres of loose regolith",
+    "sel": {
+     "opt": "berm"
+    },
+    "date": "Aug 2033",
+    "cost": 11253
+   },
+   {
+    "stage": "Land the crew",
+    "id": "crew",
+    "label": "Starship lander to the pad",
+    "sel": {
+     "opt": "starship"
+    },
+    "date": "Jan 2034",
+    "cost": 15353
+   }
+  ],
+  "finish": "Jan 2034",
+  "spent": 15353,
+  "quality": 15,
+  "monteCarlo": {
+   "runs": 4000,
+   "winRate": 99.4,
+   "p10": "Jan 2034",
+   "median": "Apr 2034",
+   "p90": "Jan 2035"
+  },
+  "reactorLands": "Jan 2032",
+  "deadline": "Dec 2035",
+  "withArtemisLeftM": 1887
+ },
+ "backplan": {
+  "china": {
+   "base": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Aug 2027",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Sep 2027",
+      "med": "Aug 2027",
+      "slow": "Aug 2026",
+      "margin": 9
+     },
+     {
+      "id": "reactor",
+      "fast": "Aug 2031",
+      "med": "Dec 2028",
+      "slow": "Jul 2026",
+      "margin": 25
+     },
+     {
+      "id": "habitat",
+      "fast": "Sep 2030",
+      "med": "Oct 2027",
+      "slow": "Feb 2026",
+      "margin": 11
+     },
+     {
+      "id": "pads",
+      "fast": "Jan 2030",
+      "med": "Dec 2028",
+      "slow": "Jul 2028",
+      "margin": 25
+     }
+    ]
+   },
+   "surfaceHalf": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Mar 2028",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Apr 2028",
+      "med": "Mar 2028",
+      "slow": "Mar 2027",
+      "margin": 16
+     },
+     {
+      "id": "reactor",
+      "fast": "Mar 2032",
+      "med": "Jul 2029",
+      "slow": "Feb 2027",
+      "margin": 32
+     },
+     {
+      "id": "habitat",
+      "fast": "Apr 2031",
+      "med": "May 2028",
+      "slow": "Sep 2026",
+      "margin": 18
+     },
+     {
+      "id": "pads",
+      "fast": "Feb 2031",
+      "med": "Jan 2030",
+      "slow": "Aug 2029",
+      "margin": 38
+     }
+    ]
+   },
+   "surfaceDouble": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Mar 2026",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Apr 2026",
+      "med": "Mar 2026",
+      "slow": "Mar 2025",
+      "margin": -8
+     },
+     {
+      "id": "reactor",
+      "fast": "Mar 2030",
+      "med": "Jul 2027",
+      "slow": "Feb 2025",
+      "margin": 8
+     },
+     {
+      "id": "habitat",
+      "fast": "Apr 2029",
+      "med": "May 2026",
+      "slow": "Sep 2024",
+      "margin": -6
+     },
+     {
+      "id": "pads",
+      "fast": "Jul 2027",
+      "med": "Jun 2026",
+      "slow": "Jan 2026",
+      "margin": -5
+     }
+    ]
+   },
+   "tail0": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Aug 2027",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Sep 2027",
+      "med": "Aug 2027",
+      "slow": "Aug 2026",
+      "margin": 9
+     },
+     {
+      "id": "reactor",
+      "fast": "Feb 2032",
+      "med": "Jun 2029",
+      "slow": "Jan 2027",
+      "margin": 31
+     },
+     {
+      "id": "habitat",
+      "fast": "Mar 2031",
+      "med": "Apr 2028",
+      "slow": "Aug 2026",
+      "margin": 17
+     },
+     {
+      "id": "pads",
+      "fast": "Jul 2030",
+      "med": "Jun 2029",
+      "slow": "Jan 2029",
+      "margin": 31
+     }
+    ]
+   },
+   "tail12": {
+    "first": "Surface habitat",
+    "med": "Apr 2027",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Sep 2027",
+      "med": "Aug 2027",
+      "slow": "Aug 2026",
+      "margin": 9
+     },
+     {
+      "id": "reactor",
+      "fast": "Feb 2031",
+      "med": "Jun 2028",
+      "slow": "Jan 2026",
+      "margin": 19
+     },
+     {
+      "id": "habitat",
+      "fast": "Mar 2030",
+      "med": "Apr 2027",
+      "slow": "Aug 2025",
+      "margin": 5
+     },
+     {
+      "id": "pads",
+      "fast": "Jul 2029",
+      "med": "Jun 2028",
+      "slow": "Jan 2028",
+      "margin": 19
+     }
+    ]
+   }
+  },
+  "nasa": {
+   "base": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Jan 2024",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Feb 2024",
+      "med": "Jan 2024",
+      "slow": "Jan 2023",
+      "margin": -34
+     },
+     {
+      "id": "reactor",
+      "fast": "Jan 2028",
+      "med": "May 2025",
+      "slow": "Dec 2022",
+      "margin": -18
+     },
+     {
+      "id": "habitat",
+      "fast": "Feb 2033",
+      "med": "Mar 2030",
+      "slow": "Jul 2028",
+      "margin": 40
+     },
+     {
+      "id": "pads",
+      "fast": "Jun 2026",
+      "med": "May 2025",
+      "slow": "Dec 2024",
+      "margin": -18
+     }
+    ]
+   },
+   "surfaceHalf": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Jan 2024",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Feb 2024",
+      "med": "Jan 2024",
+      "slow": "Jan 2023",
+      "margin": -34
+     },
+     {
+      "id": "reactor",
+      "fast": "Jan 2028",
+      "med": "May 2025",
+      "slow": "Dec 2022",
+      "margin": -18
+     },
+     {
+      "id": "habitat",
+      "fast": "Feb 2033",
+      "med": "Mar 2030",
+      "slow": "Jul 2028",
+      "margin": 40
+     },
+     {
+      "id": "pads",
+      "fast": "Dec 2026",
+      "med": "Nov 2025",
+      "slow": "Jun 2025",
+      "margin": -12
+     }
+    ]
+   },
+   "surfaceDouble": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Jan 2024",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Feb 2024",
+      "med": "Jan 2024",
+      "slow": "Jan 2023",
+      "margin": -34
+     },
+     {
+      "id": "reactor",
+      "fast": "Jan 2028",
+      "med": "May 2025",
+      "slow": "Dec 2022",
+      "margin": -18
+     },
+     {
+      "id": "habitat",
+      "fast": "Feb 2033",
+      "med": "Mar 2030",
+      "slow": "Jul 2028",
+      "margin": 40
+     },
+     {
+      "id": "pads",
+      "fast": "May 2025",
+      "med": "Apr 2024",
+      "slow": "Nov 2023",
+      "margin": -31
+     }
+    ]
+   },
+   "tail0": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Jan 2024",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Feb 2024",
+      "med": "Jan 2024",
+      "slow": "Jan 2023",
+      "margin": -34
+     },
+     {
+      "id": "reactor",
+      "fast": "Jul 2028",
+      "med": "Nov 2025",
+      "slow": "Jun 2023",
+      "margin": -12
+     },
+     {
+      "id": "habitat",
+      "fast": "Aug 2033",
+      "med": "Sep 2030",
+      "slow": "Jan 2029",
+      "margin": 46
+     },
+     {
+      "id": "pads",
+      "fast": "Dec 2026",
+      "med": "Nov 2025",
+      "slow": "Jun 2025",
+      "margin": -12
+     }
+    ]
+   },
+   "tail12": {
+    "first": "Cargo lander for 15 to 30 t loads",
+    "med": "Jan 2024",
+    "rows": [
+     {
+      "id": "cargo",
+      "fast": "Feb 2024",
+      "med": "Jan 2024",
+      "slow": "Jan 2023",
+      "margin": -34
+     },
+     {
+      "id": "reactor",
+      "fast": "Jul 2027",
+      "med": "Nov 2024",
+      "slow": "Jun 2022",
+      "margin": -24
+     },
+     {
+      "id": "habitat",
+      "fast": "Aug 2032",
+      "med": "Sep 2029",
+      "slow": "Jan 2028",
+      "margin": 34
+     },
+     {
+      "id": "pads",
+      "fast": "Dec 2025",
+      "med": "Nov 2024",
+      "slow": "Jun 2024",
+      "margin": -24
+     }
+    ]
+   }
+  }
+ }
+}

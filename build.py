@@ -9,7 +9,7 @@ head=old[:old.index('<style>')]
 painter=old[old.index('/* ---------- cutscene painter'):old.index('/* ---------- play ---------- */')]
 editor=old[old.index('/* ---------- scene editor ---------- */'):old.index('/* ---------- shell ---------- */')]
 rep=[
-("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','art','shareUrl','awarded','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
+("let db=null,user=null,","const SETKEYS=['title','start','deadline','budgetM','budgetYears','night','whatifs','rival','quality','art','shareUrl','awarded','backplan','adversary','china','deadlineRange','budgetNote','budgetSource','markers','milestones','facts','sources'];\nlet db=null,user=null,"),
 ("'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]","'Every option, carrier and item may carry costM (cost in millions of dollars); options and carriers may carry risk (0 to 1 chance of a mishap). An option outcome may also be \"setback\": it costs its months, then the stage completes with its grants. A stage may carry still (a picture link) and media (a video link) for its cutscene. A stage may carry insight: {text,url} (a sourced fact shown after the decision) and real (what NASA has published for that step). Items and carriers may carry availableAt: {y,m}. Options, carriers and items may carry caps (a list of short capability phrases) and benefit (one sentence). Items and options may carry quality (points added to the base quality score); items may carry fx: {monthsPct, risk} (changes every later stage: negative monthsPct is faster, negative risk is safer), class (a short label), src: {text,url} (the published basis for its numbers), image (a picture link), rec (true puts it in the recommended set shown first), devCostM and devMonths (development cost and time charged once), risk (added to the mishap chance of that delivery) and niac: {pi,year,url}. '+\n'A \"loadout\" stage has carriers: [{id,label,capKg,months,desc}]"),
 ("if(edSel>=draft.stages.length)edSel=0;\n  const st=draft.stages[edSel];","if(edSel>=draft.stages.length)edSel=0;\n  const isSet=edSel<0,st=isSet?Object.fromEntries(SETKEYS.filter(k=>k in draft).map(k=>[k,draft[k]])):draft.stages[edSel];"),
 ("if(!validStage(o)){say(\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};","if(isSet?!(o&&typeof o===\"object\"&&!Array.isArray(o)):!validStage(o)){say(isSet?\"Settings must be one JSON object.\":\"A stage needs an id, a title, a type, and either options with one that works or carriers and items.\",true);return null}return o};"),
@@ -48,7 +48,7 @@ body='''<header><div class="wrap">
   <div class="bar"><h1>Moon Base Race</h1>
     <div class="clock"><span>Mission date <b id="cDate"></b></span><span>Elapsed <b id="cEl"></b></span><span>Funds <b id="cBud"></b></span><span class="cn">Deadline <b id="cCn"></b></span></div></div>
   <div class="race" id="tl"></div><div class="racenote" id="tln"></div>
-  <nav><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button><span class="sp"></span><button class="tog" id="tSound" aria-pressed="false">Sound</button><button class="tog" id="tVoice" aria-pressed="false" hidden>Mission control voice</button></nav>
+  <nav><button role="tab" id="tabCase" data-tab="case">The case</button><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button><span class="sp"></span><button class="tog" id="tSound" aria-pressed="false">Sound</button><button class="tog" id="tVoice" aria-pressed="false" hidden>Mission control voice</button></nav>
 </div></header>
 <div class="wrap"><main id="main"></main></div>
 '''
@@ -65,7 +65,9 @@ problems+=["Stage %d (%s) %s"%(i+1,s.get('id','?'),_bad(s)) for i,s in enumerate
 if problems: sys.exit("scenario.json has problems:\n  "+"\n  ".join(problems))
 s=json.dumps(d,ensure_ascii=False).replace('</','<\\/')
 explorer=sys.argv[1] if len(sys.argv)>1 else "timeline.html"
-js=open('src/prelude.js').read()+"const EXPLORER="+json.dumps(explorer)+";\n"+painter+open('src/play.js').read()+open('src/data.js').read()+editor+open('src/shell.js').read()+open('src/hosted.js').read()
+import os
+an=open('tools/analysis.json').read() if os.path.exists('tools/analysis.json') else 'null'
+js=open('src/prelude.js').read()+open('src/backplan.js').read()+"const EXPLORER="+json.dumps(explorer)+";\nconst ANALYSIS="+json.dumps(json.loads(an),ensure_ascii=False).replace('</','<\\/')+";\n"+painter+open('src/play.js').read()+open('src/case.js').read()+open('src/data.js').read()+editor+open('src/shell.js').read()+open('src/hosted.js').read()
 # A plain web page needs its own doctype, charset and viewport (claude.ai adds them for artifacts).
 SKEL='<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
 open('index.html','w').write(SKEL+head+css+"\n"+body+'<script id="scn" type="application/json">'+s+'</script>\n<script>\n'+js+'</script>\n')

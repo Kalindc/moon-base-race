@@ -14,10 +14,11 @@ Every lander, rover, payload and choice lists what it can do and why it helps, a
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The game, including the **Scene editor** and **Data and sources** tabs. Built from the files below. |
+| `index.html` | The game. It opens on **The case**, which separates what NASA has under contract from what the game assumes, followed by **Play**, the **Scene editor** and **Data and sources**. Built from the files below. |
 | `timeline.html` | Timeline explorer: NASA's published milestones next to China's, with a source link for each one. |
 | `scenario.json` | **All the game content.** Every stage, choice, payload, mass, cost, duration, risk, outcome and source lives here. |
 | `src/` | The game engine (JavaScript, CSS and HTML template). |
+| `tools/analysis.js` | Produces the figures shown in The case tab (`tools/analysis.json`, built into the game) and a readable summary in `tools/analysis-report.md`. Run `node tools/analysis.js 1000`, then `python3 build.py`. |
 | `tools/balance.js` | Plays thousands of games automatically and reports win rates, spending and dead ends. Run `node tools/balance.js 2000`; the latest results are in `tools/balance-report.txt`. |
 | `tools/compress_art.py` | Shrinks the art for the web. |
 | `build.py` | Combines `scenario.json` and `src/` into `index.html` and `timeline.html`, and checks `scenario.json` for mistakes. |

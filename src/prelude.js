@@ -13,10 +13,12 @@ let BASE=LIVE;                     // scenario a run is built from (live, or a d
 let SCN=LIVE;                      // BASE with the chosen what-ifs applied
 let testing=false;
 let G=null;
-function applyWhatifs(base,picks){
-  const s=clone(base);s.riskAdd=0;s.monthsPct=0;
+function setDeadline(s,t){s.deadline=Object.assign({},s.deadline,{y:Math.floor(t/12),m:t%12+1});const rm=s.rival&&s.rival.milestones;if(rm&&rm.length){rm[rm.length-1].y=s.deadline.y;rm[rm.length-1].m=s.deadline.m}}
+const dlIdx=s=>s.deadline.y*12+s.deadline.m-1;
+function applyWhatifs(base,picks,dl){
+  const s=clone(base);s.riskAdd=0;s.monthsPct=0;if(dl!=null&&dl!==dlIdx(base))setDeadline(s,dl);
   for(const w of (base.whatifs||[]).filter(w=>picks.includes(w.id))){
-    if(w.deadlineShift){const t=s.deadline.y*12+s.deadline.m-1+w.deadlineShift;s.deadline.y=Math.floor(t/12);s.deadline.m=t%12+1;const rm=s.rival&&s.rival.milestones;if(rm&&rm.length){rm[rm.length-1].y=s.deadline.y;rm[rm.length-1].m=s.deadline.m}}
+    if(w.deadlineShift)setDeadline(s,dlIdx(s)+w.deadlineShift);
     if(w.budgetDeltaM)s.budgetM=(s.budgetM||0)+w.budgetDeltaM;
     if(w.monthsPct)s.monthsPct+=w.monthsPct;
     if(w.riskAdd)s.riskAdd+=w.riskAdd;
@@ -24,8 +26,12 @@ function applyWhatifs(base,picks){
   }
   return s;
 }
-function newGame(picks,phase){picks=picks||[];SCN=applyWhatifs(BASE,picks);G={speed:0,rel:0,quality:0,dev:[],site:"",broke:false,i:0,months:0,spent:0,wear:0,tags:[],assets:[],log:[],dates:{},phase:phase||"brief",sel:{},result:null,rec:null,picks}}
-const toStart=()=>newGame([],"start");
+function newGame(picks,phase,dl){picks=picks||[];dl=dl==null?null:dl;SCN=applyWhatifs(BASE,picks,dl);G={dl,mode:"",speed:0,rel:0,quality:0,dev:[],site:"",broke:false,i:0,months:0,spent:0,wear:0,tags:[],assets:[],log:[],dates:{},phase:phase||"brief",sel:{},result:null,rec:null,picks}}
+const toStart=()=>newGame([],"start",G?G.dl:null);
+const dlMoved=()=>G&&G.dl!=null&&G.dl!==dlIdx(BASE);
+/* awarded hardware plus the player's own additions: start where the awarded robotic missions leave the base */
+function startAdversary(){const A=SCN.adversary,Ms=(SCN.awarded&&SCN.awarded.missions)||[];if(!A)return;const i=Math.max(0,SCN.stages.findIndex(s=>s.id===A.stage)),rob=Ms.filter(m=>m.covers!=="crew");
+  G.i=i;G.months=moOf(A.start);G.spent=rob.reduce((a,m)=>a+m.costM,0);G.tags=(A.tags||[]).slice();G.assets=rob.map(m=>m.name);for(const s of SCN.stages.slice(0,i))G.dates[s.id]=G.months;G.mode="adv";G.log.push(["Awarded robotic missions",dateAt(G.months),fm(G.spent)])}
 const totalMonths=()=>(SCN.deadline.y-SCN.start.y)*12+(SCN.deadline.m-SCN.start.m);
 const moOf=d=>(d.y-SCN.start.y)*12+(d.m-SCN.start.m);
 function dateAt(mo){const t=SCN.start.y*12+SCN.start.m-1+mo;return MONTHS[t%12]+" "+Math.floor(t/12)}
@@ -56,8 +62,8 @@ function artEl(tag,u,attrs,onok){const src=artUrl(u);if(!src)return null;const e
 function thumb(o){const a=[].concat(o.image||[]).map(u=>artEl("img",u,{class:"th",alt:"",loading:"lazy"})).filter(Boolean);return a.length?h("span",{class:"ths"},a):null}
 /* ---------- shareable result ---------- */
 let SHARED=null;const showAll={};
-function shareLink(won){const d={v:1,w:won?1:0,m:G.months,s:G.spent,q:qScore(),p:G.picks};let base=(!window.claude&&/^https?:/.test(location.protocol))?location.href.split("#")[0]:(SCN.shareUrl||"");return base?base+"#r="+encodeURIComponent(btoa(JSON.stringify(d))):""}
-function readShare(){try{const m=/[#&]r=([^&]+)/.exec(location.hash||"");if(!m)return null;const d=JSON.parse(atob(decodeURIComponent(m[1])));const ids=(LIVE.whatifs||[]).map(w=>w.id);return {w:!!d.w,m:Math.max(0,Math.min(600,Math.round(+d.m)||0)),s:Math.max(0,Math.round(+d.s)||0),q:Math.max(0,Math.min(999,Math.round(+d.q)||0)),p:(Array.isArray(d.p)?d.p:[]).filter(x=>ids.includes(x))}}catch(e){return null}}
+function shareLink(won){const d={v:1,w:won?1:0,m:G.months,s:G.spent,q:qScore(),p:G.picks};if(dlMoved())d.d=G.dl;if(G.mode==="adv")d.a=1;let base=(!window.claude&&/^https?:/.test(location.protocol))?location.href.split("#")[0]:(SCN.shareUrl||"");return base?base+"#r="+encodeURIComponent(btoa(JSON.stringify(d))):""}
+function readShare(){try{const m=/[#&]r=([^&]+)/.exec(location.hash||"");if(!m)return null;const d=JSON.parse(atob(decodeURIComponent(m[1])));const ids=(LIVE.whatifs||[]).map(w=>w.id);return {w:!!d.w,m:Math.max(0,Math.min(600,Math.round(+d.m)||0)),s:Math.max(0,Math.round(+d.s)||0),q:Math.max(0,Math.min(999,Math.round(+d.q)||0)),p:(Array.isArray(d.p)?d.p:[]).filter(x=>ids.includes(x)),d:Number.isInteger(d.d)&&d.d>24000&&d.d<24600?d.d:null,a:!!d.a}}catch(e){return null}}
 const qScore=()=>Math.max(0,G.quality-((SCN.quality&&SCN.quality.wearPenalty)||0)*G.wear);
 function qGrade(){let g="";for(const x of (SCN.quality&&SCN.quality.grades)||[])if(qScore()>=x[0])g=x[1];return g}
 const qTxt=()=>"Base quality "+qScore()+(qGrade()?" ("+qGrade()+")":"");

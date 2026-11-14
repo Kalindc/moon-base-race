@@ -10,6 +10,9 @@ const root = path.join(__dirname, "..");
 const args = process.argv.slice(2), num = args.filter(a => /^\d+$/.test(a)).map(Number);
 const N = num[0] || 4000, SEED = num[1] || 1, JSON_OUT = args.includes("--json");
 const WHATIF = (args.find(a => a.startsWith("--whatif=")) || "").slice(9).split(",").filter(Boolean);
+/* --deadline=YYYY-MM moves the rival's date; --players=a,b runs only those; --clean turns mishaps off; --adversary starts from the awarded hardware (June 2028) */
+const DLA = (args.find(a => a.startsWith("--deadline=")) || "").slice(11), DL = DLA ? (+DLA.slice(0, 4)) * 12 + (+DLA.slice(5, 7)) - 1 : null;
+const ONLY = (args.find(a => a.startsWith("--players=")) || "").slice(10).split(",").filter(Boolean), CLEAN = args.includes("--clean"), ADV = args.includes("--adversary");
 
 /* seeded random (mulberry32) so runs repeat */
 let _s = SEED >>> 0;
@@ -21,11 +24,11 @@ const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { c
 const SCN_PATH = (args.find(a => a.startsWith("--scenario=")) || "").slice(11) || path.join(root, "scenario.json");
 const scenario = fs.readFileSync(SCN_PATH, "utf8");
 const stubEl = () => ({ textContent: "", append() {}, setAttribute() {}, addEventListener() {}, classList: { add() {} }, remove() {} });
-const ctx = { window: { __roll: rnd }, document: { getElementById: id => id === "scn" ? { textContent: scenario } : stubEl(), createElement: stubEl, createTextNode: stubEl },
+const ctx = { window: { __roll: CLEAN ? () => 0.99 : rnd }, document: { getElementById: id => id === "scn" ? { textContent: scenario } : stubEl(), createElement: stubEl, createTextNode: stubEl },
   localStorage: { getItem: () => null, setItem() {}, removeItem() {} }, console, Math, JSON, Object, Array, Set, Date, String, Number };
 ctx.globalThis = ctx;
-const src = fs.readFileSync(path.join(root, "src/prelude.js"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/play.js"), "utf8") +
-  "\nfunction render(){}\n;globalThis.E={newGame,commit,funds,moreComing,totalMonths,has,devDue,effRisk,qScore,qGrade,yearly,get G(){return G},get SCN(){return SCN}};";
+const src = fs.readFileSync(path.join(root, "src/prelude.js"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/backplan.js"), "utf8") + "\n" + fs.readFileSync(path.join(root, "src/play.js"), "utf8") +
+  "\nfunction render(){}\n;globalThis.E={startAdversary,newGame,commit,funds,moreComing,totalMonths,has,devDue,effRisk,qScore,qGrade,yearly,get G(){return G},get SCN(){return SCN}};";
 vm.runInNewContext(src, ctx, { filename: "engine" });
 const E = ctx.E;
 
@@ -63,7 +66,7 @@ function chooseOption(st, P, mem) {
 
 function play(pname) {
   const P = PLAYERS[pname], mem = new Set(), log = { player: pname, won: false, end: "", picks: {}, waits: {}, fails: 0, mishaps: 0 };
-  E.newGame(WHATIF, "brief");
+  E.newGame(WHATIF, "brief", DL); if (ADV) E.startAdversary();
   const T = E.totalMonths();
   let guard = 0;
   while (guard++ < 400) {
@@ -99,9 +102,9 @@ function play(pname) {
 
 /* ---------- run and report ---------- */
 const pct = (a, b) => b ? Math.round(a / b * 1000) / 10 : 0, q = (a, p) => { if (!a.length) return 0; const s = a.slice().sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
-const out = { games: N, seed: SEED, whatif: WHATIF, deadlineMonths: 0, budgetM: 0, players: {} };
+const out = { games: N, seed: SEED, whatif: WHATIF, deadline: DLA || "as published", clean: CLEAN, adversary: ADV, deadlineMonths: 0, budgetM: 0, players: {} };
 const stages = () => E.SCN.stages;
-for (const pname of Object.keys(PLAYERS)) {
+for (const pname of Object.keys(PLAYERS).filter(p => !ONLY.length || ONLY.includes(p))) {
   const L = []; for (let i = 0; i < N; i++) L.push(play(pname));
   out.deadlineMonths = E.totalMonths(); out.budgetM = E.SCN.budgetM;
   const W = L.filter(l => l.won), ends = {}; for (const l of L) ends[l.end] = (ends[l.end] || 0) + 1;
@@ -140,6 +143,6 @@ for (const [n, R] of Object.entries(out.players)) {
   console.log("   lost at stage " + JSON.stringify(R.lostAtStage) + "\n   had to wait for funding at (% of games) " + JSON.stringify(R.waitedForFunds) + "\n");
 }
 const S = out.players.sensible;
-console.log("Choices, sensible player (used %, win % with, win % without, difference):");
-for (const st of stages()) { console.log(" " + st.id); for (const r of S.choices[st.id]) console.log("   " + r.id.padEnd(13) + (r.used ? String(r.used).padStart(5) + "%  " + String(r.winWith).padStart(5) + "  " + String(r.winWithout).padStart(5) + "  " + ((r.winWith - r.winWithout) >= 0 ? "+" : "") + (r.winWith - r.winWithout).toFixed(1) : "  never chosen")); }
+if (S) console.log("Choices, sensible player (used %, win % with, win % without, difference):");
+if (S) for (const st of stages()) { console.log(" " + st.id); for (const r of S.choices[st.id]) console.log("   " + r.id.padEnd(13) + (r.used ? String(r.used).padStart(5) + "%  " + String(r.winWith).padStart(5) + "  " + String(r.winWithout).padStart(5) + "  " + ((r.winWith - r.winWithout) >= 0 ? "+" : "") + (r.winWith - r.winWithout).toFixed(1) : "  never chosen")); }
 console.log("\nStatic checks: " + JSON.stringify(out.static, null, 1));

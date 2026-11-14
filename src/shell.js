@@ -1,5 +1,5 @@
 /* ---------- shell ---------- */
-let tab="play",downloads=null;
+let tab="case",downloads=null;
 function show(t){tab=t;render();scrollTo(0,0)}
 function render(){
   for(const b of document.querySelectorAll("nav button[data-tab]"))b.setAttribute("aria-selected",b.dataset.tab===tab?"true":"false");
@@ -8,6 +8,7 @@ function render(){
   drawClock();
   if(tab==="edit"){editView();artPanel();return}
   if(tab==="data")return dataView();
+  if(tab==="case")return caseView();
   const p=G.phase;
   if(p==="start")startView();else if(p==="brief")stageView();else if(p==="recover")recoverView();else if(p==="result")resultView();else if(p==="awd"&&SCN.awarded)awardedView();else endView(p==="won");
 }
@@ -33,8 +34,8 @@ function artPanel(){
     h("p",{class:"note",text:"This page cannot load pictures or clips from outside sites, so the Higgsfield art shows here only after its files are stored with the page. "+have+" of "+jobs.size+" are stored. Download the files from Higgsfield and choose them here. Keep the original file names, or name each one after its game id, such as viper.png, scout.png, scout.mp4 or out_win.mp4."}),inp,msg));
 }
 function start(saved){
-  toStart();SHARED=readShare();
-  if(saved&&saved.G&&!saved.testing&&saved.G.i<LIVE.stages.length&&saved.G.dates){SCN=applyWhatifs(BASE,saved.G.picks||[]);G=saved.G}
+  toStart();SHARED=readShare();if(SHARED){tab="play";if(SHARED.d!=null)newGame([],"start",SHARED.d)}
+  if(saved&&saved.G&&!saved.testing&&saved.G.i<LIVE.stages.length&&saved.G.dates){SCN=applyWhatifs(BASE,saved.G.picks||[],saved.G.dl);G=saved.G;if(saved.tab)tab=saved.tab}
   render();
   connect();
 }
@@ -50,7 +51,7 @@ async function connect(){
   db.doc("game/live").onSnapshot(snap=>{
     let s=null;if(snap.exists){try{s=JSON.parse(snap.data().json)}catch(e){}}
     LIVE=validScenario(s)?s:clone(DEFAULT);
-    if(!testing){BASE=LIVE;if(G.phase==="start"||(G.months===0&&G.i===0)||G.i>=LIVE.stages.length)toStart();else SCN=applyWhatifs(BASE,G.picks)}
+    if(!testing){BASE=LIVE;if(G.phase==="start"||(G.months===0&&G.i===0)||G.i>=LIVE.stages.length)toStart();else SCN=applyWhatifs(BASE,G.picks,G.dl)}
     if(!ls.get("mb-draft"))draft=null;
     if(!(tab==="edit"&&/TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName)))render();
   },()=>{});
@@ -63,5 +64,5 @@ async function connect(){
   if(tab==="edit")render();
 }
 const hot=window.claude&&window.claude.hot;
-if(hot&&hot.snapshot)hot.snapshot(()=>({G,testing}));
+if(hot&&hot.snapshot)hot.snapshot(()=>({G,testing,tab}));
 if(hot&&hot.ready)hot.ready(start);else start((hot&&hot.data)||{});

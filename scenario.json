@@ -1,5 +1,5 @@
 {
- "version": 9,
+ "version": 10,
  "title": "Moon Base: Race to the South Pole",
  "start": {
   "y": 2026,
@@ -8,7 +8,7 @@
  "deadline": {
   "y": 2035,
   "m": 12,
-  "label": "China's published date for its lunar research station"
+  "label": "China's announced completion date for its lunar research station (an assumption you can change)"
  },
  "markers": [
   {
@@ -2086,7 +2086,7 @@
    "y": 2026,
    "m": 3,
    "text": "NASA announces Moon Base at its Ignition event: about $20 billion over seven years, dozens of missions. The Gateway station is paused and its hardware repurposed for the surface.",
-   "url": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/",
+   "url": "https://spacepolicyonline.com/news/nasa-rolls-out-new-moon-plan/",
    "cat": "program",
    "who": "NASA"
   },
@@ -2238,8 +2238,8 @@
  "facts": [
   [
    "Program cost",
-   "About $20 billion over seven years, an average of about $2.9 billion a year",
-   "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/"
+   "About $20 billion over seven years (Isaacman, 24 Mar 2026; spoken, not appropriated). Three phases of about $10 billion each over the decade",
+   "https://spacepolicyonline.com/news/nasa-rolls-out-new-moon-plan/"
   ],
   [
    "Phase One scale",
@@ -2407,12 +2407,6 @@
    "budgetDeltaM": -5000
   },
   {
-   "id": "china",
-   "label": "China finishes a year early",
-   "desc": "The rival station is declared complete at the end of 2034.",
-   "deadlineShift": -12
-  },
-  {
    "id": "risk",
    "label": "Rough decade for landers",
    "desc": "Every landing and operation is 10 points more likely to go wrong.",
@@ -2423,9 +2417,9 @@
   "name": "China",
   "milestones": [
    {
-    "y": 2026,
-    "m": 8,
-    "label": "Chang'e-7 surveys the south pole"
+    "y": 2027,
+    "m": 6,
+    "label": "Chang'e-7 surveys the south pole (slipped from Aug 2026, now no earlier than 2027)"
    },
    {
     "y": 2028,
@@ -2445,7 +2439,7 @@
   ]
  },
  "budgetYears": 7,
- "budgetSource": "https://www.cbsnews.com/news/nasa-moon-base-plan-lunar-south-pole/",
+ "budgetSource": "https://spacepolicyonline.com/news/nasa-rolls-out-new-moon-plan/",
  "quality": {
   "grades": [
    [
@@ -2711,5 +2705,402 @@
     "text": "Nothing to shield: no habitat is under contract."
    }
   ]
+ },
+ "deadlineRange": {
+  "from": {
+   "y": 2030,
+   "m": 12
+  },
+  "to": {
+   "y": 2040,
+   "m": 12
+  },
+  "note": "Assumption, not a fact. China's only public basis is its own announcement: International Lunar Research Station construction 2026 to 2035, with the five station missions ILRS-1 to ILRS-5 placed one a year from 2031 to 2035. None of that hardware has been shown in public. Slide it to see how much the date matters.",
+  "url": "https://en.wikipedia.org/wiki/International_Lunar_Research_Station"
+ },
+ "budgetNote": "Source: NASA Administrator Jared Isaacman at the Ignition event, 24 March 2026, as reported by SpacePolicyOnline: \"$20 billion would be spent over the next seven years\", with the base built in three phases \"at a cost of $10 billion per phase\" over the decade. It is a spoken figure, not an appropriation; NASA's own Moon Base pages state no budget, and the two figures are not reconciled. Releasing it in equal yearly parts is this game's assumption.",
+ "backplan": {
+  "asOf": {
+   "y": 2026,
+   "m": 11
+  },
+  "intro": "For each piece of the base that is not under contract, this works backwards from a target date to the latest month its contract can be signed. Development time comes from published award-to-flight times of comparable hardware. Surface work times are this game's estimates and are labelled as such.",
+  "after": [
+   {
+    "label": "Move the habitat to its site",
+    "months": 3,
+    "est": true
+   },
+   {
+    "label": "Run the power cable and switch on",
+    "months": 3,
+    "est": true
+   },
+   {
+    "label": "Cover the habitat with regolith",
+    "months": 6,
+    "est": true
+   },
+   {
+    "label": "Crew flight lands",
+    "months": 5,
+    "est": true
+   }
+  ],
+  "afterNote": "The fastest working option in the game for each step. Slower options push every award date earlier.",
+  "items": [
+   {
+    "id": "cargo",
+    "label": "Cargo lander for 15 to 30 t loads",
+    "status": "Not under contract. NASA announced in Nov 2024 that it intends to add cargo missions to the SpaceX and Blue Origin lander contracts; no award has been published.",
+    "needBy": "cargo",
+    "tail": 0,
+    "tailNote": "Comparables are measured to the landing itself.",
+    "comps": [
+     {
+      "name": "Starship crew lander",
+      "from": {
+       "y": 2021,
+       "m": 4
+      },
+      "to": {
+       "y": 2028,
+       "m": 2
+      },
+      "kind": "planned",
+      "what": "Award (Apr 2021) to first crewed landing, planned for early 2028. Not yet flown.",
+      "url": "https://en.wikipedia.org/wiki/Human_Landing_System"
+     },
+     {
+      "name": "Starship cargo mission for the pressurized rover",
+      "from": {
+       "y": 2024,
+       "m": 11
+      },
+      "to": {
+       "y": 2031,
+       "m": 10
+      },
+      "kind": "planned",
+      "what": "Announced Nov 2024; delivery no earlier than fiscal 2032.",
+      "url": "https://www.nasa.gov/news-release/nasa-plans-to-assign-missions-for-two-future-artemis-cargo-landers/"
+     },
+     {
+      "name": "Blue Moon cargo mission for a surface habitat",
+      "from": {
+       "y": 2024,
+       "m": 11
+      },
+      "to": {
+       "y": 2032,
+       "m": 10
+      },
+      "kind": "planned",
+      "what": "Announced Nov 2024; delivery no earlier than fiscal 2033.",
+      "url": "https://www.nasa.gov/news-release/nasa-plans-to-assign-missions-for-two-future-artemis-cargo-landers/"
+     }
+    ]
+   },
+   {
+    "id": "reactor",
+    "label": "Fission reactor (40 to 100 kW)",
+    "status": "Not under contract for flight. Three $5 million design studies were awarded in 2022; no flight award has been published.",
+    "needBy": "cargo",
+    "nasa": {
+     "y": 2030,
+     "m": 12,
+     "label": "NASA: reactor on the Moon by 2030",
+     "url": "https://thespacereview.com/article/5065/1"
+    },
+    "tail": 6,
+    "tailNote": "Estimate: ship, integrate on the lander and fly.",
+    "comps": [
+     {
+      "name": "Kilopower KRUSTY",
+      "from": {
+       "y": 2015,
+       "m": 10
+      },
+      "to": {
+       "y": 2018,
+       "m": 3
+      },
+      "kind": "ground test",
+      "what": "Project start to a full-power ground test of a 1 kW prototype. Not flight hardware, so a floor.",
+      "url": "https://en.wikipedia.org/wiki/Kilopower"
+     },
+     {
+      "name": "Mars Science Laboratory",
+      "from": {
+       "y": 2006,
+       "m": 8
+      },
+      "to": {
+       "y": 2011,
+       "m": 11
+      },
+      "kind": "launched",
+      "what": "Nuclear-powered surface system: start of detailed design to launch.",
+      "url": "https://en.wikipedia.org/wiki/Mars_Science_Laboratory"
+     },
+     {
+      "name": "HALO module",
+      "from": {
+       "y": 2020,
+       "m": 6
+      },
+      "to": {
+       "y": 2025,
+       "m": 4
+      },
+      "kind": "delivered",
+      "what": "Fabrication contract to delivery of the flight structure. Never launched.",
+      "url": "https://en.wikipedia.org/wiki/Habitation_and_Logistics_Outpost"
+     },
+     {
+      "name": "Gateway power element",
+      "from": {
+       "y": 2019,
+       "m": 5
+      },
+      "to": {
+       "y": 2026,
+       "m": 11
+      },
+      "kind": "open",
+      "what": "Award to today with no launch: at least this long, still counting.",
+      "url": "https://en.wikipedia.org/wiki/Lunar_Gateway"
+     }
+    ]
+   },
+   {
+    "id": "habitat",
+    "label": "Surface habitat",
+    "status": "Not under contract. Blue Origin's surface habitat was announced as an intended task in Nov 2024; no award has been published.",
+    "needBy": "cargo",
+    "nasa": {
+     "y": 2036,
+     "m": 12,
+     "label": "NASA: first habitats in Phase 3 (2033 to 2036), taking the latest end",
+     "url": "https://www.astronomy.com/space-exploration/nasas-30b-plan-to-build-a-moon-base/"
+    },
+    "tail": 6,
+    "tailNote": "Estimate: ship, integrate on the lander and fly.",
+    "comps": [
+     {
+      "name": "BEAM",
+      "from": {
+       "y": 2012,
+       "m": 12
+      },
+      "to": {
+       "y": 2016,
+       "m": 4
+      },
+      "kind": "launched",
+      "what": "Small inflatable module for the space station: award to launch.",
+      "url": "https://en.wikipedia.org/wiki/Bigelow_Expandable_Activity_Module"
+     },
+     {
+      "name": "HALO module",
+      "from": {
+       "y": 2020,
+       "m": 6
+      },
+      "to": {
+       "y": 2025,
+       "m": 4
+      },
+      "kind": "delivered",
+      "what": "Fabrication contract to delivery. Never launched.",
+      "url": "https://en.wikipedia.org/wiki/Habitation_and_Logistics_Outpost"
+     },
+     {
+      "name": "Lunar I-Hab",
+      "from": {
+       "y": 2020,
+       "m": 10
+      },
+      "to": {
+       "y": 2028,
+       "m": 6
+      },
+      "kind": "planned",
+      "what": "ESA selection to its planned 2028 launch (mid-year assumed). Not flown.",
+      "url": "https://en.wikipedia.org/wiki/Lunar_I-Hab"
+     },
+     {
+      "name": "Blue Origin surface habitat",
+      "from": {
+       "y": 2024,
+       "m": 11
+      },
+      "to": {
+       "y": 2032,
+       "m": 10
+      },
+      "kind": "planned",
+      "what": "Announced Nov 2024; delivery no earlier than fiscal 2033.",
+      "url": "https://www.nasa.gov/news-release/nasa-plans-to-assign-missions-for-two-future-artemis-cargo-landers/"
+     }
+    ]
+   },
+   {
+    "id": "pads",
+    "label": "Pads, roads and construction kit",
+    "status": "Not under contract. ICON ($57.2 million) and Blue Origin's regolith demonstration ($34.7 million) are development awards on Earth.",
+    "needBy": "pads",
+    "buildMonths": 13,
+    "buildNote": "Estimate: the game's fastest working pad and road option.",
+    "tail": 6,
+    "tailNote": "Estimate: ship, integrate on the lander and fly.",
+    "comps": [
+     {
+      "name": "PRIME-1 drill",
+      "from": {
+       "y": 2020,
+       "m": 10
+      },
+      "to": {
+       "y": 2025,
+       "m": 3
+      },
+      "kind": "landed",
+      "what": "Delivery award to landing. The drill was extended but never operated.",
+      "url": "https://en.wikipedia.org/wiki/PRIME-1"
+     },
+     {
+      "name": "ICON Project Olympus",
+      "from": {
+       "y": 2022,
+       "m": 11
+      },
+      "to": {
+       "y": 2026,
+       "m": 11
+      },
+      "kind": "open",
+      "what": "Award to today with no flight: at least this long, still counting.",
+      "url": "https://www.space.com/icon-moon-construction-project-olympus-nasa-funding"
+     },
+     {
+      "name": "Blue Origin regolith-to-power demo",
+      "from": {
+       "y": 2023,
+       "m": 7
+      },
+      "to": {
+       "y": 2026,
+       "m": 6
+      },
+      "kind": "planned",
+      "what": "Tipping Point award to a planned demonstration on Earth in 2026. Not a flight.",
+      "url": "https://www.theregister.com/2023/07/26/nasa_moon_funding/"
+     }
+    ]
+   }
+  ]
+ },
+ "adversary": {
+  "label": "Awarded plus your additions",
+  "start": {
+   "y": 2028,
+   "m": 6
+  },
+  "stage": "construct",
+  "tags": [
+   "mobility",
+   "mapping",
+   "prospecting",
+   "haul",
+   "ltv",
+   "site"
+  ],
+  "desc": "Start from everything already under contract: the scouting landers, VIPER, the site pathfinder and the two Lunar Terrain Vehicles, ready by June 2028. Every awarded robotic mission is already paid for. Add the fewest new contracts you can and try to land the crew in a working base before the deadline.",
+  "note": "The two Artemis crew visits (Artemis IV and V, $15.6 billion) are left off this budget, as if paid from other Artemis lines. Counted against the $20 billion, they leave $1.9 billion, which cannot pay for one cargo flight."
+ },
+ "china": {
+  "intro": "The same two views built for China from the scarce public record: what is flying or in hardware test, and what is only announced. It is optimistic by construction. NASA's record is public and open to audit; China's is not, so every Chinese date below is taken at its word.",
+  "record": [
+   {
+    "name": "Chang'e 1 to 6",
+    "status": "flown",
+    "when": "2007 to 2024",
+    "what": "Six robotic Moon missions, all successful, including two sample returns. Chang'e 6 launched on its announced month; Chang'e 1 slipped six months and Chang'e 4 three years.",
+    "url": "https://en.wikipedia.org/wiki/Chinese_Lunar_Exploration_Program"
+   },
+   {
+    "name": "Tiangong space station",
+    "status": "flown",
+    "when": "Apr 2021 to 2022",
+    "what": "Three modules launched and joined in about 19 months.",
+    "url": "https://en.wikipedia.org/wiki/Tiangong_space_station"
+   },
+   {
+    "name": "Lanyue crew lander",
+    "status": "tested",
+    "when": "Aug 2025",
+    "what": "Integrated landing and ascent test on a ground test article; engine firings and separation tests in 2024.",
+    "url": "https://en.wikipedia.org/wiki/Lanyue"
+   },
+   {
+    "name": "Mengzhou crew ship",
+    "status": "tested",
+    "when": "Jun 2025, Feb 2026",
+    "what": "Pad abort test, then an in-flight abort on a Long March 10 test stage.",
+    "url": "https://en.wikipedia.org/wiki/Mengzhou_(spacecraft)"
+   },
+   {
+    "name": "Long March 10 rocket",
+    "status": "tested",
+    "when": "Feb and Jul 2026",
+    "what": "Suborbital test stage, then the first orbital flight of the 10B variant. The crew version has not flown.",
+    "url": "https://en.wikipedia.org/wiki/Long_March_10"
+   },
+   {
+    "name": "Chang'e 7 (south pole survey)",
+    "status": "slipped",
+    "when": "Aug 2026 to 2027",
+    "what": "Delivered to the launch site in Apr 2026; the Aug 2026 launch window was called off and the launch moved to no earlier than 2027.",
+    "url": "https://spacepolicyonline.com/events/launch-of-chinas-change-7-robotic-lunar-mission-window-opens-aug-24-2026/"
+   },
+   {
+    "name": "Chang'e 8 (building test, \"basic model\" of the station)",
+    "status": "announced",
+    "when": "2028",
+    "what": "International payloads selected Apr 2025. No hardware shown.",
+    "url": "https://en.wikipedia.org/wiki/Chang%27e_8"
+   },
+   {
+    "name": "First Chinese crew landing",
+    "status": "announced",
+    "when": "by 2030",
+    "what": "Stated by the crewed programme in Jul 2023. The hardware above is in test.",
+    "url": "https://en.wikipedia.org/wiki/Lanyue"
+   },
+   {
+    "name": "ILRS-1, energy and command centre",
+    "status": "announced",
+    "when": "2031",
+    "what": "First of five station missions. No hardware, approval or cost published.",
+    "url": "https://en.wikipedia.org/wiki/International_Lunar_Research_Station"
+   },
+   {
+    "name": "ILRS-2 to ILRS-5",
+    "status": "announced",
+    "when": "2032 to 2035",
+    "what": "One mission a year; station construction ends 2035. No hardware, approval or cost published.",
+    "url": "https://en.wikipedia.org/wiki/International_Lunar_Research_Station"
+   },
+   {
+    "name": "Lunar reactor with Russia",
+    "status": "announced",
+    "when": "by 2035",
+    "what": "Announced by Roscosmos and CNSA in 2024. No design or hardware published.",
+    "url": "https://en.wikipedia.org/wiki/Nuclear_power_in_space"
+   }
+  ],
+  "backplan": "China's own schedule puts its energy and command centre, ILRS-1, on the Moon in 2031. Using the same comparable development times as for NASA's reactor, that element would already need to be under construction now or earlier; nothing in the public record shows it is.",
+  "verdict": "Under the same rule used for NASA, counting only what is flying or in hardware test, China has no station either: its crew landing hardware is in test, but none of the five station missions or the reactor has been shown. So China's 2035 date is an announcement, at the same level as NASA's own plan, and its first public test of the series has already slipped a year. The race against China holds only if you take China's best case on trust. NASA's own announced schedule needs no rival and is stricter: the reactor is promised by 2030. This page therefore leads with NASA's own dates and keeps China's date as an adjustable assumption."
  }
 }

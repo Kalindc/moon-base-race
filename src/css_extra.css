@@ -41,3 +41,11 @@ aside li span:only-child{white-space:normal;font-family:var(--body);color:var(--
 .th{display:block;flex:1;min-width:0;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:var(--panel2);opacity:.25;transition:opacity .3s}
 .th.ok{opacity:1}
 @media(max-width:640px){header{position:static}.clock{gap:2px 12px;font-size:12px}nav button{padding:6px 8px}.mani{flex-direction:column;align-items:stretch}.mani .pic{width:64px}}
+section.case{margin:0 0 34px;max-width:980px}
+section.case h2{margin:2px 0 10px}
+.claim{font-size:1.06rem;line-height:1.55;border-left:3px solid var(--sun);padding:6px 0 6px 12px;margin:12px 0}
+.card.dl{margin:12px 0;max-width:68ch}
+.card.dl input[type=range]{accent-color:var(--sun)}
+details{margin:6px 0}details summary{cursor:pointer}
+.chip.st-flown{border-color:#5fb36b;color:#8fd49a}.chip.st-tested{border-color:#d9a441;color:#f0c46b}.chip.st-announced{opacity:.75}.chip.st-slipped{border-color:#d8644f;color:#f09a88}
+.chip[class*=st-]{white-space:nowrap}
