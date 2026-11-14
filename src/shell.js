@@ -1,5 +1,5 @@
 /* ---------- shell ---------- */
-let tab="case",downloads=null;
+let tab="play",downloads=null;
 function show(t){tab=t;render();scrollTo(0,0)}
 function render(){
   for(const b of document.querySelectorAll("nav button[data-tab]"))b.setAttribute("aria-selected",b.dataset.tab===tab?"true":"false");

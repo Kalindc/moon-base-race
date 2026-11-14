@@ -48,7 +48,7 @@ body='''<header><div class="wrap">
   <div class="bar"><h1>Moon Base Race</h1>
     <div class="clock"><span>Mission date <b id="cDate"></b></span><span>Elapsed <b id="cEl"></b></span><span>Funds <b id="cBud"></b></span><span class="cn">Deadline <b id="cCn"></b></span></div></div>
   <div class="race" id="tl"></div><div class="racenote" id="tln"></div>
-  <nav><button role="tab" id="tabCase" data-tab="case">The case</button><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button><span class="sp"></span><button class="tog" id="tSound" aria-pressed="false">Sound</button><button class="tog" id="tVoice" aria-pressed="false" hidden>Mission control voice</button></nav>
+  <nav><button role="tab" id="tabPlay" data-tab="play">Play</button><button role="tab" id="tabCase" data-tab="case">The case</button><button role="tab" id="tabEdit" data-tab="edit">Scene editor</button><button role="tab" id="tabData" data-tab="data">Data and sources</button><span class="sp"></span><button class="tog" id="tSound" aria-pressed="false">Sound</button><button class="tog" id="tVoice" aria-pressed="false" hidden>Mission control voice</button></nav>
 </div></header>
 <div class="wrap"><main id="main"></main></div>
 '''

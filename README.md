@@ -14,7 +14,7 @@ Every lander, rover, payload and choice lists what it can do and why it helps, a
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The game. It opens on **The case**, which separates what NASA has under contract from what the game assumes, followed by **Play**, the **Scene editor** and **Data and sources**. Built from the files below. |
+| `index.html` | The game, with the **Play**, **The case** (what NASA has under contract versus what the game assumes), **Scene editor** and **Data and sources** tabs. Built from the files below. |
 | `timeline.html` | Timeline explorer: NASA's published milestones next to China's, with a source link for each one. |
 | `scenario.json` | **All the game content.** Every stage, choice, payload, mass, cost, duration, risk, outcome and source lives here. |
 | `src/` | The game engine (JavaScript, CSS and HTML template). |
